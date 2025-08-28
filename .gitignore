@@ -1,0 +1,77 @@
+# Gradle
+.gradle/
+build/
+/build
+**/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Local configuration
+/local.properties
+local.properties
+/.idea/
+/.idea/caches
+.idea/caches
+/.idea/libraries
+.idea/libraries
+.idea/modules.xml
+/.idea/modules.xml
+.idea/workspace.xml
+/.idea/workspace.xml
+.idea/navEditor.xml
+/.idea/navEditor.xml
+.idea/assetWizardSettings.xml
+/.idea/assetWizardSettings.xml
+.idea/compiler.xml
+.idea/gradle.xml
+.idea/jarRepositories.xml
+
+# Android Studio
+*.iml
+/captures
+.externalNativeBuild
+.cxx
+
+# Keystore files (never commit keys)
+*.jks
+*.keystore
+
+# Generated files
+captures/
+output.json
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Kotlin
+*.kotlin_module
+
+# Misc
+bin/
+gen/
+obj/
+
+# Crashlytics / Firebase
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+fabric.properties
+
+# Unit test / Coverage
+*.ec
+*.exec
+
+# Jetpack Compose compiler cache
+.compose-cache/
+
+# Android Profiling
+*.hprof
+
+# IntelliJ
+out/
+
+# Others
+.idea/deploymentTargetDropDown.xml

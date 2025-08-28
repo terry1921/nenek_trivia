@@ -1,0 +1,94 @@
+processors:
+  active: true
+
+config:
+  validation: true
+
+build:
+  maxIssues: 0
+
+console-reports:
+  active: true
+
+# Reglas globales
+exceptions:
+  TooGenericExceptionCaught:
+    active: true
+    excludes: ["**/test/**", "**/androidTest/**"]
+  SwallowedException:
+    active: true
+
+style:
+  MagicNumber:
+    active: true
+    ignorePropertyDeclaration: true
+    ignoreEnums: true
+    ignoreAnnotation: true
+    ignoreHashCodeFunction: true
+    excludes: ["**/test/**", "**/androidTest/**", "**/*Preview*.kt"]
+  MagicString:
+    active: false
+  WildcardImport:
+    active: true
+  MaxLineLength:
+    active: true
+    maxLineLength: 120
+    excludePackageStatements: true
+    excludeImportStatements: true
+    excludes: ["**/build/**"]
+  UnusedPrivateMember:
+    active: true
+    allowedNames: "_|ignored|unused|destructured"
+    ignoreAnnotated: ["Preview"]
+
+naming:
+  TopLevelPropertyNaming:
+    active: true
+  FunctionNaming:
+    active: true
+    ignoreAnnotated: ["Composable", "Preview"]
+  MatchingDeclarationName:
+    active: true
+
+complexity:
+  LongMethod:
+    active: true
+    threshold: 60
+  LongParameterList:
+    active: true
+    ignoreAnnotated: ["Composable"]
+    functionThreshold: 7
+  TooManyFunctions:
+    active: false
+
+coroutines:
+  GlobalCoroutineUsage:
+    active: true
+
+performance:
+  SpreadOperator:
+    active: true
+
+potential-bugs:
+  LateinitUsage:
+    active: true
+    excludeAnnotatedProperties: ["Inject"]
+  UnsafeCallOnNullableType:
+    active: true
+
+formatting:
+  active: true
+  android: true
+  ArgumentListWrapping:
+    active: true
+  ImportOrdering:
+    active: true
+  NoWildcardImports:
+    active: true
+  FinalNewline:
+    active: true
+  Indentation:
+    active: true
+  MaximumLineLength:
+    active: true
+    maxLineLength: 120

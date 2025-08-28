@@ -1,0 +1,52 @@
+repos:
+  # Commitlint para mensajes de commit
+  - repo: https://github.com/alessandrojcm/commitlint-pre-commit-hook
+    rev: v9.22.0
+    hooks:
+      - id: commitlint
+        stages: [ commit-msg ]
+        additional_dependencies: [ '@commitlint/config-conventional' ]
+
+  # Utilidades generales
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-merge-conflict
+      - id: check-added-large-files
+        args: ["--maxkb=1024"]  # evita subir binarios pesados accidentalmente
+
+  # KTLINT (formato Kotlin)
+  - repo: https://github.com/terry1921/pre-commit-kotlin
+    rev: v0.0.1
+    hooks:
+      - id: mvn-verify # it does not accept arguments
+      - id: ktlint # kotlin linter
+        args:
+          - --color
+
+  # Hooks locales que ejecutan Gradle (Detekt y verificación rápida)
+  - repo: local
+    hooks:
+      - id: gradle-verify
+        name: Gradle verify (compile + tests)
+        entry: ./gradlew -q assembleDebug testDebugUnitTest
+        language: system
+        pass_filenames: false
+        stages: [pre-push]   # puedes cambiar a [push] si prefieres
+
+      # Opcional: formateo de Kotlin vía Gradle si usas ktlintFormat task
+      # - id: kotlin-format
+      #   name: Kotlin format (ktlintFormat)
+      #   entry: ./gradlew ktlintFormat
+      #   language: system
+      #   pass_filenames: false
+      #   stages: [manual]  # ejecuta con `pre-commit run kotlin-format -a`
+      #
+      # - id: detekt
+      #   name: Run Detekt
+      #   entry: ./gradlew detekt
+      #   language: system
+      #   types_or: [kotlin]
+      #   pass_filenames: false
