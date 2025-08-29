@@ -44,7 +44,7 @@ Explica cómo validar que tu cambio funciona correctamente:
 
 ¿Hay algo que el revisor debería saber?
 
-> _Ejemplo: Esta funcionalidad depende del PR #24._
+> _Ejemplo: Esta funcionalidad depende del PR #12._
 
 ---
 
