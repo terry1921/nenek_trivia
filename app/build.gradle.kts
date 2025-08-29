@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.ksp)
     id(
         libs.plugins.hilt.plugin
@@ -57,10 +56,7 @@ android {
         jvmToolchain(17)
     }
     buildFeatures {
-        compose = true
-        dataBinding = true
         buildConfig = true
-        viewBinding = true
     }
     hilt {
         enableAggregatingTask = true
@@ -71,11 +67,6 @@ android {
             isReturnDefaultValues = true
         }
     }
-}
-
-composeCompiler {
-    reportsDestination = layout.buildDirectory.dir("compose_compiler")
-    stabilityConfigurationFile = rootProject.layout.projectDirectory.file("stability_config.conf")
 }
 
 dependencies {

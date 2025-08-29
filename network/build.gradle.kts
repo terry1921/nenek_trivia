@@ -40,7 +40,7 @@ android {
             buildConfigField("String", "API_KEY", "\"$key\"")
         }
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             val key = apiKeyProvider.orNull ?: ""
             buildConfigField("String", "API_KEY", "\"$key\"")
             proguardFiles(
@@ -54,7 +54,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
     kotlin { jvmToolchain(17) }
-    buildFeatures { buildConfig = false }
+    buildFeatures { buildConfig = true }
 }
 
 dependencies {

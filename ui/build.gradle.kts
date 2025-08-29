@@ -33,9 +33,13 @@ android {
     kotlin { jvmToolchain(17) }
     buildFeatures {
         compose = true
-        buildConfig = false
         viewBinding = true
     }
+}
+
+composeCompiler {
+    reportsDestination = layout.buildDirectory.dir("compose_compiler")
+    stabilityConfigurationFile = rootProject.layout.projectDirectory.file("stability_config.conf")
 }
 
 dependencies {
