@@ -33,7 +33,6 @@ android {
     kotlin { jvmToolchain(17) }
     buildFeatures {
         compose = true
-        buildConfig = false
         viewBinding = true
     }
 }
