@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "dev.terry1921.database"
+    namespace = "dev.terry1921.nenektrivia.database"
     compileSdk = 36
 
     defaultConfig {
@@ -32,7 +32,7 @@ android {
                         } else {
                             "default.db"
                         }
-                    },
+                    }
                 )
         debug {
             isMinifyEnabled = false
@@ -45,7 +45,7 @@ android {
             buildConfigField("String", "DATABASE_NAME", "\"$dbName\"")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
+                "proguard-rules.pro"
             )
         }
     }

@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "dev.terry1921.domain"
+    namespace = "dev.terry1921.nenektrivia.domain"
     compileSdk = 36
 
     defaultConfig {
@@ -19,7 +19,7 @@ android {
             isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
+                "proguard-rules.pro"
             )
         }
         debug {
