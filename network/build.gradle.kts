@@ -40,7 +40,7 @@ android {
             buildConfigField("String", "API_KEY", "\"$key\"")
         }
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             val key = apiKeyProvider.orNull ?: ""
             buildConfigField("String", "API_KEY", "\"$key\"")
             proguardFiles(

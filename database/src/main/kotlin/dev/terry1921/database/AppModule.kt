@@ -10,6 +10,22 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dev.terry1921.database.auth.AuthRepository
+import dev.terry1921.database.auth.RoomAuthRepository
+import dev.terry1921.database.categories.CategoryRepository
+import dev.terry1921.database.categories.RoomCategoryRepository
+import dev.terry1921.database.dao.CategoryDao
+import dev.terry1921.database.dao.GameSessionDao
+import dev.terry1921.database.dao.QuestionDao
+import dev.terry1921.database.dao.ScoreDao
+import dev.terry1921.database.dao.SessionQuestionDao
+import dev.terry1921.database.dao.UserDao
+import dev.terry1921.database.leaderboard.LeaderboardRepository
+import dev.terry1921.database.leaderboard.RoomLeaderboardRepository
+import dev.terry1921.database.questions.QuestionRepository
+import dev.terry1921.database.questions.RoomQuestionRepository
+import dev.terry1921.database.session.RoomSessionRepository
+import dev.terry1921.database.session.SessionRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -87,4 +103,24 @@ object AppModule {
 
     @Provides
     fun provideSessionQuestionDao(db: NenekTriviaDatabase) = db.sessionQuestionDao()
+
+    // MARK: - Repository providers
+
+    @Provides
+    fun provideCategoryRepository(categoryDao: CategoryDao): CategoryRepository = RoomCategoryRepository(categoryDao)
+
+    @Provides
+    fun provideQuestionRepository(questionDao: QuestionDao): QuestionRepository = RoomQuestionRepository(questionDao)
+
+    @Provides
+    fun provideAuthRepository(userDao: UserDao): AuthRepository = RoomAuthRepository(userDao)
+
+    @Provides
+    fun provideLeaderboardRepository(scoreDao: ScoreDao): LeaderboardRepository = RoomLeaderboardRepository(scoreDao)
+
+    @Provides
+    fun provideSessionRepository(
+        gameSessionDao: GameSessionDao,
+        sessionQuestionDao: SessionQuestionDao,
+    ): SessionRepository = RoomSessionRepository(gameSessionDao, sessionQuestionDao)
 }
