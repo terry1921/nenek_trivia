@@ -73,9 +73,6 @@ dependencies {
     implementation(libs.coil)
     implementation(libs.transformationLayout)
 
-    // data binding
-    implementation(libs.bindables)
-
     // whatIf
     implementation(libs.whatif)
 
