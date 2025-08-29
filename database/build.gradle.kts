@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -16,33 +18,45 @@ android {
     }
 
     buildTypes {
-        release {
+        val dbNameProvider =
+            providers
+                .gradleProperty("DATABASE_NAME")
+                .orElse(providers.environmentVariable("DATABASE_NAME"))
+                .orElse(
+                    providers.provider {
+                        val lp = rootProject.file("local.properties")
+                        if (lp.exists()) {
+                            Properties()
+                                .apply { lp.inputStream().use { load(it) } }
+                                .getProperty("DATABASE_NAME", "default.db")
+                        } else {
+                            "default.db"
+                        }
+                    },
+                )
+        debug {
             isMinifyEnabled = false
+            val dbName = dbNameProvider.orNull ?: "default.db"
+            buildConfigField("String", "DATABASE_NAME", "\"$dbName\"")
+        }
+        release {
+            isMinifyEnabled = true
+            val dbName = dbNameProvider.orNull ?: "default.db"
+            buildConfigField("String", "DATABASE_NAME", "\"$dbName\"")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
-        }
-        debug {
-            isMinifyEnabled = false
         }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlin {
-        jvmToolchain(17)
-    }
-    sourceSets.named("test") {
-        assets.srcDirs(files("$projectDir/schemas"))
-    }
-    testOptions {
-        unitTests.isIncludeAndroidResources = true
-    }
-    kotlinOptions {
-        freeCompilerArgs = listOf("-XXLanguage:+PropertyParamAnnotationDefaultTargetMode")
-    }
+    kotlin { jvmToolchain(17) }
+    buildFeatures { buildConfig = true }
+    sourceSets.named("test") { assets.srcDirs(files("$projectDir/schemas")) }
+    testOptions { unitTests.isIncludeAndroidResources = true }
 }
 
 ksp {

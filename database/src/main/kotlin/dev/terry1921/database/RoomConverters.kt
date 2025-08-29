@@ -18,10 +18,4 @@ class RoomConverters {
         val type = object : TypeToken<List<String>>() {}.type
         return gson.fromJson(value, type)
     }
-
-    @TypeConverter
-    fun fromNullableLong(value: Long?): Long? = value
-
-    @TypeConverter
-    fun toNullableLong(value: Long?): Long? = value
 }

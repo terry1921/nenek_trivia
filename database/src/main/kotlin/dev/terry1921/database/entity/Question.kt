@@ -32,5 +32,5 @@ data class Question(
     @ColumnInfo(name = "text") val text: String,
     @ColumnInfo(name = "options") val options: List<String>, // size must be 4
     @ColumnInfo(name = "correct_index") val correctIndex: Int, // 0..3
-    @ColumnInfo(name = "category_id") val categoryId: String,
+    @ColumnInfo(name = "category_id") val categoryId: Int,
 ) : Parcelable

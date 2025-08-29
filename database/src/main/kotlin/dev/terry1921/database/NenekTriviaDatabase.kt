@@ -1,6 +1,7 @@
 package dev.terry1921.database
 
 import androidx.room.Database
+import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import dev.terry1921.database.dao.CategoryDao
 import dev.terry1921.database.dao.GameSessionDao
@@ -21,7 +22,7 @@ import dev.terry1921.database.entity.User
     exportSchema = true,
 )
 @TypeConverters(RoomConverters::class)
-abstract class NenekTriviaDatabase {
+abstract class NenekTriviaDatabase : RoomDatabase() {
     abstract fun categoryDao(): CategoryDao
 
     abstract fun questionDao(): QuestionDao
