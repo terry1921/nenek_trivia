@@ -1,12 +1,10 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.google.services)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.ksp)
-    id(
-        libs.plugins.hilt.plugin
-            .get()
-            .pluginId
-    )
+    id(libs.plugins.hilt.plugin.get().pluginId)
 }
 
 android {
@@ -89,6 +87,14 @@ dependencies {
     // bundler
     implementation(libs.bundler)
 
+    // firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
+
+    // logging
+    implementation(libs.timber)
+
     // unit test
     testImplementation(libs.junit)
     testImplementation(libs.turbine)
@@ -105,9 +111,6 @@ dependencies {
     // Hilt en androidTest con KSP
     androidTestImplementation(libs.hilt.testing)
     kspAndroidTest(libs.hilt.compiler)
-
-    // logging
-    implementation(libs.timber)
 
     // modules for unit test
     testImplementation(project(":network"))

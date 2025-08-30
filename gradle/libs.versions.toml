@@ -19,6 +19,11 @@ androidXStartup = "1.2.0"
 # Compose
 compose-bom = "2025.08.01"
 
+# Firebase
+googleServices = "4.4.3"
+firebase-bom = "34.2.0"
+firebase-crashlytics = "3.0.6"
+
 # Material (Views)
 material = "1.12.0"
 
@@ -64,6 +69,7 @@ androidxArchCore = "2.2.0"
 baseAdapter = "1.0.4"
 swiperefreshlayout = "1.1.0"
 
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
@@ -71,6 +77,8 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 hilt-plugin = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+google-services = { id = "com.google.gms.google-services", version.ref = "googleServices"}
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics" }
 
 [libraries]
 # Core
@@ -130,6 +138,11 @@ compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity" }
 androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
+
+# Firebase BOM + artifacts
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom"}
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ndk"}
 
 # Testing
 junit = { group = "junit", name = "junit", version.ref = "junit" }
