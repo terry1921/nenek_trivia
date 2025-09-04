@@ -36,9 +36,9 @@ android {
 }
 
 dependencies {
-    api(project(":model"))
-    api(project(":network"))
     api(project(":database"))
+    api(project(":network"))
+    api(project(":model"))
 
     // coroutines/flow
     implementation(libs.coroutines)

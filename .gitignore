@@ -76,3 +76,7 @@ out/
 
 # Others
 .idea/deploymentTargetDropDown.xml
+
+# docs
+docs/.idea/*
+docs/*.iml
