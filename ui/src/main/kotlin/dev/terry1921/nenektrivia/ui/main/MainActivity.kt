@@ -3,9 +3,8 @@ package dev.terry1921.nenektrivia.ui.main
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.navigation.compose.rememberNavController
+import dev.terry1921.nenektrivia.ui.navigation.AppNavHost
 import dev.terry1921.nenektrivia.ui.theme.NenekTheme
 
 class MainActivity : ComponentActivity() {
@@ -13,12 +12,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             NenekTheme(darkTheme = false) {
-                Surface(color = MaterialTheme.colorScheme.background) {
-                    Text(
-                        text = "Bienvenido a Nenek Trivia 🎉",
-                        style = MaterialTheme.typography.headlineLarge
-                    )
-                }
+                val navController = rememberNavController()
+                AppNavHost(navController = navController)
             }
         }
     }

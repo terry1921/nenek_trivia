@@ -6,4 +6,5 @@
                  name="Nenek_Design_Docs" start-page="design-doc.md">
 
     <toc-element topic="design-doc.md"/>
+    <toc-element topic="design-doc-auth.md"/>
 </instance-profile>

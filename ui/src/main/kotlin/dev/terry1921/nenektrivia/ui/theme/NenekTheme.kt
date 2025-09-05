@@ -1,10 +1,13 @@
 package dev.terry1921.nenektrivia.ui.theme
 
 import android.app.Activity
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import dev.terry1921.nenektrivia.ui.tokens.ColorTokens
@@ -31,7 +34,7 @@ import dev.terry1921.nenektrivia.ui.tokens.asMaterialTypography
 
 @Composable
 fun NenekTheme(
-    darkTheme: Boolean,
+    darkTheme: Boolean = isSystemInDarkTheme(),
     colorTokens: ColorTokens = if (darkTheme) DarkColorTokens else LightColorTokens,
     typographyTokens: TypographyTokens = DefaultTypographyTokens,
     shapeTokens: ShapeTokens = DefaultShapeTokens,
@@ -47,7 +50,17 @@ fun NenekTheme(
     SideEffect {
         val window = (view.context as? Activity)?.window
         if (window != null) {
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
+            // Edge-to-edge
+            WindowCompat.setDecorFitsSystemWindows(window, false)
+
+            // Transparent system bars so the hero/gradients of AuthScreen respiran
+            window.statusBarColor = Color.Transparent.toArgb()
+            window.navigationBarColor = Color.Transparent.toArgb()
+
+            // Icon/label contrast depending on theme
+            val controller = WindowCompat.getInsetsController(window, view)
+            controller.isAppearanceLightStatusBars = !darkTheme
+            controller.isAppearanceLightNavigationBars = !darkTheme
         }
     }
 

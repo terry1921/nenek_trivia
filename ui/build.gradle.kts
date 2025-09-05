@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.compose.runtime)
     implementation(libs.compose.ui.preview)
     implementation(libs.compose.material3)
+    implementation(libs.androidx.navigation)
     debugImplementation(libs.compose.ui.tooling)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)

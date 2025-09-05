@@ -5,19 +5,19 @@ import androidx.compose.ui.unit.dp
 
 @Immutable
 data class SpacingTokens(
-    val xs: Int = 4, // 4dp
+    val xs: Int = 4,
     val sm: Int = 8,
     val md: Int = 12,
     val lg: Int = 16,
     val xl: Int = 24,
     val xxl: Int = 32
 ) {
-    val xsDp get() = xs.dp
-    val smDp get() = sm.dp
-    val mdDp get() = md.dp
-    val lgDp get() = lg.dp
-    val xlDp get() = xl.dp
-    val xxlDp get() = xxl.dp
+    val extraSmall get() = xs.dp
+    val small get() = sm.dp
+    val medium get() = md.dp
+    val large get() = lg.dp
+    val extraLarge get() = xl.dp
+    val extraExtraLarge get() = xxl.dp
 }
 
 val DefaultSpacing = SpacingTokens()

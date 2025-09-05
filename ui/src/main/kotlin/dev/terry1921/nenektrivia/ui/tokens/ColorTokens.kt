@@ -41,7 +41,11 @@ data class ColorTokens(
     val onSurface: Color,
     val surfaceVariant: Color,
     val onSurfaceVariant: Color,
-    val outline: Color
+    val outline: Color,
+    val circular: Color,
+    val error: Color,
+    val onError: Color,
+    val errorContainer: Color
 )
 
 val LightColorTokens =
@@ -62,7 +66,11 @@ val LightColorTokens =
         onSurface = NenekPalette.Neutral20,
         surfaceVariant = NenekPalette.Neutral95,
         onSurfaceVariant = NenekPalette.Neutral20,
-        outline = Color(0xFFBDBDBD)
+        outline = Color(0xFFBDBDBD),
+        circular = NenekPalette.Orange,
+        error = Color(0xFFB00020),
+        onError = NenekPalette.White,
+        errorContainer = Color(0xFFFCD8DF)
     )
 
 val DarkColorTokens =
@@ -83,5 +91,9 @@ val DarkColorTokens =
         onSurface = NenekPalette.Neutral90,
         surfaceVariant = NenekPalette.Neutral20,
         onSurfaceVariant = NenekPalette.Neutral90,
-        outline = Color(0xFF555555)
+        outline = Color(0xFF555555),
+        circular = NenekPalette.Orange,
+        error = Color(0xFFCF6679),
+        onError = NenekPalette.Neutral0,
+        errorContainer = Color(0xFFB1384E)
     )

@@ -22,11 +22,11 @@ fun NenekApp() {
             Modifier
                 .fillMaxSize()
                 .background(TokenTheme.colors.background)
-                .padding(s.lgDp)
+                .padding(s.large)
         ) {
             Text(
                 text = "Nenek Trivia",
-                style = TokenTheme.typography.headline,
+                style = TokenTheme.typography.headlineLarge,
                 color = TokenTheme.colors.onBackground
             )
         }

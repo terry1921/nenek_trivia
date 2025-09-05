@@ -11,6 +11,7 @@ appcompat = "1.7.1"
 recyclerView = "1.4.0"
 androidxConstraintlayout = "2.2.1"
 androidxFragment = "1.8.9"
+nav_version = "2.9.3"
 
 # Lifecycle / Startup
 androidxLifecycle = "2.9.3"
@@ -136,6 +137,7 @@ compose-runtime = { group = "androidx.compose.runtime", name = "runtime" }
 compose-ui-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "nav_version" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity" }
 androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
 
