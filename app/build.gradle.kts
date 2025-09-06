@@ -1,12 +1,10 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.google.services)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.ksp)
-    id(
-        libs.plugins.hilt.plugin
-            .get()
-            .pluginId,
-    )
+    id(libs.plugins.hilt.plugin.get().pluginId)
 }
 
 android {
@@ -27,7 +25,7 @@ android {
             isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
+                "proguard-rules.pro"
             )
         }
         debug {
@@ -77,6 +75,10 @@ dependencies {
 
     // di
     implementation(libs.hilt.android)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.constraintlayout)
     ksp(libs.hilt.compiler)
 
     // coroutines
@@ -84,6 +86,14 @@ dependencies {
 
     // bundler
     implementation(libs.bundler)
+
+    // firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
+
+    // logging
+    implementation(libs.timber)
 
     // unit test
     testImplementation(libs.junit)
@@ -101,9 +111,6 @@ dependencies {
     // Hilt en androidTest con KSP
     androidTestImplementation(libs.hilt.testing)
     kspAndroidTest(libs.hilt.compiler)
-
-    // logging
-    implementation(libs.timber)
 
     // modules for unit test
     testImplementation(project(":network"))

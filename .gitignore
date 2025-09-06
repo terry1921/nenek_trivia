@@ -55,6 +55,7 @@ gen/
 obj/
 
 # Crashlytics / Firebase
+/app/google-services.json
 com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
@@ -75,3 +76,7 @@ out/
 
 # Others
 .idea/deploymentTargetDropDown.xml
+
+# docs
+docs/.idea/*
+docs/*.iml

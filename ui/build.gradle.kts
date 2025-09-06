@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "dev.terry1921.ui"
+    namespace = "dev.terry1921.nenektrivia.ui"
     compileSdk = 36
 
     defaultConfig {
@@ -19,7 +19,7 @@ android {
             isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
+                "proguard-rules.pro"
             )
         }
         debug {
@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.compose.runtime)
     implementation(libs.compose.ui.preview)
     implementation(libs.compose.material3)
+    implementation(libs.androidx.navigation)
     debugImplementation(libs.compose.ui.tooling)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
@@ -72,9 +73,6 @@ dependencies {
     implementation(libs.progressView)
     implementation(libs.coil)
     implementation(libs.transformationLayout)
-
-    // data binding
-    implementation(libs.bindables)
 
     // whatIf
     implementation(libs.whatif)

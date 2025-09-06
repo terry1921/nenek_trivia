@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="1080dp"
+    android:height="1920dp"
+    android:viewportWidth="1080"
+    android:viewportHeight="1920">
+
+    <!-- Fondo -->
+    <path
+        android:fillColor="#FCFCFC"
+        android:pathData="M0,0H1080V1920H0Z" />
+
+    <!-- Onda superior (Magenta) -->
+    <path
+        android:fillAlpha="0.35"
+        android:fillColor="#D500F9"
+        android:pathData="M0 0H1080V478C1080 478 746.324 393.098 528.5 394.5C319.552 395.845 0 478 0 478V0Z" />
+
+    <!-- Capa sutil sobre la superior (Pink) -->
+    <path
+        android:fillAlpha="0.22"
+        android:fillColor="#E91E63"
+        android:pathData="M0 0H1080V159C1080 159 931.298 151.523 836.5 159C649.579 173.743 556.678 281.5 369.5 270.5C219.034 261.658 0 159 0 159V0Z" />
+
+    <!-- Onda inferior (Orange) -->
+    <path
+        android:fillAlpha="0.30"
+        android:fillColor="#FF9800"
+        android:pathData="M0 531C0 531 170.522 452.074 287.5 445C493.086 432.568 577.013 640.974 782.5 627C904.299 618.717 1080 531 1080 531V1037.5C1080 1037.5 999.145 1052.61 947 1050.5C813.322 1045.1 765.282 959.403 631.5 960.5C524.305 961.379 477.514 1025.43 372 1006.5C270.184 988.234 290 952.5 187.5 1006.5C85 1060.5 0 1566 0 1566V531Z" />
+
+    <!-- Sombra suave inferior (Red) -->
+    <path
+        android:fillAlpha="0.12"
+        android:fillColor="#C62828"
+        android:pathData="M0 762C0 762 83.7974 582.765 190 547.5C310.966 507.333 377.49 617.789 503 640C698.351 674.571 820.727 447.757 952 596.5C988.219 637.539 1080 762 1080 762V1920C1080 1920 939 1227.5 870 1243C801 1258.5 727.34 1304.29 628.5 1291.5C554.436 1281.91 533.397 1212.8 459.5 1202C356.346 1186.92 312.034 1298.21 208 1291.5C119.754 1285.8 0 1202 0 1202V762Z" />
+
+    <!-- Detalles neutros (opcional) -->
+    <path
+        android:fillAlpha="0.06"
+        android:fillColor="#9E9E9E"
+        android:pathData="M1080,0V220
+    C980,210 880,240 820,300
+    C770,350 700,380 640,380
+    L1080,380Z" />
+
+</vector>

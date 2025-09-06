@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "dev.terry1921.model"
+    namespace = "dev.terry1921.nenektrivia.model"
     compileSdk = 36
     defaultConfig { minSdk = 26 }
     compileOptions {

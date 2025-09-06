@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "dev.terry1921.network"
+    namespace = "dev.terry1921.nenektrivia.network"
     compileSdk = 36
 
     defaultConfig {
@@ -32,7 +32,7 @@ android {
                         } else {
                             ""
                         }
-                    },
+                    }
                 )
         debug {
             isMinifyEnabled = false
@@ -45,7 +45,7 @@ android {
             buildConfigField("String", "API_KEY", "\"$key\"")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
+                "proguard-rules.pro"
             )
         }
     }
