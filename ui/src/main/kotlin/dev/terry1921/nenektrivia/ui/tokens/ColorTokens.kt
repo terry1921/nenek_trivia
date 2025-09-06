@@ -9,6 +9,7 @@ object NenekPalette {
     val Orange = Color(0xFFFF9800)
     val Red = Color(0xFFC62828)
     val DarkRed = Color(0xFF8B0000)
+    val Blue = Color(0xFF2196F3)
 
     val BackgroundLight = Color(0xFFFAFAFA)
     val BackgroundDark = Color(0xFF121212)
@@ -45,7 +46,8 @@ data class ColorTokens(
     val circular: Color,
     val error: Color,
     val onError: Color,
-    val errorContainer: Color
+    val errorContainer: Color,
+    val link: Color
 )
 
 val LightColorTokens =
@@ -70,7 +72,8 @@ val LightColorTokens =
         circular = NenekPalette.Orange,
         error = Color(0xFFB00020),
         onError = NenekPalette.White,
-        errorContainer = Color(0xFFFCD8DF)
+        errorContainer = Color(0xFFFCD8DF),
+        link = NenekPalette.Blue
     )
 
 val DarkColorTokens =
@@ -95,5 +98,6 @@ val DarkColorTokens =
         circular = NenekPalette.Orange,
         error = Color(0xFFCF6679),
         onError = NenekPalette.Neutral0,
-        errorContainer = Color(0xFFB1384E)
+        errorContainer = Color(0xFFB1384E),
+        link = NenekPalette.Blue
     )

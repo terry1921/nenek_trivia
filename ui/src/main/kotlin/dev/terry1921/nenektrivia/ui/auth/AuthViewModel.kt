@@ -20,6 +20,7 @@ data class AuthUiState(
 
 sealed class AuthEffect {
     data object NavigateToMain : AuthEffect()
+    data object NavigateToPrivacyPolicy : AuthEffect()
 }
 
 enum class AuthProvider { GOOGLE, FACEBOOK }
@@ -66,6 +67,12 @@ class AuthViewModel : ViewModel() {
                     )
                 }
             }
+        }
+    }
+
+    fun onPrivacyPolicyClick() {
+        viewModelScope.launch {
+            _effect.emit(AuthEffect.NavigateToPrivacyPolicy)
         }
     }
 }

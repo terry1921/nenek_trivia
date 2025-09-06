@@ -1,5 +1,9 @@
 package dev.terry1921.nenektrivia.ui.navigation
 
+import android.content.Intent
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -17,6 +21,10 @@ object Routes {
 
 @Composable
 fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) {
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult(),
+        onResult = { /* Handle result if needed */ }
+    )
     NavHost(
         navController = navController,
         startDestination = Routes.AUTH,
@@ -30,6 +38,15 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                     navController.navigate(Routes.MAIN) {
                         popUpTo(Routes.AUTH) { inclusive = true }
                         launchSingleTop = true
+                    }
+                },
+                onNavigatePrivacyPolicy = {
+                    // open chrome with url
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("https://nenek-trivia.web.app/privacy/")
+                    ).also {
+                        launcher.launch(it)
                     }
                 }
             )

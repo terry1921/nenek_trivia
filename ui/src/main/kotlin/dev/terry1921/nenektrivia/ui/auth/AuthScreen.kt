@@ -1,14 +1,17 @@
 package dev.terry1921.nenektrivia.ui.auth
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -22,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -38,13 +42,18 @@ import dev.terry1921.nenektrivia.ui.tokens.asMaterialShapes
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun AuthScreen(viewModel: AuthViewModel, onNavigateMain: () -> Unit) {
+fun AuthScreen(
+    viewModel: AuthViewModel,
+    onNavigateMain: () -> Unit,
+    onNavigatePrivacyPolicy: () -> Unit
+) {
     val state by viewModel.uiState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(Unit) {
         viewModel.effect.collectLatest { effect ->
             if (effect is AuthEffect.NavigateToMain) onNavigateMain()
+            if (effect is AuthEffect.NavigateToPrivacyPolicy) onNavigatePrivacyPolicy()
         }
     }
     LaunchedEffect(state.errorMessage) {
@@ -61,7 +70,6 @@ fun AuthScreen(viewModel: AuthViewModel, onNavigateMain: () -> Unit) {
         color = color.surface
     ) {
         Box(Modifier.fillMaxSize()) {
-            // HERO superior (usa tu asset; si no, deja un placeholder)
             Image(
                 painter = painterResource(id = R.drawable.bg_nenek_minimal), // <-- agrega tu imagen
                 contentDescription = null,
@@ -86,6 +94,20 @@ fun AuthScreen(viewModel: AuthViewModel, onNavigateMain: () -> Unit) {
                     .padding(horizontal = spacing.medium, vertical = spacing.large),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                Row(
+                    modifier = Modifier
+                        .height(150.dp)
+                        .shadow(elevation = 8.dp, shape = RoundedCornerShape(8.dp), clip = true)
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_launcher),
+                        contentDescription = "Icon",
+                        modifier = Modifier
+                            .size(width = 150.dp, height = 150.dp)
+                            .align(Alignment.CenterVertically)
+                    )
+                }
+                Spacer(Modifier.height(spacing.extraExtraLarge))
                 Text(
                     text = "Bienvenido a\nNenek Trivia",
                     style = typography.displayMedium,
@@ -125,6 +147,17 @@ fun AuthScreen(viewModel: AuthViewModel, onNavigateMain: () -> Unit) {
                     shape = shapes.asMaterialShapes().medium
                 )
                 Spacer(Modifier.height(spacing.medium))
+                // enlace a politica de privacidad
+                Text(
+                    text = "Política de privacidad",
+                    style = typography.bodySmall,
+                    color = color.link,
+                    modifier = Modifier
+                        .clickable { viewModel.onPrivacyPolicyClick() }
+                        .padding(spacing.small)
+                        .align(Alignment.End)
+                )
+                Spacer(Modifier.height(spacing.large))
                 SnackbarHost(hostState = snackbarHostState)
             }
         }
@@ -134,5 +167,5 @@ fun AuthScreen(viewModel: AuthViewModel, onNavigateMain: () -> Unit) {
 @Preview
 @Composable
 fun AuthScreenPreview() {
-    AuthScreen(viewModel = AuthViewModel(), onNavigateMain = {})
+    AuthScreen(viewModel = AuthViewModel(), onNavigateMain = {}, onNavigatePrivacyPolicy = {})
 }
