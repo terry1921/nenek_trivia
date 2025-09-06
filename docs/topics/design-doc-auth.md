@@ -46,9 +46,13 @@ En esta etapa:
 |                                   |
 |       [ Ilustración o Logo ]      |
 |                                   |
+|           Bienvenido a            |
+|           Nenek Trivia            |
+|     --------------------------    |
+|     --------------------------    |
+|                                   |
 |       [ Iniciar con Google ]      |
 |      [ Iniciar con Facebook ]     |
-|    [ Continuar como Invitado ]    |
 |                                   |
 |            Política de Privacidad |
 +-----------------------------------+
