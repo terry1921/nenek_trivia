@@ -73,6 +73,7 @@ dependencies {
     implementation(libs.progressView)
     implementation(libs.coil)
     implementation(libs.transformationLayout)
+    implementation(libs.splashscreen)
 
     // whatIf
     implementation(libs.whatif)

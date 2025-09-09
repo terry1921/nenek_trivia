@@ -73,6 +73,8 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":model"))
 
+    implementation(libs.splashscreen)
+
     // di
     implementation(libs.hilt.android)
     implementation(libs.androidx.appcompat)

@@ -6,6 +6,7 @@ ksp = "2.2.10-2.0.2"
 
 # AndroidX / UI
 coreKtx = "1.17.0"
+splashscreen = "1.0.1"
 activity = "1.10.1"
 appcompat = "1.7.1"
 recyclerView = "1.4.0"
@@ -92,6 +93,7 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 androidx-fragment = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "androidxFragment" }
 recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerView" }
+splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashscreen" }
 
 # Lifecycle / Startup
 androidx-lifecycle = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "androidxLifecycle" }
