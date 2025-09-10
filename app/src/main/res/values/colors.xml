@@ -4,8 +4,13 @@
     <color name="magenta">#FFD500F9</color>
     <color name="orange">#FFFF9800</color>
     <color name="red">#FFC62828</color>
-    <color name="dark_red">#FFB00020</color>
+    <color name="dark_red">#FF8B0000</color>
     <color name="blue">#FF2196F3</color>
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="background_light">#FFFAFAFA</color>
+    <color name="background_dark">#FF121212</color>
+    <color name="surface_gray">#FF9E9E9E</color>
 </resources>

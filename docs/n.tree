@@ -7,4 +7,6 @@
 
     <toc-element topic="design-doc.md"/>
     <toc-element topic="design-doc-auth.md"/>
+    <toc-element topic="design-doc-main.md"/>
+    <toc-element topic="design-doc-navigation.md"/>
 </instance-profile>
