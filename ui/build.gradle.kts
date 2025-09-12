@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.ksp)
+    id(libs.plugins.hilt.plugin.get().pluginId)
 }
 
 android {
@@ -35,6 +37,9 @@ android {
         compose = true
         viewBinding = true
     }
+    hilt {
+        enableAggregatingTask = true
+    }
 }
 
 composeCompiler {
@@ -62,7 +67,7 @@ dependencies {
     implementation(libs.compose.ui.preview)
     implementation(libs.compose.material3)
     implementation(libs.androidx.navigation)
-    debugImplementation(libs.compose.ui.tooling)
+    implementation(libs.play.services.games)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
 
@@ -75,10 +80,18 @@ dependencies {
     implementation(libs.transformationLayout)
     implementation(libs.splashscreen)
 
+    // Hilt en androidTest con KSP
+    implementation(libs.hilt.android)
+    implementation(libs.hilt.navigation.compose)
+    ksp(libs.hilt.compiler)
+
     // whatIf
     implementation(libs.whatif)
 
     // unit test
+    androidTestImplementation(libs.hilt.testing)
+    kspAndroidTest(libs.hilt.compiler)
+
     testImplementation(libs.junit)
     testImplementation(libs.turbine)
     testImplementation(libs.androidx.test.core)
@@ -92,4 +105,5 @@ dependencies {
     androidTestImplementation(libs.android.test.runner)
     androidTestImplementation(libs.compose.ui.test.junit4)
     debugImplementation(libs.compose.ui.test.manifest)
+    debugImplementation(libs.compose.ui.tooling)
 }

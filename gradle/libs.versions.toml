@@ -7,19 +7,19 @@ ksp = "2.2.10-2.0.2"
 # AndroidX / UI
 coreKtx = "1.17.0"
 splashscreen = "1.0.1"
-activity = "1.10.1"
+activity = "1.11.0"
 appcompat = "1.7.1"
 recyclerView = "1.4.0"
 androidxConstraintlayout = "2.2.1"
 androidxFragment = "1.8.9"
-nav_version = "2.9.3"
+nav_version = "2.9.4"
 
 # Lifecycle / Startup
 androidxLifecycle = "2.9.3"
 androidXStartup = "1.2.0"
 
 # Compose
-compose-bom = "2025.08.01"
+compose-bom = "2025.09.00"
 
 # Firebase
 googleServices = "4.4.3"
@@ -27,15 +27,15 @@ firebase-bom = "34.2.0"
 firebase-crashlytics = "3.0.6"
 
 # Material (Views)
-material = "1.12.0"
+material = "1.13.0"
 
 # Data / DB
 datastore = "1.1.7"
-androidxRoom = "2.7.2"
+androidxRoom = "2.8.0"
 
 # DI
 hilt = "2.57.1"
-javaxInject = "1"
+hiltNavigation = "1.2.0"
 
 # Net
 retrofit = "3.0.0"
@@ -70,6 +70,7 @@ testRunner = "1.7.0"
 androidxArchCore = "2.2.0"
 baseAdapter = "1.0.4"
 swiperefreshlayout = "1.1.0"
+playServicesGames = "24.0.0"
 
 
 [plugins]
@@ -109,6 +110,7 @@ androidx-room-compiler = { group = "androidx.room", name = "room-compiler", vers
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
 hilt-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
+hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigation" }
 
 # Coroutines
 coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
@@ -167,3 +169,4 @@ compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-mani
 # customViews
 baseAdapter = { group = "com.github.skydoves", name = "baserecyclerviewadapter", version.ref = "baseAdapter" }
 androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swiperefreshlayout" }
+play-services-games = { group = "com.google.android.gms", name = "play-services-games", version.ref = "playServicesGames" }

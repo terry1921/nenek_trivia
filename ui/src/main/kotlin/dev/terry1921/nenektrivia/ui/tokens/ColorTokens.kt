@@ -47,7 +47,8 @@ data class ColorTokens(
     val error: Color,
     val onError: Color,
     val errorContainer: Color,
-    val link: Color
+    val link: Color,
+    val text: Color
 )
 
 val LightColorTokens =
@@ -73,7 +74,8 @@ val LightColorTokens =
         error = Color(0xFFB00020),
         onError = NenekPalette.White,
         errorContainer = Color(0xFFFCD8DF),
-        link = NenekPalette.Blue
+        link = NenekPalette.Blue,
+        text = NenekPalette.White
     )
 
 val DarkColorTokens =
@@ -99,5 +101,6 @@ val DarkColorTokens =
         error = Color(0xFFCF6679),
         onError = NenekPalette.Neutral0,
         errorContainer = Color(0xFFB1384E),
-        link = NenekPalette.Blue
+        link = NenekPalette.Blue,
+        text = NenekPalette.White
     )

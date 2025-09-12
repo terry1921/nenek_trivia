@@ -13,6 +13,7 @@ import androidx.navigation.compose.composable
 import dev.terry1921.nenektrivia.ui.auth.AuthScreen
 import dev.terry1921.nenektrivia.ui.auth.AuthViewModel
 import dev.terry1921.nenektrivia.ui.main.MainScreen
+import dev.terry1921.nenektrivia.ui.main.MainViewModel
 
 object Routes {
     const val AUTH = "auth"
@@ -52,7 +53,20 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
             )
         }
         composable(Routes.MAIN) {
-            MainScreen()
+            val vm: MainViewModel = viewModel()
+            MainScreen(
+                viewModel = vm,
+                onLogoutClick = {
+                    // Pendiente: cerrar sesión con FirebaseAuth y navegar a Auth
+                    navController.navigate(Routes.AUTH) {
+                        popUpTo(Routes.MAIN) { inclusive = true }
+                        launchSingleTop = true
+                    }
+                },
+                onPlayClick = {
+                    // Pendiente: navegar a la pantalla de juego
+                }
+            )
         }
     }
 }

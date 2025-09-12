@@ -73,14 +73,15 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":model"))
 
-    implementation(libs.splashscreen)
-
-    // di
-    implementation(libs.hilt.android)
+    // androidx
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.splashscreen)
+
+    // di
+    implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
 
     // coroutines
