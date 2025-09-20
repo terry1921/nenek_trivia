@@ -77,6 +77,7 @@ dependencies {
     implementation(libs.baseAdapter)
     implementation(libs.progressView)
     implementation(libs.coil)
+    implementation(libs.coil.network.okhttp)
     implementation(libs.transformationLayout)
     implementation(libs.splashscreen)
 

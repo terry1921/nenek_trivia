@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="1080dp" android:height="1920dp"
+    android:viewportWidth="1080" android:viewportHeight="1920">
+    <path android:fillColor="#000000" android:pathData="M0,0H1080V1920H0Z"/>
+    <!-- Montañas -->
+    <path android:fillColor="#1A1A1A" android:fillAlpha="0.9"
+        android:pathData="M0,960 C180,820 360,900 580,840 C780,780 960,720 1080,680 V1920 H0 Z"/>
+    <!-- Brillos (luciérnagas) -->
+    <path android:fillColor="#FF9800" android:fillAlpha="0.35"
+        android:pathData="M120,480 h2 v2 h-2 z"/>
+    <path android:fillColor="#FF9800" android:fillAlpha="0.35"
+        android:pathData="M740,360 h2 v2 h-2 z"/>
+    <path android:fillColor="#E91E63" android:fillAlpha="0.28"
+        android:pathData="M940,520 h2 v2 h-2 z"/>
+    <path android:fillColor="#D500F9" android:fillAlpha="0.28"
+        android:pathData="M300,300 h2 v2 h-2 z"/>
+    <!-- Halo superior -->
+    <path android:fillColor="#8B0000" android:fillAlpha="0.18"
+        android:pathData="M0,0H1080V280 C800,320 540,300 280,260 C180,240 80,220 0,200 Z"/>
+</vector>

@@ -1,4 +1,4 @@
-package dev.terry1921.nenektrivia.ui.auth
+package dev.terry1921.nenektrivia.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -25,6 +25,8 @@ import androidx.compose.ui.unit.dp
 import dev.terry1921.nenektrivia.ui.R
 import dev.terry1921.nenektrivia.ui.tokens.LocalColorTokens
 import dev.terry1921.nenektrivia.ui.tokens.LocalShapeTokens
+import dev.terry1921.nenektrivia.ui.tokens.LocalSizeTokens
+import dev.terry1921.nenektrivia.ui.tokens.LocalSpacingTokens
 import dev.terry1921.nenektrivia.ui.tokens.LocalTypographyTokens
 import dev.terry1921.nenektrivia.ui.tokens.asMaterialShapes
 
@@ -43,30 +45,32 @@ fun SocialLoginButton(
 ) {
     val typography = LocalTypographyTokens.current
     val color = LocalColorTokens.current
+    val size = LocalSizeTokens.current
+    val spacing = LocalSpacingTokens.current
 
     val content = @Composable {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 14.dp), // más alto, estilo pill
+                .padding(vertical = size.paddingLarge), // más alto, estilo pill
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
             if (loading) {
                 CircularProgressIndicator(
                     color = color.circular,
-                    strokeWidth = 2.dp,
+                    strokeWidth = size.strokeWidthMedium,
                     modifier = Modifier
-                        .size(20.dp)
+                        .size(size.circularProgressIndicator)
                 )
             } else {
                 Icon(
                     imageVector = icon,
                     contentDescription = label,
-                    modifier = Modifier.size(20.dp)
+                    modifier = Modifier.size(size.iconButtonSize)
                 )
             }
-            Spacer(modifier = Modifier.size(10.dp))
+            Spacer(modifier = Modifier.size(spacing.medium))
             Text(text = label, style = typography.titleMedium)
         }
     }
@@ -105,7 +109,7 @@ fun SocialLoginButtonPreview() {
         color = MaterialTheme.colorScheme.background
     ) {
         SocialLoginButton(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(8.dp),
             label = "Continue with Google",
             icon = ImageVector.vectorResource(id = R.drawable.ic_google),
             enabled = true,
@@ -124,7 +128,7 @@ fun SocialLoginButtonLoadingPreview() {
         color = MaterialTheme.colorScheme.background
     ) {
         SocialLoginButton(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(8.dp),
             label = "Continue with Google",
             icon = ImageVector.vectorResource(id = R.drawable.ic_google),
             enabled = true,

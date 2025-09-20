@@ -23,10 +23,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import dev.terry1921.nenektrivia.ui.R
 import dev.terry1921.nenektrivia.ui.tokens.LocalColorTokens
 import dev.terry1921.nenektrivia.ui.tokens.LocalShapeTokens
+import dev.terry1921.nenektrivia.ui.tokens.LocalSizeTokens
 import dev.terry1921.nenektrivia.ui.tokens.LocalSpacingTokens
 import dev.terry1921.nenektrivia.ui.tokens.LocalTypographyTokens
 
@@ -39,8 +39,9 @@ fun HomeScreen(
 ) {
     val typography = LocalTypographyTokens.current
     val spacing = LocalSpacingTokens.current
-    val shapes = LocalShapeTokens.current
     val color = LocalColorTokens.current
+    val size = LocalSizeTokens.current
+    val shape = LocalShapeTokens.current
     val start = color.primary
     val end = color.tertiary
 
@@ -57,7 +58,7 @@ fun HomeScreen(
             )
     ) {
         Image(
-            painter = painterResource(id = R.drawable.huasteca_river),
+            painter = painterResource(id = R.drawable.caminando_rio),
             contentDescription = "Muñeca huasteca",
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -70,10 +71,12 @@ fun HomeScreen(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Spacer(Modifier.height(size.paddingExtraExtraLarge))
+            Spacer(Modifier.height(size.paddingLarge))
             Text(
                 text = title,
                 style = typography.headlineLarge,
-                color = color.text,
+                color = color.textSecondary,
                 textAlign = TextAlign.Center
             )
             if (!subtitle.isNullOrBlank()) {
@@ -81,7 +84,7 @@ fun HomeScreen(
                 Text(
                     text = subtitle,
                     style = typography.titleMedium,
-                    color = color.text.copy(alpha = 0.75f),
+                    color = color.textTertiary,
                     textAlign = TextAlign.Center
                 )
             }
@@ -90,19 +93,19 @@ fun HomeScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = spacing.extraLarge)
-                .padding(bottom = spacing.extraExtraLarge),
+                .padding(horizontal = size.paddingExtraLarge)
+                .padding(bottom = size.paddingExtraLarge),
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Button(
                 onClick = onPlayClick,
-                shape = RoundedCornerShape(28.dp),
+                shape = RoundedCornerShape(shape.radiusXl),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(56.dp)
+                    .height(size.buttonHeight)
             ) {
-                Text("🎮 Jugar Trivia")
+                Text("🎮  Jugar Trivia")
             }
         }
     }

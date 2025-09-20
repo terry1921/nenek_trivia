@@ -25,9 +25,9 @@ fun MainScreen(
                 items = MainDestination.items
             )
         }
-    ) { padding ->
+    ) { paddingValues ->
         MainNavGraph(
-            modifier = Modifier.padding(padding),
+            modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding()),
             navController = navController,
             onPlayClick = onPlayClick,
             onLogoutClick = onLogoutClick

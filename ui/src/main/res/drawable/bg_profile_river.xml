@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="1080dp" android:height="1920dp"
+    android:viewportWidth="1080" android:viewportHeight="1920">
+    <path android:fillColor="#121212" android:pathData="M0,0H1080V1920H0Z"/>
+    <!-- Colinas -->
+    <path android:fillColor="#2A2A2A" android:fillAlpha="0.6"
+        android:pathData="M0,860 C240,760 420,820 640,800 C840,780 1000,720 1080,680 V0 H0 Z"/>
+    <!-- Río -->
+    <path android:fillColor="#EAEAEA" android:fillAlpha="0.08"
+        android:pathData="M-20,1400 C220,1320 360,1500 520,1480 C700,1460 860,1320 1120,1360 V1920 H-20 Z"/>
+    <path android:fillColor="#FF9800" android:fillAlpha="0.25"
+        android:pathData="M-40,1500 C200,1420 360,1600 540,1580 C740,1560 900,1440 1120,1480 V1920 H-40 Z"/>
+    <!-- Neblina superior -->
+    <path android:fillColor="#FCFCFC" android:fillAlpha="0.05"
+        android:pathData="M0,0H1080V220 C860,280 660,260 420,240 C220,224 100,200 0,170 Z"/>
+</vector>

@@ -5,12 +5,13 @@ import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
 
 // Locals
-val LocalColorTokens = staticCompositionLocalOf<ColorTokens> { LightColorTokens }
+val LocalColorTokens = staticCompositionLocalOf { LightColorTokens }
 val LocalTypographyTokens = staticCompositionLocalOf { DefaultTypographyTokens }
 val LocalShapeTokens = staticCompositionLocalOf { DefaultShapeTokens }
 val LocalSpacingTokens = staticCompositionLocalOf { DefaultSpacing }
 val LocalElevationTokens = staticCompositionLocalOf { DefaultElevation }
 val LocalMotionTokens = staticCompositionLocalOf { DefaultMotion }
+val LocalSizeTokens = staticCompositionLocalOf { DefaultSizes }
 
 // Punto de acceso canónico
 object TokenTheme {

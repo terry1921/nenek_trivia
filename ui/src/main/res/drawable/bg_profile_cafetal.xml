@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="1080dp" android:height="1920dp"
+    android:viewportWidth="1080" android:viewportHeight="1920">
+    <path android:fillColor="#121212" android:pathData="M0,0H1080V1920H0Z"/>
+    <path android:fillColor="#2A2A2A" android:fillAlpha="0.7"
+        android:pathData="M0,1100 C220,980 460,1050 680,1020 C900,1000 1030,960 1080,920 V0 H0 Z"/>
+    <!-- Siluetas de hojas -->
+    <path android:fillColor="#9E9E9E" android:fillAlpha="0.10"
+        android:pathData="M120,1340 C240,1240 360,1260 420,1380 C360,1400 280,1460 180,1480 Z"/>
+    <path android:fillColor="#EAEAEA" android:fillAlpha="0.07"
+        android:pathData="M820,1460 C940,1340 1060,1380 1080,1500 C1000,1540 920,1580 840,1600 Z"/>
+    <!-- Luz diagonal -->
+    <path android:fillColor="#D500F9" android:fillAlpha="0.18"
+        android:pathData="M-60,400 L1140,0 V260 L-60,660 Z"/>
+</vector>

@@ -1,7 +1,7 @@
 [versions]
 # Core toolchains
 agp = "8.13.0"
-kotlin = "2.2.10"
+kotlin = "2.2.20"
 ksp = "2.2.10-2.0.2"
 
 # AndroidX / UI
@@ -15,7 +15,7 @@ androidxFragment = "1.8.9"
 nav_version = "2.9.4"
 
 # Lifecycle / Startup
-androidxLifecycle = "2.9.3"
+androidxLifecycle = "2.9.4"
 androidXStartup = "1.2.0"
 
 # Compose
@@ -23,7 +23,7 @@ compose-bom = "2025.09.00"
 
 # Firebase
 googleServices = "4.4.3"
-firebase-bom = "34.2.0"
+firebase-bom = "34.3.0"
 firebase-crashlytics = "3.0.6"
 
 # Material (Views)
@@ -35,13 +35,13 @@ androidxRoom = "2.8.0"
 
 # DI
 hilt = "2.57.1"
-hiltNavigation = "1.2.0"
+hiltNavigation = "1.3.0"
 
 # Net
 retrofit = "3.0.0"
 okhttp = "5.1.0"
-gson = "2.13.1"
-sandwich = "2.1.2"
+gson = "2.13.2"
+sandwich = "2.1.3"
 
 # Coroutines
 coroutines = "1.10.2"
@@ -61,7 +61,7 @@ junit = "4.13.2"
 junitVersion = "1.3.0"
 androidxTest = "1.7.0"
 espressoCore = "3.7.0"
-truth = "1.4.4"
+truth = "1.4.5"
 turbine = "1.2.1"
 mockitoKotlin = "6.0.0"
 mockitoInline = "5.2.0"
@@ -133,6 +133,8 @@ sandwich = { group = "com.github.skydoves", name = "sandwich", version.ref = "sa
 
 # Images
 coil = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
+coil-network-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil" }
+
 
 # Compose BOM + artifacts
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }

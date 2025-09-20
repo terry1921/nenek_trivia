@@ -24,7 +24,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
@@ -32,10 +31,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import dev.terry1921.nenektrivia.ui.R
+import dev.terry1921.nenektrivia.ui.components.SocialButtonVariant
+import dev.terry1921.nenektrivia.ui.components.SocialLoginButton
 import dev.terry1921.nenektrivia.ui.tokens.LocalColorTokens
 import dev.terry1921.nenektrivia.ui.tokens.LocalShapeTokens
+import dev.terry1921.nenektrivia.ui.tokens.LocalSizeTokens
 import dev.terry1921.nenektrivia.ui.tokens.LocalSpacingTokens
 import dev.terry1921.nenektrivia.ui.tokens.LocalTypographyTokens
 import dev.terry1921.nenektrivia.ui.tokens.asMaterialShapes
@@ -62,6 +63,7 @@ fun AuthScreen(
 
     val typography = LocalTypographyTokens.current
     val spacing = LocalSpacingTokens.current
+    val size = LocalSizeTokens.current
     val shapes = LocalShapeTokens.current
     val color = LocalColorTokens.current
 
@@ -71,39 +73,39 @@ fun AuthScreen(
     ) {
         Box(Modifier.fillMaxSize()) {
             Image(
-                painter = painterResource(id = R.drawable.bg_nenek_minimal), // <-- agrega tu imagen
+                painter = painterResource(id = R.drawable.bg_nenek_minimal),
                 contentDescription = null,
                 alignment = Alignment.TopCenter,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight()
-                    .clip(
-                        RoundedCornerShape(
-                            bottomStart = 48.dp,
-                            bottomEnd = 0.dp
-                        )
-                    )
             )
 
-            // Contenido inferior
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter)
-                    .padding(horizontal = spacing.medium, vertical = spacing.large),
+                    .padding(
+                        horizontal = size.paddingMedium,
+                        vertical = size.paddingLarge
+                    ),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Row(
                     modifier = Modifier
-                        .height(150.dp)
-                        .shadow(elevation = 8.dp, shape = RoundedCornerShape(8.dp), clip = true)
+                        .height(size.iconMaxHeight)
+                        .shadow(
+                            elevation = size.elevationLarge,
+                            shape = RoundedCornerShape(shapes.radiusSm),
+                            clip = true
+                        )
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.ic_launcher),
                         contentDescription = "Icon",
                         modifier = Modifier
-                            .size(width = 150.dp, height = 150.dp)
+                            .size(size.iconMax)
                             .align(Alignment.CenterVertically)
                     )
                 }
@@ -154,7 +156,7 @@ fun AuthScreen(
                     color = color.link,
                     modifier = Modifier
                         .clickable { viewModel.onPrivacyPolicyClick() }
-                        .padding(spacing.small)
+                        .padding(size.paddingSmall)
                         .align(Alignment.End)
                 )
                 Spacer(Modifier.height(spacing.large))
@@ -167,5 +169,9 @@ fun AuthScreen(
 @Preview
 @Composable
 fun AuthScreenPreview() {
-    AuthScreen(viewModel = AuthViewModel(), onNavigateMain = {}, onNavigatePrivacyPolicy = {})
+    AuthScreen(
+        viewModel = AuthViewModel(),
+        onNavigateMain = {},
+        onNavigatePrivacyPolicy = {}
+    )
 }
