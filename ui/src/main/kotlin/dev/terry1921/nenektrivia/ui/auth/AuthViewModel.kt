@@ -2,6 +2,8 @@ package dev.terry1921.nenektrivia.ui.auth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,7 +27,8 @@ sealed class AuthEffect {
 
 enum class AuthProvider { GOOGLE, FACEBOOK }
 
-class AuthViewModel : ViewModel() {
+@HiltViewModel
+class AuthViewModel @Inject constructor() : ViewModel() {
 
     private val _uiState = MutableStateFlow(AuthUiState())
     val uiState: StateFlow<AuthUiState> = _uiState.asStateFlow()
@@ -36,6 +39,16 @@ class AuthViewModel : ViewModel() {
     fun onGoogleClick() = simulateLogin(AuthProvider.GOOGLE)
 
     fun onFacebookClick() = simulateLogin(AuthProvider.FACEBOOK)
+
+    init {
+        checkIfUserIsLoggedIn()
+    }
+
+    // TODO() -> Implementar verificación de usuario logueado con database and FireAuth.
+    fun checkIfUserIsLoggedIn() = viewModelScope.launch {
+        delay(10)
+        _effect.emit(AuthEffect.NavigateToMain)
+    }
 
     private fun simulateLogin(provider: AuthProvider) {
         // Conexión real a Firebase quedará fuera de alcance por ahora.
