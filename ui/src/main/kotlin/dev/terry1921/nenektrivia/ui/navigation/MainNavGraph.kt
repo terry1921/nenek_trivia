@@ -1,6 +1,5 @@
-package dev.terry1921.nenektrivia.ui.main
+package dev.terry1921.nenektrivia.ui.navigation
 
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel

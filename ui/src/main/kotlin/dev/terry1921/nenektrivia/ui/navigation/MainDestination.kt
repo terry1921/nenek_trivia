@@ -1,4 +1,4 @@
-package dev.terry1921.nenektrivia.ui.main
+package dev.terry1921.nenektrivia.ui.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home

@@ -7,6 +7,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
+import dev.terry1921.nenektrivia.ui.components.MainBottomBar
+import dev.terry1921.nenektrivia.ui.navigation.MainDestination
+import dev.terry1921.nenektrivia.ui.navigation.MainNavGraph
 
 @Composable
 fun MainScreen(

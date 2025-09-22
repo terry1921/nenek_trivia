@@ -1,4 +1,4 @@
-package dev.terry1921.nenektrivia.ui.main
+package dev.terry1921.nenektrivia.ui.components
 
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -10,6 +10,7 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import dev.terry1921.nenektrivia.ui.navigation.MainDestination
 
 @Composable
 fun MainBottomBar(navController: NavHostController, items: List<MainDestination>) {
