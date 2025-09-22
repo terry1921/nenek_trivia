@@ -10,7 +10,9 @@ data class SpacingTokens(
     val md: Int = 12,
     val lg: Int = 16,
     val xl: Int = 24,
-    val xxl: Int = 32
+    val xxl: Int = 32,
+    val xxxl: Int = 40,
+    val topBarHeight: Int = 56
 ) {
     val extraSmall get() = xs.dp
     val small get() = sm.dp
@@ -18,6 +20,8 @@ data class SpacingTokens(
     val large get() = lg.dp
     val extraLarge get() = xl.dp
     val extraExtraLarge get() = xxl.dp
+    val extraExtraExtraLarge get() = xxxl.dp
+    val topAppBarHeight get() = topBarHeight.dp
 }
 
 val DefaultSpacing = SpacingTokens()

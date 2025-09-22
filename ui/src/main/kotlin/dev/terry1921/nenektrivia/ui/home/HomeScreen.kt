@@ -67,12 +67,11 @@ fun HomeScreen(
         )
 
         Column(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth()
+                .padding(top = spacing.topAppBarHeight),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(Modifier.height(size.paddingExtraExtraLarge))
-            Spacer(Modifier.height(size.paddingLarge))
             Text(
                 text = title,
                 style = typography.headlineLarge,

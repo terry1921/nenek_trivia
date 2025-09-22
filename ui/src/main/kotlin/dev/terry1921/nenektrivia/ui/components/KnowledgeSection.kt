@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import dev.terry1921.nenektrivia.model.category.Category
 import dev.terry1921.nenektrivia.ui.tokens.LocalColorTokens
 import dev.terry1921.nenektrivia.ui.tokens.LocalShapeTokens
@@ -75,4 +76,18 @@ private fun categoryColor(cat: Category): Color = when (cat) {
     Category.Geography -> Color(0xFFC62828) // Red
     Category.History -> Color(0xFF8B0000) // DarkRed
     else -> Color.Gray // Fallback
+}
+
+@Preview(name = "Knowledge Section")
+@Composable
+private fun KnowledgeSectionPreview() {
+    KnowledgeSection(
+        knowledge = mapOf(
+            Category.Art to 80,
+            Category.Sports to 60,
+            Category.General to 90,
+            Category.Geography to 40,
+            Category.History to 70
+        )
+    )
 }

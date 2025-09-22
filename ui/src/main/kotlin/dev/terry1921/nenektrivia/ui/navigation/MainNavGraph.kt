@@ -2,12 +2,13 @@ package dev.terry1921.nenektrivia.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import dev.terry1921.nenektrivia.ui.home.HomeScreen
-import dev.terry1921.nenektrivia.ui.leaderboard.LeaderboardScreen
+import dev.terry1921.nenektrivia.ui.leaderboard.LeaderboardRoute
+import dev.terry1921.nenektrivia.ui.leaderboard.LeaderboardViewModel
 import dev.terry1921.nenektrivia.ui.options.OptionsScreen
 import dev.terry1921.nenektrivia.ui.profile.ProfileRoute
 import dev.terry1921.nenektrivia.ui.profile.ProfileViewModel
@@ -38,7 +39,13 @@ fun MainNavGraph(
                 onBack = { navController.popBackStack() }
             )
         }
-        composable(MainDestination.Leaderboard.route) { LeaderboardScreen() }
+        composable(MainDestination.Leaderboard.route) {
+            val vm: LeaderboardViewModel = hiltViewModel()
+            LeaderboardRoute(
+                viewModel = vm,
+                onBack = { navController.popBackStack() }
+            )
+        }
         composable(MainDestination.Options.route) { OptionsScreen(onLogoutClick) }
     }
 }

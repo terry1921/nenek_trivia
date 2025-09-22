@@ -17,6 +17,9 @@ class MainViewModel @Inject constructor(
     fun setUser(name: String?, avatarUrl: String?) {
         _uiState.value = _uiState.value.copy(displayName = name, avatarUrl = avatarUrl)
     }
+
+    val userName: String
+        get() = _uiState.value.displayName ?: "Invitado"
 }
 
 data class MainUiState(val displayName: String? = null, val avatarUrl: String? = null)

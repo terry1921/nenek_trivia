@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import dev.terry1921.nenektrivia.ui.tokens.LocalSpacingTokens
 import dev.terry1921.nenektrivia.ui.tokens.LocalTypographyTokens
 
@@ -26,4 +27,10 @@ fun ErrorContent(message: String, onRetry: () -> Unit, modifier: Modifier = Modi
         Spacer(Modifier.height(spacing.small))
         Button(onClick = onRetry) { Text("Reintentar") }
     }
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun ErrorContentPreview() {
+    ErrorContent(message = "Ocurrió un error", onRetry = {})
 }

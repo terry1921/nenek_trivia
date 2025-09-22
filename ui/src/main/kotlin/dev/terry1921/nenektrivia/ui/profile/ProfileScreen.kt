@@ -48,53 +48,46 @@ fun ProfileRoute(viewModel: ProfileViewModel, onBack: () -> Unit = {}) {
 @Composable
 fun ProfileScreen(state: ProfileUiState, onRetry: () -> Unit, modifier: Modifier = Modifier) {
     val size = LocalSizeTokens.current
+    val color = LocalColorTokens.current
+    val spacing = LocalSpacingTokens.current
 
-    Scaffold(modifier = modifier.fillMaxSize()) { padding ->
-        Box(Modifier.fillMaxSize()) {
-            Image(
-                painter = painterResource(id = R.drawable.luciernagas_noche),
-                contentDescription = null,
-                modifier = Modifier
-                    .alpha(0.7f)
-                    .fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
-            Box(
+    Box(Modifier.fillMaxSize()) {
+        Image(
+            painter = painterResource(id = R.drawable.luciernagas_noche),
+            contentDescription = null,
+            modifier = Modifier
+                .alpha(0.7f)
+                .fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+        Box(
+            Modifier
+                .matchParentSize()
+                .background(color.surface.copy(alpha = 0.08f))
+        )
+
+        when {
+            state.isLoading -> Box(
                 Modifier
-                    .fillMaxSize()
-                    .background(
-                        Brush.verticalGradient(
-                            0f to Color(0x66000000),
-                            1f to Color(0x33000000)
-                        )
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) { CircularProgressIndicator() }
+
+            state.error != null -> ErrorContent(
+                message = state.error,
+                onRetry = onRetry,
+                modifier = Modifier
+            )
+
+            else -> ProfileContent(
+                state = state,
+                modifier = Modifier
+                    .verticalScroll(rememberScrollState())
+                    .padding(
+                        vertical = spacing.topAppBarHeight,
+                        horizontal = size.paddingExtraLarge
                     )
             )
-
-            when {
-                state.isLoading -> Box(
-                    Modifier
-                        .padding(padding)
-                        .fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) { CircularProgressIndicator() }
-
-                state.error != null -> ErrorContent(
-                    message = state.error,
-                    onRetry = onRetry,
-                    modifier = Modifier.padding(padding)
-                )
-
-                else -> ProfileContent(
-                    state = state,
-                    modifier = Modifier
-                        .padding(padding)
-                        .verticalScroll(rememberScrollState())
-                        .padding(
-                            horizontal = size.paddingExtraLarge,
-                            vertical = size.paddingExtraLarge
-                        )
-                )
-            }
         }
     }
 }
@@ -112,7 +105,7 @@ private fun ProfileContent(state: ProfileUiState, modifier: Modifier = Modifier)
     ) {
         Avatar(
             url = state.avatarUrl,
-            size = size.avatarSize,
+            size = size.avatarExtraExtraLarge,
             contentDescription = "Foto de perfil"
         )
 

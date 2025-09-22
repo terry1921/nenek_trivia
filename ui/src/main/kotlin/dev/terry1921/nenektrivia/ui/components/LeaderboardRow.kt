@@ -1,0 +1,93 @@
+package dev.terry1921.nenektrivia.ui.components
+
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
+import dev.terry1921.nenektrivia.model.category.leaderboard.PlayerScore
+import dev.terry1921.nenektrivia.ui.tokens.LocalColorTokens
+import dev.terry1921.nenektrivia.ui.tokens.LocalShapeTokens
+import dev.terry1921.nenektrivia.ui.tokens.LocalSizeTokens
+import dev.terry1921.nenektrivia.ui.tokens.LocalSpacingTokens
+import dev.terry1921.nenektrivia.ui.tokens.LocalTypographyTokens
+
+@Composable
+fun LeaderboardRow(player: PlayerScore) {
+    val size = LocalSizeTokens.current
+    val spacing = LocalSpacingTokens.current
+    val shape = LocalShapeTokens.current
+    val color = LocalColorTokens.current
+    val typography = LocalTypographyTokens.current
+
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(shape.radiusLg),
+        colors = CardDefaults.cardColors(
+            containerColor = color.surface.copy(alpha = 0.78f)
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = size.elevationSmall)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = size.paddingMedium, vertical = size.paddingSmall),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "# ${player.position}",
+                style = typography.titleMedium,
+                color = color.primary,
+                modifier = Modifier.width(spacing.extraExtraExtraLarge)
+            )
+
+            // Avatar
+            Avatar(
+                url = player.avatarUrl,
+                size = size.avatarSmall,
+                contentDescription = player.displayName
+            )
+
+            Spacer(Modifier.width(spacing.medium))
+
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = player.displayName,
+                    style = typography.bodyLarge,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
+
+            // Puntos
+            Text(
+                text = "${player.score} pts",
+                style = typography.bodyMedium,
+                color = color.onSurfaceVariant
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+fun LeaderboardRowPreview() {
+    LeaderboardRow(
+        player = PlayerScore(
+            position = 1,
+            displayName = "Usuario de prueba",
+            avatarUrl = "https://i.pravatar.cc/150?u=terry@",
+            score = 1234
+        )
+    )
+}

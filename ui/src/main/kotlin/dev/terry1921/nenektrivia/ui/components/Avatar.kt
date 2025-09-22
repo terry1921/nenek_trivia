@@ -1,5 +1,6 @@
 package dev.terry1921.nenektrivia.ui.components
 
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
@@ -16,12 +17,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.UiMode
 import androidx.compose.ui.unit.Dp
 import coil3.compose.AsyncImage
-import dev.terry1921.nenektrivia.ui.R
 import dev.terry1921.nenektrivia.ui.tokens.LocalColorTokens
 import dev.terry1921.nenektrivia.ui.tokens.LocalSizeTokens
 
@@ -41,7 +42,7 @@ fun Avatar(url: String?, size: Dp, contentDescription: String?) {
             Icon(
                 imageVector = Icons.Default.Person,
                 contentDescription = contentDescription,
-                modifier = Modifier.size(size * 0.5f),
+                modifier = Modifier.size(size),
                 tint = color.onSurfaceVariant
             )
         }
@@ -56,8 +57,8 @@ fun Avatar(url: String?, size: Dp, contentDescription: String?) {
             AsyncImage(
                 model = url,
                 contentDescription = contentDescription,
-                placeholder = painterResource(id = R.drawable.ic_launcher),
-                error = painterResource(id = R.drawable.ic_launcher),
+                placeholder = rememberVectorPainter(Icons.Default.Person),
+                error = rememberVectorPainter(Icons.Default.Person),
                 onLoading = { isLoading = true },
                 onSuccess = { isLoading = false },
                 onError = { isLoading = false },
@@ -81,7 +82,7 @@ fun Avatar(url: String?, size: Dp, contentDescription: String?) {
 fun AvatarPreview() {
     Avatar(
         url = null,
-        size = LocalSizeTokens.current.avatarSize,
+        size = LocalSizeTokens.current.avatarExtraExtraLarge,
         contentDescription = "Avatar"
     )
 }
@@ -91,7 +92,17 @@ fun AvatarPreview() {
 fun AvatarPreviewUrl() {
     Avatar(
         url = "https://i.pravatar.cc/300",
-        size = LocalSizeTokens.current.avatarSize,
+        size = LocalSizeTokens.current.avatarExtraExtraLarge,
+        contentDescription = "Avatar"
+    )
+}
+
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun AvatarPreviewUrlDark() {
+    Avatar(
+        url = "https://i.pravatar.cc/300",
+        size = LocalSizeTokens.current.avatarExtraExtraLarge,
         contentDescription = "Avatar"
     )
 }

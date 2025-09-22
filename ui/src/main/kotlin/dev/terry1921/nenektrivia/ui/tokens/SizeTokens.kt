@@ -20,7 +20,11 @@ data class SizeTokens(
     val iconMaxHeightSize: Int = 150,
     val iconMaxSize: Int = 150,
 
-    val avatarSizeSize: Int = 200,
+    val avatarSm: Int = 40,
+    val avatarMd: Int = 60,
+    val avatarLg: Int = 100,
+    val avatarXl: Int = 150,
+    val avatarXxl: Int = 200,
 
     val strokeWidthSm: Int = 1,
     val strokeWidthMd: Int = 2,
@@ -51,7 +55,11 @@ data class SizeTokens(
 
     val buttonHeight get() = buttonHeightSize.dp
 
-    val avatarSize get() = avatarSizeSize.dp
+    val avatarSmall get() = avatarSm.dp
+    val avatarMedium get() = avatarMd.dp
+    val avatarLarge get() = avatarLg.dp
+    val avatarExtraLarge get() = avatarXl.dp
+    val avatarExtraExtraLarge get() = avatarXxl.dp
 
     val strokeWidthSmall get() = strokeWidthSm.dp
     val strokeWidthMedium get() = strokeWidthMd.dp
