@@ -15,9 +15,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NenekTrivia">
         <activity
-            android:name=".SplashActivity"
-            android:theme="@style/AppTheme.Launcher" />
-        <activity
             android:name=".ui.main.MainActivity"
             android:exported="true"
             android:theme="@style/AppTheme.Launcher">
