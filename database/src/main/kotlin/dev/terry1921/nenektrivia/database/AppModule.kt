@@ -22,6 +22,8 @@ import dev.terry1921.nenektrivia.database.dao.SessionQuestionDao
 import dev.terry1921.nenektrivia.database.dao.UserDao
 import dev.terry1921.nenektrivia.database.leaderboard.LeaderboardRepository
 import dev.terry1921.nenektrivia.database.leaderboard.RoomLeaderboardRepository
+import dev.terry1921.nenektrivia.database.preferences.DataStorePreferencesRepository
+import dev.terry1921.nenektrivia.database.preferences.PreferencesRepository
 import dev.terry1921.nenektrivia.database.questions.QuestionRepository
 import dev.terry1921.nenektrivia.database.questions.RoomQuestionRepository
 import dev.terry1921.nenektrivia.database.session.RoomSessionRepository
@@ -125,4 +127,10 @@ object AppModule {
         gameSessionDao: GameSessionDao,
         sessionQuestionDao: SessionQuestionDao
     ): SessionRepository = RoomSessionRepository(gameSessionDao, sessionQuestionDao)
+
+    @Provides
+    @Singleton
+    fun providePreferencesRepository(
+        @ApplicationContext appContext: Context
+    ): PreferencesRepository = DataStorePreferencesRepository(appContext)
 }

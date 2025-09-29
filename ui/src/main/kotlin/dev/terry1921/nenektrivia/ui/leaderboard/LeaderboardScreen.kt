@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -18,15 +16,6 @@ import dev.terry1921.nenektrivia.ui.R
 import dev.terry1921.nenektrivia.ui.components.ErrorContent
 import dev.terry1921.nenektrivia.ui.components.LeaderboardList
 import dev.terry1921.nenektrivia.ui.tokens.LocalColorTokens
-
-@Composable
-fun LeaderboardRoute(viewModel: LeaderboardViewModel, onBack: () -> Unit = {}) {
-    val state by viewModel.uiState.collectAsState()
-    LeaderboardScreen(
-        state = state,
-        onRetry = viewModel::retry
-    )
-}
 
 @Composable
 fun LeaderboardScreen(

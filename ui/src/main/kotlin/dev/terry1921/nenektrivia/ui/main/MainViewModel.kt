@@ -21,5 +21,3 @@ class MainViewModel @Inject constructor(
     val userName: String
         get() = _uiState.value.displayName ?: "Invitado"
 }
-
-data class MainUiState(val displayName: String? = null, val avatarUrl: String? = null)

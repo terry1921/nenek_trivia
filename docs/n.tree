@@ -9,4 +9,5 @@
     <toc-element topic="design-doc-navigation.md"/>
     <toc-element topic="design-doc-profile.md" />
     <toc-element topic="design-doc-leaderboard.md"/>
+    <toc-element topic="design-doc-preferences.md"/>
 </instance-profile>

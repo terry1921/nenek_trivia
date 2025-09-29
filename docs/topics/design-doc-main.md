@@ -1,5 +1,9 @@
 # 📄 Design Doc — Pantalla Principal (MainScreen) de Nenek Trivia
 
+**Autor:** Enrique Espinoza (terry1921)
+**Fecha:** 09 de septiembre de 2025
+**Estado:** Borrador
+
 ## 1. Contexto y Objetivo
 Una vez autenticado, el usuario debe acceder a una **pantalla principal** clara y minimalista que sirva como
 **hub de navegación** dentro de Nenek Trivia.

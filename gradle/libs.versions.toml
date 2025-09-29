@@ -71,6 +71,7 @@ androidxArchCore = "2.2.0"
 baseAdapter = "1.0.4"
 swiperefreshlayout = "1.1.0"
 playServicesGames = "24.0.0"
+uiText = "1.9.2"
 
 
 [plugins]
@@ -172,3 +173,4 @@ compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-mani
 baseAdapter = { group = "com.github.skydoves", name = "baserecyclerviewadapter", version.ref = "baseAdapter" }
 androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swiperefreshlayout" }
 play-services-games = { group = "com.google.android.gms", name = "play-services-games", version.ref = "playServicesGames" }
+androidx-ui-text = { group = "androidx.compose.ui", name = "ui-text", version.ref = "uiText" }

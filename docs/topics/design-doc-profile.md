@@ -1,5 +1,9 @@
 # 📄 Design Doc — Pantalla de Perfil (Nenek Trivia)
 
+**Autor:** Enrique Espinoza (terry1921)
+**Fecha:** 18 de septiembre de 2025
+**Estado:** Borrador
+
 ## 1) Contexto y objetivo
 La pantalla de **Perfil** muestra de forma simple la información principal del usuario y su “barra de conocimientos” por categoría, como un vistazo rápido a su progreso en Nenek Trivia.
 

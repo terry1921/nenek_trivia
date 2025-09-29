@@ -40,9 +40,3 @@ class LeaderboardViewModel @Inject constructor() : ViewModel() {
 
     fun retry() = load()
 }
-
-data class LeaderboardUiState(
-    val isLoading: Boolean = true,
-    val players: List<PlayerScore> = emptyList(),
-    val error: String? = null
-)

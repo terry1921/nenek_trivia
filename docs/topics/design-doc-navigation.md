@@ -1,5 +1,9 @@
 # 📄 Design Doc — Navegación General (NavGraph) en Nenek Trivia
 
+**Autor:** Enrique Espinoza (terry1921)
+**Fecha:** 09 de septiembre de 2025
+**Estado:** Borrador
+
 ## 1. Contexto y Objetivo
 La aplicación **Nenek Trivia** requiere un sistema de navegación centralizado, claro y extensible que conecte todas
 las pantallas principales de la app.

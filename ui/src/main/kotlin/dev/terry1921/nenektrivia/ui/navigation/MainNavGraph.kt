@@ -9,7 +9,9 @@ import androidx.navigation.compose.composable
 import dev.terry1921.nenektrivia.ui.home.HomeScreen
 import dev.terry1921.nenektrivia.ui.leaderboard.LeaderboardRoute
 import dev.terry1921.nenektrivia.ui.leaderboard.LeaderboardViewModel
-import dev.terry1921.nenektrivia.ui.options.OptionsScreen
+import dev.terry1921.nenektrivia.ui.preferences.PreferencesRoute
+import dev.terry1921.nenektrivia.ui.preferences.PreferencesScreen
+import dev.terry1921.nenektrivia.ui.preferences.PreferencesViewModel
 import dev.terry1921.nenektrivia.ui.profile.ProfileRoute
 import dev.terry1921.nenektrivia.ui.profile.ProfileViewModel
 
@@ -46,6 +48,14 @@ fun MainNavGraph(
                 onBack = { navController.popBackStack() }
             )
         }
-        composable(MainDestination.Options.route) { OptionsScreen(onLogoutClick) }
+        composable(MainDestination.Options.route) {
+            val vm: PreferencesViewModel = hiltViewModel()
+            PreferencesRoute(
+                viewModel = vm,
+                onLogout = onLogoutClick,
+                onRate = { /* Implementa la acción de calificar la app */ },
+                onPrivacy = { /* Implementa la acción de política de privacidad */ }
+            )
+        }
     }
 }

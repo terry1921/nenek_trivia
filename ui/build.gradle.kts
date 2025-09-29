@@ -48,6 +48,7 @@ composeCompiler {
 }
 
 dependencies {
+    implementation(project(":domain"))
     implementation(project(":model"))
 
     // androidx
@@ -84,6 +85,7 @@ dependencies {
     // Hilt en androidTest con KSP
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
+    implementation(libs.androidx.ui.text)
     ksp(libs.hilt.compiler)
 
     // whatIf

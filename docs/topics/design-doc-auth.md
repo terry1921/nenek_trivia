@@ -1,5 +1,9 @@
 # 📄 Design Doc — Flujo de Autenticación (Nenek Trivia)
 
+**Autor:** Enrique Espinoza (terry1921)
+**Fecha:** 05 de septiembre de 2025
+**Estado:** Borrador
+
 ## 1. Contexto y Objetivo
 El proyecto **Nenek Trivia** necesita un flujo de autenticación que permita a los usuarios iniciar sesión de manera sencilla y moderna.
 Este documento define la primera versión de la **pantalla de autenticación**, enfocada en la **UI con Jetpack Compose** y siguiendo **Material 3**.

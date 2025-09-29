@@ -1,5 +1,9 @@
 # 📄 Design Doc — Pantalla de Tabla de Posiciones (Leaderboard) en Nenek Trivia
 
+**Autor:** Enrique Espinoza (terry1921)
+**Fecha:** 22 de septiembre de 2025
+**Estado:** Borrador
+
 ## 1. Contexto y Objetivo
 La pantalla de **Leaderboard** mostrará una lista con los puntajes de los jugadores ordenados por posición.
 El objetivo es dar visibilidad al desempeño de los usuarios y fomentar la competitividad en el juego.
