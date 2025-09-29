@@ -104,7 +104,7 @@ fun HomeScreen(
                     .fillMaxWidth()
                     .height(size.buttonHeight)
             ) {
-                Text("🎮  Jugar Trivia")
+                Text("🎮  Jugar Trivia", color = color.text)
             }
         }
     }

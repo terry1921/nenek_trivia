@@ -10,6 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import dev.terry1921.nenektrivia.model.category.Theme
 import dev.terry1921.nenektrivia.ui.tokens.ColorTokens
 import dev.terry1921.nenektrivia.ui.tokens.DarkColorTokens
 import dev.terry1921.nenektrivia.ui.tokens.DefaultElevation
@@ -34,8 +35,7 @@ import dev.terry1921.nenektrivia.ui.tokens.asMaterialTypography
 
 @Composable
 fun NenekTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    colorTokens: ColorTokens = if (darkTheme) DarkColorTokens else LightColorTokens,
+    theme: Theme = Theme.SYSTEM,
     typographyTokens: TypographyTokens = DefaultTypographyTokens,
     shapeTokens: ShapeTokens = DefaultShapeTokens,
     spacingTokens: SpacingTokens = DefaultSpacing,
@@ -43,7 +43,13 @@ fun NenekTheme(
     motionTokens: MotionTokens = DefaultMotion,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = if (darkTheme) colorTokens.asDarkScheme() else colorTokens.asLightScheme()
+    val darkTheme = when (theme) {
+        Theme.SYSTEM -> isSystemInDarkTheme()
+        Theme.LIGHT -> false
+        Theme.DARK -> true
+    }
+    val colorTokens: ColorTokens = if (darkTheme) DarkColorTokens else LightColorTokens
+    val colorScheme = if (darkTheme) colorTokens.asDarkScheme() else asLightScheme()
 
     // Borde a borde opcional
     val view = LocalView.current
