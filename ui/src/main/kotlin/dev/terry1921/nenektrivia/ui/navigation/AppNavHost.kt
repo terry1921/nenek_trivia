@@ -1,11 +1,11 @@
 package dev.terry1921.nenektrivia.ui.navigation
 
 import android.content.Intent
-import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -15,10 +15,7 @@ import dev.terry1921.nenektrivia.ui.auth.AuthViewModel
 import dev.terry1921.nenektrivia.ui.main.MainScreen
 import dev.terry1921.nenektrivia.ui.main.MainViewModel
 
-object Routes {
-    const val AUTH = "auth"
-    const val MAIN = "main"
-}
+const val PRIVACY_POLICY_URL = "https://nenek-trivia.web.app/privacy/"
 
 @Composable
 fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) {
@@ -45,7 +42,7 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                     // open chrome with url
                     Intent(
                         Intent.ACTION_VIEW,
-                        Uri.parse("https://nenek-trivia.web.app/privacy/")
+                        PRIVACY_POLICY_URL.toUri()
                     ).also {
                         launcher.launch(it)
                     }
@@ -63,8 +60,13 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                         launchSingleTop = true
                     }
                 },
-                onPlayClick = {
-                    // Pendiente: navegar a la pantalla de juego
+                onNavigatePrivacyPolicy = {
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        PRIVACY_POLICY_URL.toUri()
+                    ).also {
+                        launcher.launch(it)
+                    }
                 }
             )
         }

@@ -15,7 +15,7 @@ import dev.terry1921.nenektrivia.ui.navigation.MainNavGraph
 fun MainScreen(
     modifier: Modifier = Modifier,
     onLogoutClick: () -> Unit,
-    onPlayClick: () -> Unit,
+    onNavigatePrivacyPolicy: () -> Unit,
     viewModel: MainViewModel = hiltViewModel()
 ) {
     val navController = rememberNavController()
@@ -32,8 +32,8 @@ fun MainScreen(
         MainNavGraph(
             modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding()),
             navController = navController,
-            onPlayClick = onPlayClick,
-            onLogoutClick = onLogoutClick
+            onLogoutClick = onLogoutClick,
+            onNavigatePrivacyPolicy = onNavigatePrivacyPolicy
         )
     }
 }

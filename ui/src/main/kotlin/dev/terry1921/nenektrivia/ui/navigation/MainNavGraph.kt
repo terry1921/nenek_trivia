@@ -10,17 +10,16 @@ import dev.terry1921.nenektrivia.ui.home.HomeScreen
 import dev.terry1921.nenektrivia.ui.leaderboard.LeaderboardRoute
 import dev.terry1921.nenektrivia.ui.leaderboard.LeaderboardViewModel
 import dev.terry1921.nenektrivia.ui.preferences.PreferencesRoute
-import dev.terry1921.nenektrivia.ui.preferences.PreferencesScreen
 import dev.terry1921.nenektrivia.ui.preferences.PreferencesViewModel
 import dev.terry1921.nenektrivia.ui.profile.ProfileRoute
 import dev.terry1921.nenektrivia.ui.profile.ProfileViewModel
 
 @Composable
 fun MainNavGraph(
+    modifier: Modifier = Modifier,
     navController: NavHostController,
-    onPlayClick: () -> Unit,
     onLogoutClick: () -> Unit,
-    modifier: Modifier = Modifier
+    onNavigatePrivacyPolicy: () -> Unit
 ) {
     NavHost(
         navController = navController,
@@ -31,7 +30,7 @@ fun MainNavGraph(
             HomeScreen(
                 title = "Nenek Trivia",
                 subtitle = "Volando alto, jugando fuerte", // opcional, ref. a tu lema
-                onPlayClick = onPlayClick
+                onPlayClick = {} // TODO("Pendiente ir a pantalla de juego")
             )
         }
         composable(MainDestination.Profile.route) {
@@ -54,7 +53,7 @@ fun MainNavGraph(
                 viewModel = vm,
                 onLogout = onLogoutClick,
                 onRate = { /* Implementa la acción de calificar la app */ },
-                onPrivacy = { /* Implementa la acción de política de privacidad */ }
+                onPrivacy = onNavigatePrivacyPolicy
             )
         }
     }

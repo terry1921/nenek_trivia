@@ -8,8 +8,11 @@ import dev.terry1921.nenektrivia.domain.preferences.SaveSoundPrefsUseCase
 import dev.terry1921.nenektrivia.domain.preferences.SaveThemeUseCase
 import dev.terry1921.nenektrivia.model.category.Theme
 import javax.inject.Inject
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -23,6 +26,9 @@ class PreferencesViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(PreferencesUiState(isLoading = true))
     val uiState: StateFlow<PreferencesUiState> = _uiState
+
+    private val _effect = MutableSharedFlow<PreferenceEffect>()
+    val effect: SharedFlow<PreferenceEffect> = _effect.asSharedFlow()
 
     init {
         load()
@@ -72,5 +78,13 @@ class PreferencesViewModel @Inject constructor(
 
     fun onThemeDialogDismiss() {
         _uiState.update { it.copy(showThemeDialog = false) }
+    }
+
+    fun onPrivacyPolicyClick() = viewModelScope.launch {
+        _effect.emit(PreferenceEffect.PrivacyPolicy)
+    }
+
+    fun onRateClick() = viewModelScope.launch {
+        _effect.emit(PreferenceEffect.RateApp)
     }
 }

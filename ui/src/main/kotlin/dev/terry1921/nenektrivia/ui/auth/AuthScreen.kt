@@ -1,5 +1,6 @@
 package dev.terry1921.nenektrivia.ui.auth
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -34,6 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import dev.terry1921.nenektrivia.ui.R
 import dev.terry1921.nenektrivia.ui.components.SocialButtonVariant
 import dev.terry1921.nenektrivia.ui.components.SocialLoginButton
+import dev.terry1921.nenektrivia.ui.theme.NenekTheme
 import dev.terry1921.nenektrivia.ui.tokens.LocalColorTokens
 import dev.terry1921.nenektrivia.ui.tokens.LocalShapeTokens
 import dev.terry1921.nenektrivia.ui.tokens.LocalSizeTokens
@@ -149,8 +151,8 @@ fun AuthScreen(
                     shape = shapes.asMaterialShapes().medium
                 )
                 Spacer(Modifier.height(spacing.medium))
-                // enlace a politica de privacidad
                 Text(
+                    // TODO Cambiar textos a string resources
                     text = "Política de privacidad",
                     style = typography.bodySmall,
                     color = color.link,
@@ -166,12 +168,38 @@ fun AuthScreen(
     }
 }
 
-@Preview
+@Preview(
+    name = "Auth Screen Light",
+    showSystemUi = true,
+    showBackground = true,
+    locale = "es"
+)
 @Composable
 fun AuthScreenPreview() {
-    AuthScreen(
-        viewModel = AuthViewModel(),
-        onNavigateMain = {},
-        onNavigatePrivacyPolicy = {}
-    )
+    NenekTheme {
+        AuthScreen(
+            viewModel = AuthViewModel(),
+            onNavigateMain = {},
+            onNavigatePrivacyPolicy = {}
+        )
+    }
+}
+
+// TODO Corregir dark theme preview
+@Preview(
+    name = "Auth Screen Dark",
+    showSystemUi = true,
+    showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    locale = "es"
+)
+@Composable
+fun AuthScreenDarkPreview() {
+    NenekTheme {
+        AuthScreen(
+            viewModel = AuthViewModel(),
+            onNavigateMain = {},
+            onNavigatePrivacyPolicy = {}
+        )
+    }
 }
