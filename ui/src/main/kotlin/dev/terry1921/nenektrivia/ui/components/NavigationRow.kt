@@ -12,14 +12,13 @@ import dev.terry1921.nenektrivia.ui.tokens.LocalColorTokens
 
 @Composable
 fun NavigationRow(title: String, currentValue: String, onClick: () -> Unit) {
-    val color = LocalColorTokens.current
     ListItem(
         modifier = Modifier.clickable(onClick = onClick),
         headlineContent = { Text(title) },
         supportingContent = {
             Text(
                 currentValue,
-                color = color.onSurfaceVariant
+                color = LocalColorTokens.current.onSurfaceVariant
             )
         },
         trailingContent = { Icon(Icons.Default.KeyboardArrowRight, contentDescription = title) }

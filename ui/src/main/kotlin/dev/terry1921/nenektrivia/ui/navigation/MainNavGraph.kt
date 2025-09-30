@@ -6,7 +6,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import dev.terry1921.nenektrivia.ui.home.HomeScreen
+import dev.terry1921.nenektrivia.ui.home.HomeRoute
 import dev.terry1921.nenektrivia.ui.leaderboard.LeaderboardRoute
 import dev.terry1921.nenektrivia.ui.leaderboard.LeaderboardViewModel
 import dev.terry1921.nenektrivia.ui.preferences.PreferencesRoute
@@ -27,9 +27,7 @@ fun MainNavGraph(
         modifier = modifier
     ) {
         composable(MainDestination.Home.route) {
-            HomeScreen(
-                title = "Nenek Trivia",
-                subtitle = "Volando alto, jugando fuerte", // opcional, ref. a tu lema
+            HomeRoute(
                 onPlayClick = {} // TODO("Pendiente ir a pantalla de juego")
             )
         }

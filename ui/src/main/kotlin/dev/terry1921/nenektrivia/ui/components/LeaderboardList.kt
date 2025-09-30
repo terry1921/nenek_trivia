@@ -22,7 +22,10 @@ fun LeaderboardList(players: List<PlayerScore>) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = size.paddingLarge, vertical = spacing.topAppBarHeight),
+            .padding(
+                horizontal = size.paddingLarge,
+                vertical = spacing.topAppBarHeight
+            ),
         state = listState,
         verticalArrangement = Arrangement.spacedBy(spacing.medium),
         contentPadding = PaddingValues(bottom = size.paddingExtraLarge)

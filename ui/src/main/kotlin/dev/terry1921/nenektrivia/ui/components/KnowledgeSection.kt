@@ -12,12 +12,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import dev.terry1921.nenektrivia.model.category.Category
+import dev.terry1921.nenektrivia.ui.R
 import dev.terry1921.nenektrivia.ui.tokens.LocalColorTokens
 import dev.terry1921.nenektrivia.ui.tokens.LocalShapeTokens
 import dev.terry1921.nenektrivia.ui.tokens.LocalSpacingTokens
 import dev.terry1921.nenektrivia.ui.tokens.LocalTypographyTokens
+import dev.terry1921.nenektrivia.ui.tokens.NenekPalette
 
 @Composable
 fun KnowledgeSection(knowledge: Map<Category, Int>) {
@@ -34,7 +37,7 @@ fun KnowledgeSection(knowledge: Map<Category, Int>) {
             .padding(spacing.large)
     ) {
         Text(
-            text = "Barra de conocimientos",
+            text = stringResource(R.string.knowledge_bar),
             style = typography.titleMedium,
             color = color.onSurface
         )
@@ -53,12 +56,12 @@ fun KnowledgeSection(knowledge: Map<Category, Int>) {
             val percent = knowledge[cat]?.coerceIn(1, 100) ?: 0
             KnowledgeBar(
                 label = when (cat) {
-                    Category.Art -> "Arte"
-                    Category.Sports -> "Deportes"
-                    Category.General -> "General"
-                    Category.Geography -> "Geografía"
-                    Category.History -> "Historia"
-                    else -> "Otro" // No debería ocurrir
+                    Category.Art -> stringResource(R.string.knowledge_art)
+                    Category.Sports -> stringResource(R.string.knowledge_sports)
+                    Category.General -> stringResource(R.string.knowledge_general)
+                    Category.Geography -> stringResource(R.string.knowledge_geography)
+                    Category.History -> stringResource(R.string.knowledge_history)
+                    else -> stringResource(R.string.knowledge_other) // No debería ocurrir
                 },
                 percent = percent,
                 trackColor = color.surfaceVariant.copy(alpha = 0.7f),
@@ -70,12 +73,12 @@ fun KnowledgeSection(knowledge: Map<Category, Int>) {
 }
 
 private fun categoryColor(cat: Category): Color = when (cat) {
-    Category.Art -> Color(0xFFD500F9) // Magenta
-    Category.Sports -> Color(0xFFFF9800) // Orange
-    Category.General -> Color(0xFFE91E63) // Pink
-    Category.Geography -> Color(0xFFC62828) // Red
-    Category.History -> Color(0xFF8B0000) // DarkRed
-    else -> Color.Gray // Fallback
+    Category.Art -> NenekPalette.Magenta
+    Category.Sports -> NenekPalette.Orange
+    Category.General -> NenekPalette.Pink
+    Category.Geography -> NenekPalette.Red
+    Category.History -> NenekPalette.DarkRed
+    else -> NenekPalette.SurfaceGray // Fallback
 }
 
 @Preview(name = "Knowledge Section")

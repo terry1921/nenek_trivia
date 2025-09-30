@@ -1,5 +1,6 @@
 package dev.terry1921.nenektrivia.ui.components
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -52,7 +53,7 @@ fun SocialLoginButton(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = size.paddingLarge), // más alto, estilo pill
+                .padding(vertical = size.paddingLarge),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
@@ -83,7 +84,7 @@ fun SocialLoginButton(
             modifier = modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
                 containerColor = color.primary,
-                contentColor = color.onPrimary
+                contentColor = color.whiteText
             ),
             content = { content() }
         )
@@ -93,7 +94,7 @@ fun SocialLoginButton(
             shape = shape,
             modifier = modifier.fillMaxWidth(),
             colors = ButtonDefaults.outlinedButtonColors(
-                contentColor = color.onSurface
+                contentColor = color.darkText
             ),
             border = ButtonDefaults.outlinedButtonBorder,
             content = { content() }
@@ -101,9 +102,34 @@ fun SocialLoginButton(
     }
 }
 
-@Preview
+@Preview(
+    name = "Social button",
+    uiMode = Configuration.UI_MODE_NIGHT_NO
+)
 @Composable
 fun SocialLoginButtonPreview() {
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        color = MaterialTheme.colorScheme.background
+    ) {
+        SocialLoginButton(
+            modifier = Modifier.padding(8.dp),
+            label = "Continue with Google",
+            icon = ImageVector.vectorResource(id = R.drawable.ic_google),
+            enabled = true,
+            onClick = {},
+            loading = false,
+            variant = SocialButtonVariant.Filled
+        )
+    }
+}
+
+@Preview(
+    name = "Dark Social button",
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
+@Composable
+fun SocialLoginButtonDarkPreview() {
     Surface(
         modifier = Modifier.fillMaxWidth(),
         color = MaterialTheme.colorScheme.background

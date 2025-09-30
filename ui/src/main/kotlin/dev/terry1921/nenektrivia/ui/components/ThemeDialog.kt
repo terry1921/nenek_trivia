@@ -14,14 +14,20 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 import dev.terry1921.nenektrivia.model.category.Theme
+import dev.terry1921.nenektrivia.ui.R
+import dev.terry1921.nenektrivia.ui.tokens.LocalSizeTokens
+import dev.terry1921.nenektrivia.ui.tokens.LocalSpacingTokens
 
 @Composable
 fun ThemeDialog(selected: Theme, onSelect: (Theme) -> Unit, onDismiss: () -> Unit) {
+    val size = LocalSizeTokens.current
+    val space = LocalSpacingTokens.current
+
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Tema de la aplicación") },
+        title = { Text(stringResource(R.string.theme_dialog_title)) },
         text = {
             Column(Modifier.fillMaxWidth()) {
                 Theme.entries.forEach { option ->
@@ -29,21 +35,21 @@ fun ThemeDialog(selected: Theme, onSelect: (Theme) -> Unit, onDismiss: () -> Uni
                         Modifier
                             .fillMaxWidth()
                             .clickable { onSelect(option) }
-                            .padding(vertical = 8.dp),
+                            .padding(vertical = size.paddingSmall),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         RadioButton(
                             selected = option == selected,
                             onClick = { onSelect(option) }
                         )
-                        Spacer(Modifier.width(8.dp))
+                        Spacer(Modifier.width(space.small))
                         Text(option.displayName)
                     }
                 }
             }
         },
         confirmButton = {
-            TextButton(onClick = onDismiss) { Text("Cerrar") }
+            TextButton(onClick = onDismiss) { Text(stringResource(R.string.close)) }
         }
     )
 }

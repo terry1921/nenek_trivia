@@ -14,19 +14,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-data class AuthUiState(
-    val isFacebookLoading: Boolean = false,
-    val isGoogleLoading: Boolean = false,
-    val errorMessage: String? = null
-)
-
-sealed class AuthEffect {
-    data object NavigateToMain : AuthEffect()
-    data object NavigateToPrivacyPolicy : AuthEffect()
-}
-
-enum class AuthProvider { GOOGLE, FACEBOOK }
-
 @HiltViewModel
 class AuthViewModel @Inject constructor() : ViewModel() {
 

@@ -16,6 +16,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import dev.terry1921.nenektrivia.ui.R
 import dev.terry1921.nenektrivia.ui.components.ActionRow
 import dev.terry1921.nenektrivia.ui.components.InfoRow
 import dev.terry1921.nenektrivia.ui.components.NavigationRow
@@ -61,27 +63,26 @@ fun PreferencesScreen(
                 contentPadding = PaddingValues(vertical = size.paddingLarge),
                 verticalArrangement = Arrangement.spacedBy(spacing.none)
             ) {
-                // --- Sonido y Apariencia --- \\
-                item { SettingsSectionHeader("SONIDO Y APARIENCIA") }
+                item { SettingsSectionHeader(stringResource(R.string.sound_appearance_header)) }
                 item {
                     SwitchRow(
-                        title = "Música de fondo",
-                        subtitle = "Reproducir música mientras juegas",
+                        title = stringResource(R.string.music_title),
+                        subtitle = stringResource(R.string.music_subtitle),
                         isChecked = state.isMusicEnabled,
                         onCheckedChange = viewModel::onMusicToggle
                     )
                 }
                 item {
                     SwitchRow(
-                        title = "Vibración al responder",
-                        subtitle = "Retroalimentación háptica al acertar/fallar",
+                        title = stringResource(R.string.vibe_title),
+                        subtitle = stringResource(R.string.vibe_subtitle),
                         isChecked = state.isHapticsEnabled,
                         onCheckedChange = viewModel::onHapticsToggle
                     )
                 }
                 item {
                     NavigationRow(
-                        title = "Tema de la aplicación",
+                        title = stringResource(R.string.theme_title),
                         currentValue = state.selectedTheme.displayName,
                         onClick = viewModel::onThemeClicked
                     )
@@ -89,24 +90,30 @@ fun PreferencesScreen(
 
                 item { Spacer(Modifier.height(spacing.large)) }
 
-                // --- Cuenta ---
-                item { SettingsSectionHeader("CUENTA") }
-                item { ActionRow(title = "Cerrar sesión", onClick = onLogoutClicked) }
+                item { SettingsSectionHeader(stringResource(R.string.account_header)) }
+                item {
+                    ActionRow(
+                        title = stringResource(R.string.close_session),
+                        onClick = onLogoutClicked
+                    )
+                }
 
                 item { Spacer(Modifier.height(spacing.large)) }
 
-                // --- Acerca de ---
-                item { SettingsSectionHeader("ACERCA DE NENEK TRIVIA") }
+                item { SettingsSectionHeader(stringResource(R.string.about_header)) }
                 item {
-                    ActionRow(title = "Calificar en Play Store", onClick = viewModel::onRateClick)
+                    ActionRow(
+                        title = stringResource(R.string.playstore_score),
+                        onClick = viewModel::onRateClick
+                    )
                 }
                 item {
                     ActionRow(
-                        title = "Política de Privacidad",
+                        title = stringResource(R.string.privacy_title),
                         onClick = viewModel::onPrivacyPolicyClick
                     )
                 }
-                item { InfoRow(title = "Versión", value = state.appVersion) }
+                item { InfoRow(title = stringResource(R.string.version), value = state.appVersion) }
             }
         }
 

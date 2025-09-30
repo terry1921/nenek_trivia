@@ -1,6 +1,7 @@
 package dev.terry1921.nenektrivia.ui.components
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,9 +14,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import dev.terry1921.nenektrivia.model.category.leaderboard.PlayerScore
+import dev.terry1921.nenektrivia.ui.R
 import dev.terry1921.nenektrivia.ui.tokens.LocalColorTokens
 import dev.terry1921.nenektrivia.ui.tokens.LocalShapeTokens
 import dev.terry1921.nenektrivia.ui.tokens.LocalSizeTokens
@@ -41,17 +46,19 @@ fun LeaderboardRow(player: PlayerScore) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = size.paddingMedium, vertical = size.paddingSmall),
+                .padding(
+                    horizontal = size.paddingMedium,
+                    vertical = size.paddingSmall
+                ),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "# ${player.position}",
+                text = stringResource(R.string.position, player.position),
                 style = typography.titleMedium,
                 color = color.primary,
                 modifier = Modifier.width(spacing.extraExtraExtraLarge)
             )
 
-            // Avatar
             Avatar(
                 url = player.avatarUrl,
                 size = size.avatarSmall,
@@ -69,9 +76,8 @@ fun LeaderboardRow(player: PlayerScore) {
                 )
             }
 
-            // Puntos
             Text(
-                text = "${player.score} pts",
+                text = stringResource(R.string.points, player.score),
                 style = typography.bodyMedium,
                 color = color.onSurfaceVariant
             )
@@ -79,15 +85,22 @@ fun LeaderboardRow(player: PlayerScore) {
     }
 }
 
-@Preview
+@Preview(
+    name = "Leaderboard Row"
+)
 @Composable
 fun LeaderboardRowPreview() {
-    LeaderboardRow(
-        player = PlayerScore(
-            position = 1,
-            displayName = "Usuario de prueba",
-            avatarUrl = "https://i.pravatar.cc/150?u=terry@",
-            score = 1234
+    PreviewContent(
+        backgroundColor = Color.Transparent,
+        paddingValues = PaddingValues(4.dp)
+    ) {
+        LeaderboardRow(
+            player = PlayerScore(
+                position = 1,
+                displayName = "Usuario de prueba",
+                avatarUrl = "https://i.pravatar.cc/150?u=terry@",
+                score = 1234
+            )
         )
-    )
+    }
 }

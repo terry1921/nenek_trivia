@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import dev.terry1921.nenektrivia.model.category.Category
@@ -92,7 +93,7 @@ private fun ProfileContent(state: ProfileUiState, modifier: Modifier = Modifier)
         Avatar(
             url = state.avatarUrl,
             size = size.avatarExtraExtraLarge,
-            contentDescription = "Foto de perfil"
+            contentDescription = stringResource(R.string.profile_photo)
         )
 
         Spacer(Modifier.height(spacing.medium))

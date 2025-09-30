@@ -10,7 +10,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import dev.terry1921.nenektrivia.ui.R
 import dev.terry1921.nenektrivia.ui.tokens.LocalSpacingTokens
 import dev.terry1921.nenektrivia.ui.tokens.LocalTypographyTokens
 
@@ -25,7 +27,7 @@ fun ErrorContent(message: String, onRetry: () -> Unit, modifier: Modifier = Modi
     ) {
         Text(message, style = typography.bodyMedium)
         Spacer(Modifier.height(spacing.small))
-        Button(onClick = onRetry) { Text("Reintentar") }
+        Button(onClick = onRetry) { Text(stringResource(R.string.retry)) }
     }
 }
 

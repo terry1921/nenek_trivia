@@ -29,6 +29,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -113,24 +114,21 @@ fun AuthScreen(
                 }
                 Spacer(Modifier.height(spacing.extraExtraLarge))
                 Text(
-                    text = "Bienvenido a\nNenek Trivia",
+                    text = stringResource(R.string.welcome_app),
                     style = typography.displayMedium,
-                    color = color.onSurface,
+                    color = color.darkText,
                     textAlign = TextAlign.Center
                 )
                 Spacer(Modifier.height(spacing.small))
                 Text(
-                    text = "Participa en cuestionarios rápidos y sube en la clasificación.\n" +
-                        "Todas tus curiosidades en un solo lugar.",
+                    text = stringResource(R.string.description_app),
                     style = typography.bodyMedium,
-                    color = color.onSurface.copy(alpha = 0.8f),
+                    color = color.darkText.copy(alpha = 0.8f),
                     textAlign = TextAlign.Center
                 )
                 Spacer(Modifier.height(spacing.large))
-
-                // Botón social primario (estilo filled / morado en tu tema)
                 SocialLoginButton(
-                    label = "Inicia sesión con Google",
+                    label = stringResource(R.string.google_login),
                     icon = ImageVector.vectorResource(id = R.drawable.ic_google),
                     enabled = !state.isGoogleLoading,
                     loading = state.isGoogleLoading,
@@ -139,10 +137,8 @@ fun AuthScreen(
                     shape = shapes.asMaterialShapes().medium
                 )
                 Spacer(Modifier.height(spacing.medium))
-
-                // Botón social secundario (outlined / fondo claro)
                 SocialLoginButton(
-                    label = "Inicia sesión con Facebook",
+                    label = stringResource(R.string.facebook_login),
                     icon = ImageVector.vectorResource(id = R.drawable.ic_facebook),
                     enabled = !state.isFacebookLoading,
                     loading = state.isFacebookLoading,
@@ -153,7 +149,7 @@ fun AuthScreen(
                 Spacer(Modifier.height(spacing.medium))
                 Text(
                     // TODO Cambiar textos a string resources
-                    text = "Política de privacidad",
+                    text = stringResource(R.string.privacy),
                     style = typography.bodySmall,
                     color = color.link,
                     modifier = Modifier

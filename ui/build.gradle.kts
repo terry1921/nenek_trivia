@@ -9,6 +9,7 @@ plugins {
 android {
     namespace = "dev.terry1921.nenektrivia.ui"
     compileSdk = 36
+    val versionName = "1.0.0"
 
     defaultConfig {
         minSdk = 26
@@ -27,6 +28,9 @@ android {
         debug {
             isMinifyEnabled = false
         }
+        configureEach {
+            buildConfigField("String", "VERSION", "\"$versionName\"")
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -34,6 +38,7 @@ android {
     }
     kotlin { jvmToolchain(17) }
     buildFeatures {
+        buildConfig = true
         compose = true
         viewBinding = true
     }

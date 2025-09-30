@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    // Inyecta repositorios de :database cuando estén listos (UserRepository, etc.)
+    // Inyecta casos de uso cuando esten listos
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(MainUiState())

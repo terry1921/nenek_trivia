@@ -1,11 +1,14 @@
 package dev.terry1921.nenektrivia.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Surface
@@ -51,12 +54,8 @@ fun KnowledgeBar(label: String, percent: Int, barColor: Color, trackColor: Color
 @Preview
 @Composable
 fun KnowledgeBarPreview() {
-    Surface(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(80.dp),
-        color = Color(0xFFF5F5F5),
-        shape = RoundedCornerShape(8.dp)
+    PreviewContent(
+        paddingValues = PaddingValues(8.dp)
     ) {
         KnowledgeBar(
             label = "Science",

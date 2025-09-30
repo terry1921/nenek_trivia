@@ -21,6 +21,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import dev.terry1921.nenektrivia.ui.R
@@ -31,12 +32,7 @@ import dev.terry1921.nenektrivia.ui.tokens.LocalSpacingTokens
 import dev.terry1921.nenektrivia.ui.tokens.LocalTypographyTokens
 
 @Composable
-fun HomeScreen(
-    title: String,
-    subtitle: String?,
-    onPlayClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
+fun HomeScreen(modifier: Modifier = Modifier, onPlayClick: () -> Unit) {
     val typography = LocalTypographyTokens.current
     val spacing = LocalSpacingTokens.current
     val color = LocalColorTokens.current
@@ -59,7 +55,7 @@ fun HomeScreen(
     ) {
         Image(
             painter = painterResource(id = R.drawable.caminando_rio),
-            contentDescription = "Muñeca huasteca",
+            contentDescription = stringResource(R.string.home_description),
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .alpha(0.7f)
@@ -67,26 +63,25 @@ fun HomeScreen(
         )
 
         Column(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .padding(top = spacing.topAppBarHeight),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = title,
+                text = stringResource(R.string.app_name),
                 style = typography.headlineLarge,
                 color = color.textSecondary,
                 textAlign = TextAlign.Center
             )
-            if (!subtitle.isNullOrBlank()) {
-                Spacer(Modifier.height(spacing.small))
-                Text(
-                    text = subtitle,
-                    style = typography.titleMedium,
-                    color = color.textTertiary,
-                    textAlign = TextAlign.Center
-                )
-            }
+            Spacer(Modifier.height(spacing.small))
+            Text(
+                text = stringResource(R.string.app_subtitle),
+                style = typography.titleMedium,
+                color = color.textTertiary,
+                textAlign = TextAlign.Center
+            )
         }
 
         Column(
@@ -104,7 +99,7 @@ fun HomeScreen(
                     .fillMaxWidth()
                     .height(size.buttonHeight)
             ) {
-                Text("🎮  Jugar Trivia", color = color.text)
+                Text(stringResource(R.string.play_button_label), color = color.text)
             }
         }
     }
@@ -115,8 +110,6 @@ fun HomeScreen(
 fun HomeScreenPreview() {
     Surface {
         HomeScreen(
-            title = "Nenek Trivia",
-            subtitle = "Volando alto, jugando fuerte",
             onPlayClick = {}
         )
     }
