@@ -65,6 +65,8 @@ dependencies {
     implementation(libs.androidx.lifecycle)
     implementation(libs.androidx.startup)
     implementation(libs.androidx.activity)
+    implementation(libs.play.review)
+    implementation(libs.compose.material.icons.extended)
 
     // compose
     implementation(platform(libs.compose.bom))

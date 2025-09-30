@@ -1,5 +1,7 @@
 package dev.terry1921.nenektrivia.ui.navigation
 
+import android.app.Activity
+import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -47,10 +49,11 @@ fun MainNavGraph(
         }
         composable(MainDestination.Options.route) {
             val vm: PreferencesViewModel = hiltViewModel()
+            val activity = LocalActivity.current as Activity
             PreferencesRoute(
                 viewModel = vm,
                 onLogout = onLogoutClick,
-                onRate = { /* Implementa la acción de calificar la app */ },
+                onRate = { vm.startInAppReview(activity) },
                 onPrivacy = onNavigatePrivacyPolicy
             )
         }

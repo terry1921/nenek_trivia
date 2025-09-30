@@ -148,7 +148,6 @@ fun AuthScreen(
                 )
                 Spacer(Modifier.height(spacing.medium))
                 Text(
-                    // TODO Cambiar textos a string resources
                     text = stringResource(R.string.privacy),
                     style = typography.bodySmall,
                     color = color.link,
@@ -181,7 +180,6 @@ fun AuthScreenPreview() {
     }
 }
 
-// TODO Corregir dark theme preview
 @Preview(
     name = "Auth Screen Dark",
     showSystemUi = true,
