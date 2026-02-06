@@ -98,6 +98,9 @@ dependencies {
     // logging
     implementation(libs.timber)
 
+    // whatIf
+    implementation(libs.whatif)
+
     // unit test
     testImplementation(libs.junit)
     testImplementation(libs.turbine)
