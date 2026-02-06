@@ -71,8 +71,14 @@ object AppModule {
         @ApplicationContext context: Context,
         roomCallback: RoomDatabase.Callback
     ): NenekTriviaDatabase {
-        // If you add real migrations later, put them in this array and bump the @Database(version)
-        val migrations: Array<out Migration> = emptyArray()
+        val migration1To2 = object : Migration(1, 2) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    "ALTER TABLE users ADD COLUMN is_logged_in INTEGER NOT NULL DEFAULT 0"
+                )
+            }
+        }
+        val migrations: Array<out Migration> = arrayOf(migration1To2)
 
         return Room
             .databaseBuilder(

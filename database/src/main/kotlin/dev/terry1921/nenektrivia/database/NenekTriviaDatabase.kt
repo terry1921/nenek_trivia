@@ -25,7 +25,7 @@ import dev.terry1921.nenektrivia.database.entity.User
         GameSession::class,
         SessionQuestionCrossRef::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = true
 )
 @TypeConverters(RoomConverters::class)

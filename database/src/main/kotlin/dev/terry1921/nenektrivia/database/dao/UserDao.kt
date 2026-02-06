@@ -16,4 +16,13 @@ interface UserDao {
 
     @Query("SELECT * FROM users WHERE username = :username LIMIT 1")
     suspend fun findByUsername(username: String): User?
+
+    @Query("SELECT * FROM users WHERE is_logged_in = 1 LIMIT 1")
+    suspend fun getActiveUser(): User?
+
+    @Query("UPDATE users SET is_logged_in = 0")
+    suspend fun clearActiveSession()
+
+    @Query("UPDATE users SET is_logged_in = 1 WHERE id = :userId")
+    suspend fun setActiveSession(userId: String)
 }

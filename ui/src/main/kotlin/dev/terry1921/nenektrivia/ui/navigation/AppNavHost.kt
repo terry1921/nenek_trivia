@@ -6,7 +6,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.core.net.toUri
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -29,7 +29,7 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
         modifier = modifier
     ) {
         composable(Routes.AUTH) {
-            val vm: AuthViewModel = viewModel()
+            val vm: AuthViewModel = hiltViewModel()
             AuthScreen(
                 viewModel = vm,
                 onNavigateMain = {
@@ -50,11 +50,10 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
             )
         }
         composable(Routes.MAIN) {
-            val vm: MainViewModel = viewModel()
+            val vm: MainViewModel = hiltViewModel()
             MainScreen(
                 viewModel = vm,
                 onLogoutClick = {
-                    // Pendiente: cerrar sesión con FirebaseAuth y navegar a Auth
                     navController.navigate(Routes.AUTH) {
                         popUpTo(Routes.MAIN) { inclusive = true }
                         launchSingleTop = true

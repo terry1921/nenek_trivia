@@ -3,6 +3,9 @@ package dev.terry1921.nenektrivia.ui.auth
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.terry1921.nenektrivia.database.entity.User
+import dev.terry1921.nenektrivia.domain.session.GetUserSessionUseCase
+import dev.terry1921.nenektrivia.domain.session.SaveUserSessionUseCase
 import javax.inject.Inject
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -15,7 +18,10 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-class AuthViewModel @Inject constructor() : ViewModel() {
+class AuthViewModel @Inject constructor(
+    private val saveUserSession: SaveUserSessionUseCase,
+    private val getUserSession: GetUserSessionUseCase
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(AuthUiState())
     val uiState: StateFlow<AuthUiState> = _uiState.asStateFlow()
@@ -31,10 +37,10 @@ class AuthViewModel @Inject constructor() : ViewModel() {
         checkIfUserIsLoggedIn()
     }
 
-    // TODO() -> Implementar verificación de usuario logueado con database and FireAuth.
     fun checkIfUserIsLoggedIn() = viewModelScope.launch {
-        delay(10)
-        _effect.emit(AuthEffect.NavigateToMain)
+        if (getUserSession() != null) {
+            _effect.emit(AuthEffect.NavigateToMain)
+        }
     }
 
     private fun simulateLogin(provider: AuthProvider) {
@@ -50,6 +56,7 @@ class AuthViewModel @Inject constructor() : ViewModel() {
             try {
                 // TODO() -> integrar FirebaseAuth con el provider cuando corresponda.
                 delay(1200)
+                saveUserSession(simulatedUser(provider)).getOrThrow()
                 _effect.emit(AuthEffect.NavigateToMain)
             } catch (t: Throwable) {
                 _uiState.update {
@@ -68,6 +75,20 @@ class AuthViewModel @Inject constructor() : ViewModel() {
                 }
             }
         }
+    }
+
+    private fun simulatedUser(provider: AuthProvider): User = when (provider) {
+        AuthProvider.GOOGLE ->
+            User(
+                username = "Jugador Google",
+                photoUrl = "https://i.pravatar.cc/300?img=12"
+            )
+
+        AuthProvider.FACEBOOK ->
+            User(
+                username = "Jugador Facebook",
+                photoUrl = "https://i.pravatar.cc/300?img=32"
+            )
     }
 
     fun onPrivacyPolicyClick() {

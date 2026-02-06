@@ -4,12 +4,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
 import dev.terry1921.nenektrivia.ui.components.MainBottomBar
 import dev.terry1921.nenektrivia.ui.navigation.MainDestination
 import dev.terry1921.nenektrivia.ui.navigation.MainNavGraph
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun MainScreen(
@@ -19,6 +21,12 @@ fun MainScreen(
     viewModel: MainViewModel = hiltViewModel()
 ) {
     val navController = rememberNavController()
+
+    LaunchedEffect(viewModel) {
+        viewModel.effect.collectLatest { effect ->
+            if (effect is MainEffect.NavigateToAuth) onLogoutClick()
+        }
+    }
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -32,7 +40,7 @@ fun MainScreen(
         MainNavGraph(
             modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding()),
             navController = navController,
-            onLogoutClick = onLogoutClick,
+            onLogoutClick = viewModel::onLogoutClick,
             onNavigatePrivacyPolicy = onNavigatePrivacyPolicy
         )
     }

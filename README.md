@@ -17,11 +17,11 @@ Su meta es ofrecer una experiencia divertida y moderna de trivia, con un código
 ### Diagrama de Dependencias
 
 ```
-:app → :ui, :domain, :model
-:domain → :database, :network, :model
-:database → :model
-:network → :model
-:ui → :model
+:app -> :ui, :domain, :model
+:ui  -> :domain, :model
+:domain -> :database, :network, :model
+:database -> :model
+:network -> :model
 ```
 
 ---
