@@ -15,4 +15,13 @@ class RoomAuthRepository(private val dao: UserDao) : AuthRepository {
 
     override suspend fun updateMaxPoints(userId: String, points: Int) =
         dao.updateMaxPoints(userId, points)
+
+    override suspend fun getActiveUser(): User? = dao.getActiveUser()
+
+    override suspend fun setActiveSession(userId: String) {
+        dao.clearActiveSession()
+        dao.setActiveSession(userId)
+    }
+
+    override suspend fun clearActiveSession() = dao.clearActiveSession()
 }

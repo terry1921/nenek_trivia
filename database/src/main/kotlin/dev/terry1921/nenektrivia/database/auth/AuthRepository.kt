@@ -8,4 +8,10 @@ interface AuthRepository {
     suspend fun getUserByUsername(username: String): User?
 
     suspend fun updateMaxPoints(userId: String, points: Int)
+
+    suspend fun getActiveUser(): User?
+
+    suspend fun setActiveSession(userId: String)
+
+    suspend fun clearActiveSession()
 }

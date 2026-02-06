@@ -17,5 +17,6 @@ data class User(
     @PrimaryKey val id: String = UUID.randomUUID().toString(),
     @ColumnInfo(name = "username") val username: String,
     @ColumnInfo(name = "max_points") val maxPoints: Int = 0,
-    @ColumnInfo(name = "photo_url") val photoUrl: String? = null
+    @ColumnInfo(name = "photo_url") val photoUrl: String? = null,
+    @ColumnInfo(name = "is_logged_in") val isLoggedIn: Boolean = false
 )

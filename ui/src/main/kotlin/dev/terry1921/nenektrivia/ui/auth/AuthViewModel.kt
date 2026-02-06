@@ -3,9 +3,9 @@ package dev.terry1921.nenektrivia.ui.auth
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.terry1921.nenektrivia.database.entity.User
 import dev.terry1921.nenektrivia.domain.session.GetUserSessionUseCase
 import dev.terry1921.nenektrivia.domain.session.SaveUserSessionUseCase
-import dev.terry1921.nenektrivia.model.category.preference.UserSession
 import javax.inject.Inject
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -14,7 +14,6 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -39,7 +38,7 @@ class AuthViewModel @Inject constructor(
     }
 
     fun checkIfUserIsLoggedIn() = viewModelScope.launch {
-        if (getUserSession().first() != null) {
+        if (getUserSession() != null) {
             _effect.emit(AuthEffect.NavigateToMain)
         }
     }
@@ -57,7 +56,7 @@ class AuthViewModel @Inject constructor(
             try {
                 // TODO() -> integrar FirebaseAuth con el provider cuando corresponda.
                 delay(1200)
-                saveUserSession(simulatedSession(provider))
+                saveUserSession(simulatedUser(provider)).getOrThrow()
                 _effect.emit(AuthEffect.NavigateToMain)
             } catch (t: Throwable) {
                 _uiState.update {
@@ -78,19 +77,17 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    private fun simulatedSession(provider: AuthProvider): UserSession = when (provider) {
+    private fun simulatedUser(provider: AuthProvider): User = when (provider) {
         AuthProvider.GOOGLE ->
-            UserSession(
-                userId = "google_demo_user",
+            User(
                 username = "Jugador Google",
-                provider = "google"
+                photoUrl = "https://i.pravatar.cc/300?img=12"
             )
 
         AuthProvider.FACEBOOK ->
-            UserSession(
-                userId = "facebook_demo_user",
+            User(
                 username = "Jugador Facebook",
-                provider = "facebook"
+                photoUrl = "https://i.pravatar.cc/300?img=32"
             )
     }
 
