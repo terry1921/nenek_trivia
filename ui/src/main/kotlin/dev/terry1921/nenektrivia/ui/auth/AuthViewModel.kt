@@ -3,6 +3,9 @@ package dev.terry1921.nenektrivia.ui.auth
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.terry1921.nenektrivia.domain.session.GetUserSessionUseCase
+import dev.terry1921.nenektrivia.domain.session.SaveUserSessionUseCase
+import dev.terry1921.nenektrivia.model.category.preference.UserSession
 import javax.inject.Inject
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -11,11 +14,15 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-class AuthViewModel @Inject constructor() : ViewModel() {
+class AuthViewModel @Inject constructor(
+    private val saveUserSession: SaveUserSessionUseCase,
+    private val getUserSession: GetUserSessionUseCase
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(AuthUiState())
     val uiState: StateFlow<AuthUiState> = _uiState.asStateFlow()
@@ -31,10 +38,10 @@ class AuthViewModel @Inject constructor() : ViewModel() {
         checkIfUserIsLoggedIn()
     }
 
-    // TODO() -> Implementar verificación de usuario logueado con database and FireAuth.
     fun checkIfUserIsLoggedIn() = viewModelScope.launch {
-        delay(10)
-        _effect.emit(AuthEffect.NavigateToMain)
+        if (getUserSession().first() != null) {
+            _effect.emit(AuthEffect.NavigateToMain)
+        }
     }
 
     private fun simulateLogin(provider: AuthProvider) {
@@ -50,6 +57,7 @@ class AuthViewModel @Inject constructor() : ViewModel() {
             try {
                 // TODO() -> integrar FirebaseAuth con el provider cuando corresponda.
                 delay(1200)
+                saveUserSession(simulatedSession(provider))
                 _effect.emit(AuthEffect.NavigateToMain)
             } catch (t: Throwable) {
                 _uiState.update {
@@ -68,6 +76,22 @@ class AuthViewModel @Inject constructor() : ViewModel() {
                 }
             }
         }
+    }
+
+    private fun simulatedSession(provider: AuthProvider): UserSession = when (provider) {
+        AuthProvider.GOOGLE ->
+            UserSession(
+                userId = "google_demo_user",
+                username = "Jugador Google",
+                provider = "google"
+            )
+
+        AuthProvider.FACEBOOK ->
+            UserSession(
+                userId = "facebook_demo_user",
+                username = "Jugador Facebook",
+                provider = "facebook"
+            )
     }
 
     fun onPrivacyPolicyClick() {

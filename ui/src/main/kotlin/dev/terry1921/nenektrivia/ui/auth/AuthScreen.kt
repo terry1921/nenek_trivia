@@ -64,6 +64,23 @@ fun AuthScreen(
         state.errorMessage?.let { snackbarHostState.showSnackbar(it) }
     }
 
+    AuthScreenContent(
+        state = state,
+        snackbarHostState = snackbarHostState,
+        onGoogleClick = viewModel::onGoogleClick,
+        onFacebookClick = viewModel::onFacebookClick,
+        onPrivacyClick = viewModel::onPrivacyPolicyClick
+    )
+}
+
+@Composable
+private fun AuthScreenContent(
+    state: AuthUiState,
+    snackbarHostState: SnackbarHostState,
+    onGoogleClick: () -> Unit,
+    onFacebookClick: () -> Unit,
+    onPrivacyClick: () -> Unit
+) {
     val typography = LocalTypographyTokens.current
     val spacing = LocalSpacingTokens.current
     val size = LocalSizeTokens.current
@@ -132,7 +149,7 @@ fun AuthScreen(
                     icon = ImageVector.vectorResource(id = R.drawable.ic_google),
                     enabled = !state.isGoogleLoading,
                     loading = state.isGoogleLoading,
-                    onClick = { viewModel.onGoogleClick() },
+                    onClick = onGoogleClick,
                     variant = SocialButtonVariant.Filled,
                     shape = shapes.asMaterialShapes().medium
                 )
@@ -142,7 +159,7 @@ fun AuthScreen(
                     icon = ImageVector.vectorResource(id = R.drawable.ic_facebook),
                     enabled = !state.isFacebookLoading,
                     loading = state.isFacebookLoading,
-                    onClick = { viewModel.onFacebookClick() },
+                    onClick = onFacebookClick,
                     variant = SocialButtonVariant.Outlined,
                     shape = shapes.asMaterialShapes().medium
                 )
@@ -152,7 +169,7 @@ fun AuthScreen(
                     style = typography.bodySmall,
                     color = color.link,
                     modifier = Modifier
-                        .clickable { viewModel.onPrivacyPolicyClick() }
+                        .clickable(onClick = onPrivacyClick)
                         .padding(size.paddingSmall)
                         .align(Alignment.End)
                 )
@@ -172,10 +189,12 @@ fun AuthScreen(
 @Composable
 fun AuthScreenPreview() {
     NenekTheme {
-        AuthScreen(
-            viewModel = AuthViewModel(),
-            onNavigateMain = {},
-            onNavigatePrivacyPolicy = {}
+        AuthScreenContent(
+            state = AuthUiState(),
+            snackbarHostState = remember { SnackbarHostState() },
+            onGoogleClick = {},
+            onFacebookClick = {},
+            onPrivacyClick = {}
         )
     }
 }
@@ -190,10 +209,12 @@ fun AuthScreenPreview() {
 @Composable
 fun AuthScreenDarkPreview() {
     NenekTheme {
-        AuthScreen(
-            viewModel = AuthViewModel(),
-            onNavigateMain = {},
-            onNavigatePrivacyPolicy = {}
+        AuthScreenContent(
+            state = AuthUiState(),
+            snackbarHostState = remember { SnackbarHostState() },
+            onGoogleClick = {},
+            onFacebookClick = {},
+            onPrivacyClick = {}
         )
     }
 }
