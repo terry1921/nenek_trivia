@@ -60,16 +60,16 @@ fun LeaderboardScreenPreview() {
         state = LeaderboardUiState(
             isLoading = false,
             players = listOf(
-                PlayerScore(1, null, "Terry1921", 1500),
-                PlayerScore(2, null, "JaneDoe", 1200),
-                PlayerScore(3, null, "JohnSmith", 1100),
-                PlayerScore(4, null, "AliceWonder", 1000),
-                PlayerScore(5, null, "BobBuilder", 900),
-                PlayerScore(6, null, "CharlieBrown", 800),
-                PlayerScore(7, null, "DoraExplorer", 700),
-                PlayerScore(8, null, "EveOnline", 600),
-                PlayerScore(9, null, "FrankCastle", 500),
-                PlayerScore(10, null, "GraceHopper", 400)
+                PlayerScore(id = "1", image = null, username = "Terry1921", points = 1500),
+                PlayerScore(id = "2", image = null, username = "JaneDoe", points = 1200),
+                PlayerScore(id = "3", image = null, username = "JohnSmith", points = 1100),
+                PlayerScore(id = "4", image = null, username = "AliceWonder", points = 1000),
+                PlayerScore(id = "5", image = null, username = "BobBuilder", points = 900),
+                PlayerScore(id = "6", image = null, username = "CharlieBrown", points = 800),
+                PlayerScore(id = "7", image = null, username = "DoraExplorer", points = 700),
+                PlayerScore(id = "8", image = null, username = "EveOnline", points = 600),
+                PlayerScore(id = "9", image = null, username = "FrankCastle", points = 500),
+                PlayerScore(id = "10", image = null, username = "GraceHopper", points = 400)
             )
         )
     )
