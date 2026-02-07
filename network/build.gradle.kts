@@ -77,7 +77,7 @@ dependencies {
 
     // firebase
     implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.database.ktx)
+    implementation(libs.firebase.database)
 
     // datastore
     implementation(libs.datastore)

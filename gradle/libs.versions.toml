@@ -155,7 +155,6 @@ androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lif
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom"}
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ndk"}
-firebase-database-ktx = { group = "com.google.firebase", name = "firebase-database-ktx" }
 firebase-database = { group = "com.google.firebase", name = "firebase-database" }
 
 
