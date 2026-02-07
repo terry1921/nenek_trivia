@@ -1,8 +1,8 @@
 package dev.terry1921.nenektrivia.model.category.leaderboard
 
 data class PlayerScore(
-    val position: Int,
-    val avatarUrl: String?,
-    val displayName: String,
-    val score: Int
+    val id: String = "",
+    val image: String? = null,
+    val points: Int = 0,
+    val username: String = ""
 )

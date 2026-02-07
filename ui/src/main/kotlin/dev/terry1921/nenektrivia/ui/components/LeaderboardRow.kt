@@ -28,7 +28,7 @@ import dev.terry1921.nenektrivia.ui.tokens.LocalSpacingTokens
 import dev.terry1921.nenektrivia.ui.tokens.LocalTypographyTokens
 
 @Composable
-fun LeaderboardRow(player: PlayerScore) {
+fun LeaderboardRow(position: Int, player: PlayerScore) {
     val size = LocalSizeTokens.current
     val spacing = LocalSpacingTokens.current
     val shape = LocalShapeTokens.current
@@ -53,23 +53,23 @@ fun LeaderboardRow(player: PlayerScore) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = stringResource(R.string.position, player.position),
+                text = stringResource(R.string.position, position),
                 style = typography.titleMedium,
                 color = color.primary,
                 modifier = Modifier.width(spacing.extraExtraExtraLarge)
             )
 
             Avatar(
-                url = player.avatarUrl,
+                url = player.image,
                 size = size.avatarSmall,
-                contentDescription = player.displayName
+                contentDescription = player.username
             )
 
             Spacer(Modifier.width(spacing.medium))
 
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = player.displayName,
+                    text = player.username,
                     style = typography.bodyLarge,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
@@ -77,7 +77,7 @@ fun LeaderboardRow(player: PlayerScore) {
             }
 
             Text(
-                text = stringResource(R.string.points, player.score),
+                text = stringResource(R.string.points, player.points),
                 style = typography.bodyMedium,
                 color = color.onSurfaceVariant
             )
@@ -95,11 +95,12 @@ fun LeaderboardRowPreview() {
         paddingValues = PaddingValues(4.dp)
     ) {
         LeaderboardRow(
+            position = 1,
             player = PlayerScore(
-                position = 1,
-                displayName = "Usuario de prueba",
-                avatarUrl = "https://i.pravatar.cc/150?u=terry@",
-                score = 1234
+                id = "test-user",
+                username = "Usuario de prueba",
+                image = "https://i.pravatar.cc/150?u=terry@",
+                points = 1234
             )
         )
     }

@@ -23,7 +23,7 @@ compose-bom = "2026.01.01"
 
 # Firebase
 googleServices = "4.4.4"
-firebase-bom = "34.8.0"
+firebase-bom = "34.9.0"
 firebase-crashlytics = "3.0.6"
 
 # Material (Views)
@@ -155,6 +155,8 @@ androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lif
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom"}
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ndk"}
+firebase-database = { group = "com.google.firebase", name = "firebase-database" }
+
 
 # Testing
 junit = { group = "junit", name = "junit", version.ref = "junit" }

@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -30,8 +30,13 @@ fun LeaderboardList(players: List<PlayerScore>) {
         verticalArrangement = Arrangement.spacedBy(spacing.medium),
         contentPadding = PaddingValues(bottom = size.paddingExtraLarge)
     ) {
-        items(players, key = { it.position }) { player ->
-            LeaderboardRow(player = player)
+        itemsIndexed(
+            items = players,
+            key = { index, player ->
+                player.id.ifBlank { "$index-${player.username}" }
+            }
+        ) { index, player ->
+            LeaderboardRow(position = index + 1, player = player)
         }
     }
 }
@@ -41,16 +46,16 @@ fun LeaderboardList(players: List<PlayerScore>) {
 fun LeaderboardListPreview() {
     LeaderboardList(
         players = listOf(
-            PlayerScore(1, "", "Alice", 1500),
-            PlayerScore(2, "", "Bob", 1200),
-            PlayerScore(3, "", "Charlie", 900),
-            PlayerScore(4, "", "David", 800),
-            PlayerScore(5, "", "Eve", 700),
-            PlayerScore(6, "", "Frank", 600),
-            PlayerScore(7, "", "Grace", 500),
-            PlayerScore(8, "", "Heidi", 400),
-            PlayerScore(9, "", "Ivan", 300),
-            PlayerScore(10, "", "Judy", 200)
+            PlayerScore(id = "1", image = "", username = "Alice", points = 1500),
+            PlayerScore(id = "2", image = "", username = "Bob", points = 1200),
+            PlayerScore(id = "3", image = "", username = "Charlie", points = 900),
+            PlayerScore(id = "4", image = "", username = "David", points = 800),
+            PlayerScore(id = "5", image = "", username = "Eve", points = 700),
+            PlayerScore(id = "6", image = "", username = "Frank", points = 600),
+            PlayerScore(id = "7", image = "", username = "Grace", points = 500),
+            PlayerScore(id = "8", image = "", username = "Heidi", points = 400),
+            PlayerScore(id = "9", image = "", username = "Ivan", points = 300),
+            PlayerScore(id = "10", image = "", username = "Judy", points = 200)
         )
     )
 }
