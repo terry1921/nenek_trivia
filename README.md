@@ -7,12 +7,12 @@ Su meta es ofrecer una experiencia divertida y moderna de trivia, con un código
 ---
 
 ## 📦 Módulos del Proyecto
-- **`:app`** → Orquestador principal, navegación, Splash.
-- **`:model`** → Entidades y contratos (interfaces de repositorios).
-- **`:database`** → Room (DAOs, migraciones, seeds).
-- **`:domain`** → Casos de uso (lógica de negocio).
-- **`:network`** → Conexión a Firebase (Auth + Realtime DB).
-- **`:ui`** → Componentes Compose, design system y tokens.
+- **`:app`** → Orquestador principal, navegación, Splash Screen API.
+- **`:model`** → Entidades de datos y contratos (interfaces de repositorios).
+- **`:database`** → Implementación de Room (DAOs, migraciones, seeds) y DataStore.
+- **`:domain`** → Casos de uso (Leaderboard, Sesión, Preferencias) y lógica de negocio.
+- **`:network`** → Cliente para servicios externos (Firebase Realtime Database para Leaderboard).
+- **`:ui`** → Pantallas (Home, Auth, Profile, Leaderboard, Preferences), ViewModels, componentes Compose y Design System con Tokens.
 
 ### Diagrama de Dependencias
 
@@ -27,22 +27,24 @@ Su meta es ofrecer una experiencia divertida y moderna de trivia, con un código
 ---
 
 ## ✅ Estado Actual
-- Arquitectura modular configurada.
-- Entidades principales definidas (`Question`, `Category`, `User`, `Score`, `GameSession`).
-- Room con migraciones + seeds iniciales.
-- Repositorios creados (interfaces en `:model`, implementación en `:database`).
-- Theming con Material 3 + design tokens.
-- Pantalla Splash (XML) + `MainActivity` (Compose).
-- CI/CD básico con GitHub Actions y pre-commit hooks.
+- **Arquitectura**: Clean Architecture + MVVM + Flow + Hilt implementados.
+- **UI/UX**: Pantallas de Autenticación, Home, Leaderboard, Perfil y Preferencias construidas con Jetpack Compose y Material 3.
+- **Datos**:
+    - Room para persistencia local (User, Score, GameSession, Question, Category).
+    - DataStore para preferencias de usuario.
+    - Firebase Realtime Database integrado para Leaderboard.
+- **Dominio**: Casos de uso implementados para gestión de sesión, configuración y leaderboard.
+- **Testing**: Tests unitarios iniciales para ViewModels.
+- **Navegación**: Jetpack Navigation Compose configurado.
+- **Otros**: CI/CD básico con GitHub Actions y pre-commit hooks.
 
 ---
 
 ## 🚀 Próximos Pasos
-- Conectar UI ↔ ViewModel ↔ Repository con Flow.
-- Implementar casos de uso en `:domain`.
-- Pantallas iniciales: Standings, Preguntas, Leaderboard, Auth.
-- Integración Firebase Auth + Realtime DB.
-- Tests unitarios e integración (JUnit5, MockK, Compose UI Test).
+- Integración real con Firebase Authentication (actualmente simulada).
+- Implementación de la pantalla de Juego (Trivia) y lógica de la partida.
+- Ampliar cobertura de tests (Unitarios e Integración/UI).
+- Sincronización de progreso de usuario en la nube.
 
 ---
 
