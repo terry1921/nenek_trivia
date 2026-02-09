@@ -6,7 +6,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -31,7 +31,7 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
         modifier = modifier
     ) {
         composable(Routes.AUTH) {
-            val vm: AuthViewModel = viewModel()
+            val vm: AuthViewModel = hiltViewModel()
             AuthScreen(
                 viewModel = vm,
                 onNavigateMain = {

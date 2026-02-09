@@ -33,13 +33,16 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import dev.terry1921.nenektrivia.model.auth.AuthService
 import dev.terry1921.nenektrivia.ui.R
 import dev.terry1921.nenektrivia.ui.tokens.LocalColorTokens
 import dev.terry1921.nenektrivia.ui.tokens.LocalShapeTokens
 import dev.terry1921.nenektrivia.ui.tokens.LocalSpacingTokens
 import dev.terry1921.nenektrivia.ui.tokens.LocalTypographyTokens
 import dev.terry1921.nenektrivia.ui.tokens.asMaterialShapes
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flowOf
 
 @Composable
 fun AuthScreen(
@@ -130,7 +133,10 @@ fun AuthScreen(
                     icon = ImageVector.vectorResource(id = R.drawable.ic_google),
                     enabled = !state.isGoogleLoading,
                     loading = state.isGoogleLoading,
-                    onClick = { viewModel.onGoogleClick() },
+                    onClick = {
+                        // TODO: Obtain real ID token from Google Sign-In SDK
+                        viewModel.onGoogleSignIn("PENDING_REAL_TOKEN")
+                    },
                     variant = SocialButtonVariant.Filled,
                     shape = shapes.asMaterialShapes().medium
                 )
@@ -142,7 +148,10 @@ fun AuthScreen(
                     icon = ImageVector.vectorResource(id = R.drawable.ic_facebook),
                     enabled = !state.isFacebookLoading,
                     loading = state.isFacebookLoading,
-                    onClick = { viewModel.onFacebookClick() },
+                    onClick = {
+                        // TODO: Obtain real access token from Facebook Login SDK
+                        viewModel.onFacebookSignIn("PENDING_REAL_TOKEN")
+                    },
                     variant = SocialButtonVariant.Outlined,
                     shape = shapes.asMaterialShapes().medium
                 )
@@ -167,5 +176,21 @@ fun AuthScreen(
 @Preview
 @Composable
 fun AuthScreenPreview() {
-    AuthScreen(viewModel = AuthViewModel(), onNavigateMain = {}, onNavigatePrivacyPolicy = {})
+    val dummyAuthService = object : AuthService {
+        override suspend fun signInWithGoogle(idToken: String): Result<Unit> = Result.success(Unit)
+        override suspend fun signInWithFacebook(accessToken: String): Result<Unit> = Result.success(Unit)
+        override fun signOut() {}
+        override val isUserLoggedIn: Flow<Boolean> = flowOf(false)
+        override fun getCurrentUserId(): String? = null
+    }
+    AuthScreen(
+        viewModel = AuthViewModel(dummyAuthService),
+        onNavigateMain = {},
+        onNavigatePrivacyPolicy = {}
+    )
 }
+
+// Add these to satisfy the Preview if needed, though they are not used in code yet
+// import android.app.Activity
+// import com.google.android.gms.auth.api.signin.GoogleSignIn
+// import com.google.android.gms.common.api.ApiException

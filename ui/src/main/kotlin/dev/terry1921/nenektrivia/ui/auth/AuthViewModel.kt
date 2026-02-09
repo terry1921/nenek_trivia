@@ -2,7 +2,9 @@ package dev.terry1921.nenektrivia.ui.auth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.delay
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.terry1921.nenektrivia.model.auth.AuthProvider
+import dev.terry1921.nenektrivia.model.auth.AuthService
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -11,6 +13,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 data class AuthUiState(
     val isFacebookLoading: Boolean = false,
@@ -23,9 +26,10 @@ sealed class AuthEffect {
     data object NavigateToPrivacyPolicy : AuthEffect()
 }
 
-enum class AuthProvider { GOOGLE, FACEBOOK }
-
-class AuthViewModel : ViewModel() {
+@HiltViewModel
+class AuthViewModel @Inject constructor(
+    private val authService: AuthService
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(AuthUiState())
     val uiState: StateFlow<AuthUiState> = _uiState.asStateFlow()
@@ -33,12 +37,23 @@ class AuthViewModel : ViewModel() {
     private val _effect = MutableSharedFlow<AuthEffect>()
     val effect: SharedFlow<AuthEffect> = _effect.asSharedFlow()
 
-    fun onGoogleClick() = simulateLogin(AuthProvider.GOOGLE)
+    /**
+     * Triggered when the Google login button is clicked.
+     * The token should be obtained from the Google Sign-In SDK.
+     */
+    fun onGoogleSignIn(idToken: String) {
+        performLogin(AuthProvider.GOOGLE, idToken)
+    }
 
-    fun onFacebookClick() = simulateLogin(AuthProvider.FACEBOOK)
+    /**
+     * Triggered when the Facebook login button is clicked.
+     * The token should be obtained from the Facebook Login SDK.
+     */
+    fun onFacebookSignIn(accessToken: String) {
+        performLogin(AuthProvider.FACEBOOK, accessToken)
+    }
 
-    private fun simulateLogin(provider: AuthProvider) {
-        // Conexión real a Firebase quedará fuera de alcance por ahora.
+    private fun performLogin(provider: AuthProvider, token: String) {
         viewModelScope.launch {
             _uiState.update {
                 it.copy(
@@ -48,15 +63,26 @@ class AuthViewModel : ViewModel() {
                 )
             }
             try {
-                // TODO() -> integrar FirebaseAuth con el provider cuando corresponda.
-                delay(1200)
-                _effect.emit(AuthEffect.NavigateToMain)
+                // Using the real auth service eliminates the simulation bypass.
+                // Firebase will validate the provided token.
+                val result = when (provider) {
+                    AuthProvider.GOOGLE -> authService.signInWithGoogle(token)
+                    AuthProvider.FACEBOOK -> authService.signInWithFacebook(token)
+                }
+
+                if (result.isSuccess) {
+                    _effect.emit(AuthEffect.NavigateToMain)
+                } else {
+                    _uiState.update {
+                        it.copy(
+                            errorMessage = "Authentication failed. Please try again."
+                        )
+                    }
+                }
             } catch (t: Throwable) {
                 _uiState.update {
                     it.copy(
-                        isGoogleLoading = false,
-                        isFacebookLoading = false,
-                        errorMessage = "Ocurrió un error. Inténtalo de nuevo."
+                        errorMessage = "An unexpected error occurred. Please try again."
                     )
                 }
             } finally {

@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt.plugin)
 }
 
 android {
@@ -62,6 +64,7 @@ dependencies {
     implementation(libs.compose.ui.preview)
     implementation(libs.compose.material3)
     implementation(libs.androidx.navigation)
+    implementation(libs.androidx.hilt.navigation-compose)
     debugImplementation(libs.compose.ui.tooling)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
@@ -76,6 +79,13 @@ dependencies {
 
     // whatIf
     implementation(libs.whatif)
+
+    // play services
+    implementation(libs.play.services.auth)
+
+    // di
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
 
     // unit test
     testImplementation(libs.junit)

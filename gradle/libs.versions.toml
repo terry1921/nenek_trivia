@@ -118,6 +118,9 @@ timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "tim
 progressView = { group = "com.github.skydoves", name = "progressview", version.ref = "progressView" }
 transformationLayout = { group = "com.github.skydoves", name = "transformationlayout", version.ref = "transformationLayout" }
 
+# Google Play Services
+play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version = "21.3.0" }
+
 # Networking
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
@@ -138,12 +141,14 @@ compose-ui-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview
 compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "nav_version" }
+androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version = "1.2.0" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity" }
 androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
 
 # Firebase BOM + artifacts
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom"}
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ndk"}
 
 # Testing

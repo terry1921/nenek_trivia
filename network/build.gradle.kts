@@ -64,6 +64,8 @@ dependencies {
     implementation(libs.coroutines)
 
     // network
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
     implementation(libs.okhttp)
     implementation(libs.okhttp.urlconnection)
     implementation(libs.retrofit)
