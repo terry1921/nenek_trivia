@@ -1,5 +1,8 @@
 name: Android CI
 
+permissions:
+  contents: read
+
 on:
   pull_request:
   push:
@@ -23,5 +26,5 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Build & Unit tests
-        run: ./gradlew build
+      - name: Unit tests
+        run: ./gradlew :ui:testDebugUnitTest

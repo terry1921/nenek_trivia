@@ -1,46 +1,47 @@
 [versions]
-# Core toolchains
-agp = "8.13.0"
-kotlin = "2.2.10"
-ksp = "2.2.10-2.0.2"
+# Core tool chains
+agp = "9.0.0"
+kotlin = "2.3.0"
+ksp = "2.3.5"
 
 # AndroidX / UI
 coreKtx = "1.17.0"
-activity = "1.10.1"
+splashscreen = "1.2.0"
+activity = "1.12.3"
 appcompat = "1.7.1"
 recyclerView = "1.4.0"
 androidxConstraintlayout = "2.2.1"
 androidxFragment = "1.8.9"
-nav_version = "2.9.3"
+nav_version = "2.9.7"
 
 # Lifecycle / Startup
-androidxLifecycle = "2.9.3"
+androidxLifecycle = "2.10.0"
 androidXStartup = "1.2.0"
 
 # Compose
-compose-bom = "2025.08.01"
+compose-bom = "2026.01.01"
 
 # Firebase
-googleServices = "4.4.3"
-firebase-bom = "34.2.0"
+googleServices = "4.4.4"
+firebase-bom = "34.9.0"
 firebase-crashlytics = "3.0.6"
 
 # Material (Views)
-material = "1.12.0"
+material = "1.13.0"
 
 # Data / DB
-datastore = "1.1.7"
-androidxRoom = "2.7.2"
+datastore = "1.2.0"
+androidxRoom = "2.8.4"
 
 # DI
-hilt = "2.57.1"
-javaxInject = "1"
+hilt = "2.59"
+hiltNavigation = "1.3.0"
 
 # Net
 retrofit = "3.0.0"
-okhttp = "5.1.0"
-gson = "2.13.1"
-sandwich = "2.1.2"
+okhttp = "5.3.2"
+gson = "2.13.2"
+sandwich = "2.2.0"
 
 # Coroutines
 coroutines = "1.10.2"
@@ -51,6 +52,7 @@ whatIf = "1.2.1"
 bundler = "1.0.4"
 progressView = "1.1.3"
 transformationLayout = "1.1.6"
+playCore = "2.0.2"
 
 # Images
 coil = "3.3.0"
@@ -60,16 +62,17 @@ junit = "4.13.2"
 junitVersion = "1.3.0"
 androidxTest = "1.7.0"
 espressoCore = "3.7.0"
-truth = "1.4.4"
+truth = "1.4.5"
 turbine = "1.2.1"
-mockitoKotlin = "6.0.0"
+mockitoKotlin = "6.2.3"
 mockitoInline = "5.2.0"
-robolectric = "4.16"
+robolectric = "4.16.1"
 testRunner = "1.7.0"
 androidxArchCore = "2.2.0"
 baseAdapter = "1.0.4"
-swiperefreshlayout = "1.1.0"
-
+swiperefreshlayout = "1.2.0"
+playServicesGames = "24.0.0"
+uiText = "1.10.2"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -92,6 +95,7 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 androidx-fragment = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "androidxFragment" }
 recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerView" }
+splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashscreen" }
 
 # Lifecycle / Startup
 androidx-lifecycle = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "androidxLifecycle" }
@@ -107,6 +111,7 @@ androidx-room-compiler = { group = "androidx.room", name = "room-compiler", vers
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
 hilt-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
+hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigation" }
 
 # Coroutines
 coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
@@ -117,6 +122,7 @@ bundler = { group = "com.github.skydoves", name = "bundler", version.ref = "bund
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
 progressView = { group = "com.github.skydoves", name = "progressview", version.ref = "progressView" }
 transformationLayout = { group = "com.github.skydoves", name = "transformationlayout", version.ref = "transformationLayout" }
+play-review = { group = "com.google.android.play", name = "review-ktx", version.ref = "playCore" }
 
 # Networking
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
@@ -129,6 +135,8 @@ sandwich = { group = "com.github.skydoves", name = "sandwich", version.ref = "sa
 
 # Images
 coil = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
+coil-network-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil" }
+
 
 # Compose BOM + artifacts
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
@@ -137,14 +145,18 @@ compose-runtime = { group = "androidx.compose.runtime", name = "runtime" }
 compose-ui-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version = "1.7.8"}
 androidx-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "nav_version" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity" }
+androidx-ui-text = { group = "androidx.compose.ui", name = "ui-text", version.ref = "uiText" }
 androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
 
 # Firebase BOM + artifacts
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom"}
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ndk"}
+firebase-database = { group = "com.google.firebase", name = "firebase-database" }
+
 
 # Testing
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -165,3 +177,4 @@ compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-mani
 # customViews
 baseAdapter = { group = "com.github.skydoves", name = "baserecyclerviewadapter", version.ref = "baseAdapter" }
 androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swiperefreshlayout" }
+play-services-games = { group = "com.google.android.gms", name = "play-services-games", version.ref = "playServicesGames" }

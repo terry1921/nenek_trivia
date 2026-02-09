@@ -9,7 +9,13 @@ object NenekPalette {
     val Orange = Color(0xFFFF9800)
     val Red = Color(0xFFC62828)
     val DarkRed = Color(0xFF8B0000)
+    val LightRed = Color(0xFFCF6679)
+    val RedLightContainer = Color(0xFFFCD8DF)
+    val RedDarkContainer = Color(0xFFB1384E)
+    val Brown = Color(0xFF6A3F00)
+    val ErrorRed = Color(0xFFB00020)
     val Blue = Color(0xFF2196F3)
+    val Yellow = Color(0xFFFFE0B2)
 
     val BackgroundLight = Color(0xFFFAFAFA)
     val BackgroundDark = Color(0xFF121212)
@@ -47,57 +53,86 @@ data class ColorTokens(
     val error: Color,
     val onError: Color,
     val errorContainer: Color,
-    val link: Color
+    val link: Color,
+    val whiteText: Color,
+    val darkText: Color,
+    val text: Color,
+    val textSecondary: Color,
+    val textTertiary: Color
 )
 
 val LightColorTokens =
     ColorTokens(
         primary = NenekPalette.Pink,
         onPrimary = NenekPalette.White,
-        primaryContainer = NenekPalette.Magenta,
-        onPrimaryContainer = NenekPalette.White,
         secondary = NenekPalette.Orange,
         onSecondary = NenekPalette.Neutral0,
-        secondaryContainer = Color(0xFFFFE0B2),
-        onSecondaryContainer = NenekPalette.Neutral0,
         tertiary = NenekPalette.Red,
         onTertiary = NenekPalette.White,
-        background = NenekPalette.Neutral99,
+
+        error = NenekPalette.ErrorRed,
+        onError = NenekPalette.White,
+
+        background = NenekPalette.BackgroundLight,
         onBackground = NenekPalette.Neutral20,
+
         surface = NenekPalette.Neutral99,
         onSurface = NenekPalette.Neutral20,
+
         surfaceVariant = NenekPalette.Neutral95,
         onSurfaceVariant = NenekPalette.Neutral20,
-        outline = Color(0xFFBDBDBD),
+
+        outline = NenekPalette.SurfaceGray,
+
+        primaryContainer = NenekPalette.Magenta,
+        onPrimaryContainer = NenekPalette.White,
+        secondaryContainer = NenekPalette.Yellow,
+        onSecondaryContainer = NenekPalette.Neutral0,
+
         circular = NenekPalette.Orange,
-        error = Color(0xFFB00020),
-        onError = NenekPalette.White,
-        errorContainer = Color(0xFFFCD8DF),
-        link = NenekPalette.Blue
+        errorContainer = NenekPalette.RedLightContainer,
+        link = NenekPalette.Blue,
+        whiteText = NenekPalette.White,
+        darkText = NenekPalette.Neutral0,
+        text = NenekPalette.White,
+        textSecondary = NenekPalette.Neutral20,
+        textTertiary = NenekPalette.Neutral10
     )
 
 val DarkColorTokens =
     ColorTokens(
         primary = NenekPalette.Pink,
-        onPrimary = NenekPalette.White,
+        onPrimary = NenekPalette.Neutral0,
+        secondary = NenekPalette.Orange,
+        onSecondary = NenekPalette.Neutral0,
+        tertiary = NenekPalette.Red,
+        onTertiary = NenekPalette.Neutral0,
+
+        error = NenekPalette.Red,
+        onError = NenekPalette.White,
+
+        background = NenekPalette.BackgroundDark,
+        onBackground = NenekPalette.Neutral90,
+
+        surface = NenekPalette.Neutral20,
+        onSurface = NenekPalette.Neutral90,
+
+        surfaceVariant = NenekPalette.Neutral10,
+        onSurfaceVariant = NenekPalette.Neutral90,
+
+        outline = NenekPalette.SurfaceGray,
+
         primaryContainer = NenekPalette.DarkRed,
         onPrimaryContainer = NenekPalette.White,
-        secondary = NenekPalette.Orange,
-        onSecondary = NenekPalette.White,
-        secondaryContainer = Color(0xFF6A3F00),
+        secondaryContainer = NenekPalette.Brown,
         onSecondaryContainer = NenekPalette.White,
-        tertiary = NenekPalette.Red,
-        onTertiary = NenekPalette.White,
-        background = NenekPalette.Neutral10,
-        onBackground = NenekPalette.Neutral90,
-        surface = NenekPalette.Neutral10,
-        onSurface = NenekPalette.Neutral90,
-        surfaceVariant = NenekPalette.Neutral20,
-        onSurfaceVariant = NenekPalette.Neutral90,
-        outline = Color(0xFF555555),
+
         circular = NenekPalette.Orange,
-        error = Color(0xFFCF6679),
-        onError = NenekPalette.Neutral0,
-        errorContainer = Color(0xFFB1384E),
-        link = NenekPalette.Blue
+        errorContainer = NenekPalette.RedDarkContainer,
+        link = NenekPalette.Blue,
+        whiteText = NenekPalette.White,
+        darkText = NenekPalette.Neutral0,
+        text = NenekPalette.White,
+        textSecondary = NenekPalette.Neutral90,
+        textTertiary = NenekPalette.Neutral95
     )

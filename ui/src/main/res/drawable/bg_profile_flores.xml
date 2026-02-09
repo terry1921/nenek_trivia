@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="1080dp" android:height="1920dp"
+    android:viewportWidth="1080" android:viewportHeight="1920">
+    <path android:fillColor="#121212" android:pathData="M0,0H1080V1920H0Z"/>
+    <!-- Pradera -->
+    <path android:fillColor="#2A2A2A" android:fillAlpha="0.6"
+        android:pathData="M0,1200 C260,1120 540,1160 840,1120 C980,1100 1060,1080 1080,1080 V1920 H0 Z"/>
+    <!-- Flores estilizadas -->
+    <group android:pivotX="0" android:pivotY="0">
+        <path android:fillColor="#FF9800" android:fillAlpha="0.28"
+            android:pathData="M160,1520 a60,60 0 1,0 120,0 a60,60 0 1,0 -120,0"/>
+        <path android:fillColor="#E91E63" android:fillAlpha="0.24"
+            android:pathData="M880,1400 a70,70 0 1,0 140,0 a70,70 0 1,0 -140,0"/>
+        <path android:fillColor="#D500F9" android:fillAlpha="0.18"
+            android:pathData="M560,1680 a80,80 0 1,0 160,0 a80,80 0 1,0 -160,0"/>
+    </group>
+    <!-- Resplandor -->
+    <path android:fillColor="#FCFCFC" android:fillAlpha="0.05"
+        android:pathData="M0,0H1080V180 C900,220 700,210 480,190 C260,170 140,150 0,120 Z"/>
+</vector>

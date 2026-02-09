@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="welcome_app">Bienvenido a\nNenek Trivia</string>
+    <string name="description_app">Participa en cuestionarios rápidos y sube en la clasificación.\nTodas tus curiosidades en un solo lugar.</string>
+    <string name="google_login">Inicia sesión con Google</string>
+    <string name="facebook_login">Inicia sesión con Facebook</string>
+    <string name="privacy">Política de privacidad</string>
+    <string name="retry">Reintentar</string>
+    <string name="knowledge_bar">Barra de conocimientos</string>
+    <string name="knowledge_other">Otro</string>
+    <string name="knowledge_sports">Deportes</string>
+    <string name="knowledge_general">General</string>
+    <string name="knowledge_geography">Geografía</string>
+    <string name="knowledge_history">Historia</string>
+    <string name="knowledge_art">Arte</string>
+    <string name="position"># %1$d</string>
+    <string name="points">%1$d pts</string>
+    <string name="theme_dialog_title">Tema de la aplicación</string>
+    <string name="close">Cerrar</string>
+    <string name="home_description">Muñeca huasteca</string>
+    <string name="play_button_label">🎮  Jugar Trivia</string>
+    <string name="app_name">Nenek Trivia</string>
+    <string name="app_subtitle">Volando alto, jugando fuerte</string>
+    <string name="sound_appearance_header">SONIDO Y APARIENCIA</string>
+    <string name="music_title">Música de fondo</string>
+    <string name="music_subtitle">Reproducir música mientras juegas</string>
+    <string name="vibe_title">Vibración al responder</string>
+    <string name="vibe_subtitle">Retroalimentación háptica al acertar/fallar</string>
+    <string name="theme_title">Tema de la aplicación</string>
+    <string name="account_header">CUENTA</string>
+    <string name="close_session">Cerrar sesión</string>
+    <string name="about_header">ACERCA DE NENEK TRIVIA</string>
+    <string name="privacy_title">Política de Privacidad</string>
+    <string name="version">Versión</string>
+    <string name="playstore_score">Calificar en Play Store</string>
+    <string name="profile_photo">Foto de perfil</string>
+</resources>

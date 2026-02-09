@@ -2,9 +2,12 @@
 <!DOCTYPE instance-profile
         SYSTEM "https://resources.jetbrains.com/writerside/1.0/product-profile.dtd">
 
-<instance-profile id="n"
-                 name="Nenek_Design_Docs" start-page="design-doc.md">
-
+<instance-profile id="n" name="Nenek_Design_Docs" start-page="design-doc.md">
     <toc-element topic="design-doc.md"/>
     <toc-element topic="design-doc-auth.md"/>
+    <toc-element topic="design-doc-main.md"/>
+    <toc-element topic="design-doc-navigation.md"/>
+    <toc-element topic="design-doc-profile.md" />
+    <toc-element topic="design-doc-leaderboard.md"/>
+    <toc-element topic="design-doc-preferences.md"/>
 </instance-profile>

@@ -1,5 +1,11 @@
 # 📄 Design Doc — Nenek Trivia
 
+**Autor:** Enrique Espinoza (terry1921)
+
+**Fecha:** 04 de septiembre de 2025
+
+**Estado:** Borrador
+
 ## 1. Contexto y Objetivo
 **Nenek Trivia** es una aplicación móvil de preguntas y respuestas construida con Android Studio, Kotlin y Jetpack
 Compose.

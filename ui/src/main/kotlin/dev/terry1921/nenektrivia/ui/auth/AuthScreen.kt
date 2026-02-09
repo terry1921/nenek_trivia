@@ -1,5 +1,6 @@
 package dev.terry1921.nenektrivia.ui.auth
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -24,18 +25,21 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import dev.terry1921.nenektrivia.ui.R
+import dev.terry1921.nenektrivia.ui.components.SocialButtonVariant
+import dev.terry1921.nenektrivia.ui.components.SocialLoginButton
+import dev.terry1921.nenektrivia.ui.theme.NenekTheme
 import dev.terry1921.nenektrivia.ui.tokens.LocalColorTokens
 import dev.terry1921.nenektrivia.ui.tokens.LocalShapeTokens
+import dev.terry1921.nenektrivia.ui.tokens.LocalSizeTokens
 import dev.terry1921.nenektrivia.ui.tokens.LocalSpacingTokens
 import dev.terry1921.nenektrivia.ui.tokens.LocalTypographyTokens
 import dev.terry1921.nenektrivia.ui.tokens.asMaterialShapes
@@ -60,8 +64,26 @@ fun AuthScreen(
         state.errorMessage?.let { snackbarHostState.showSnackbar(it) }
     }
 
+    AuthScreenContent(
+        state = state,
+        snackbarHostState = snackbarHostState,
+        onGoogleClick = viewModel::onGoogleClick,
+        onFacebookClick = viewModel::onFacebookClick,
+        onPrivacyClick = viewModel::onPrivacyPolicyClick
+    )
+}
+
+@Composable
+private fun AuthScreenContent(
+    state: AuthUiState,
+    snackbarHostState: SnackbarHostState,
+    onGoogleClick: () -> Unit,
+    onFacebookClick: () -> Unit,
+    onPrivacyClick: () -> Unit
+) {
     val typography = LocalTypographyTokens.current
     val spacing = LocalSpacingTokens.current
+    val size = LocalSizeTokens.current
     val shapes = LocalShapeTokens.current
     val color = LocalColorTokens.current
 
@@ -71,90 +93,84 @@ fun AuthScreen(
     ) {
         Box(Modifier.fillMaxSize()) {
             Image(
-                painter = painterResource(id = R.drawable.bg_nenek_minimal), // <-- agrega tu imagen
+                painter = painterResource(id = R.drawable.bg_nenek_minimal),
                 contentDescription = null,
                 alignment = Alignment.TopCenter,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight()
-                    .clip(
-                        RoundedCornerShape(
-                            bottomStart = 48.dp,
-                            bottomEnd = 0.dp
-                        )
-                    )
             )
 
-            // Contenido inferior
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter)
-                    .padding(horizontal = spacing.medium, vertical = spacing.large),
+                    .padding(
+                        horizontal = size.paddingMedium,
+                        vertical = size.paddingLarge
+                    ),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Row(
                     modifier = Modifier
-                        .height(150.dp)
-                        .shadow(elevation = 8.dp, shape = RoundedCornerShape(8.dp), clip = true)
+                        .height(size.iconMaxHeight)
+                        .shadow(
+                            elevation = size.elevationLarge,
+                            shape = RoundedCornerShape(shapes.radiusSm),
+                            clip = true
+                        )
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.ic_launcher),
                         contentDescription = "Icon",
                         modifier = Modifier
-                            .size(width = 150.dp, height = 150.dp)
+                            .size(size.iconMax)
                             .align(Alignment.CenterVertically)
                     )
                 }
                 Spacer(Modifier.height(spacing.extraExtraLarge))
                 Text(
-                    text = "Bienvenido a\nNenek Trivia",
+                    text = stringResource(R.string.welcome_app),
                     style = typography.displayMedium,
-                    color = color.onSurface,
+                    color = color.darkText,
                     textAlign = TextAlign.Center
                 )
                 Spacer(Modifier.height(spacing.small))
                 Text(
-                    text = "Participa en cuestionarios rápidos y sube en la clasificación.\n" +
-                        "Todas tus curiosidades en un solo lugar.",
+                    text = stringResource(R.string.description_app),
                     style = typography.bodyMedium,
-                    color = color.onSurface.copy(alpha = 0.8f),
+                    color = color.darkText.copy(alpha = 0.8f),
                     textAlign = TextAlign.Center
                 )
                 Spacer(Modifier.height(spacing.large))
-
-                // Botón social primario (estilo filled / morado en tu tema)
                 SocialLoginButton(
-                    label = "Inicia sesión con Google",
+                    label = stringResource(R.string.google_login),
                     icon = ImageVector.vectorResource(id = R.drawable.ic_google),
                     enabled = !state.isGoogleLoading,
                     loading = state.isGoogleLoading,
-                    onClick = { viewModel.onGoogleClick() },
+                    onClick = onGoogleClick,
                     variant = SocialButtonVariant.Filled,
                     shape = shapes.asMaterialShapes().medium
                 )
                 Spacer(Modifier.height(spacing.medium))
-
-                // Botón social secundario (outlined / fondo claro)
                 SocialLoginButton(
-                    label = "Inicia sesión con Facebook",
+                    label = stringResource(R.string.facebook_login),
                     icon = ImageVector.vectorResource(id = R.drawable.ic_facebook),
                     enabled = !state.isFacebookLoading,
                     loading = state.isFacebookLoading,
-                    onClick = { viewModel.onFacebookClick() },
+                    onClick = onFacebookClick,
                     variant = SocialButtonVariant.Outlined,
                     shape = shapes.asMaterialShapes().medium
                 )
                 Spacer(Modifier.height(spacing.medium))
-                // enlace a politica de privacidad
                 Text(
-                    text = "Política de privacidad",
+                    text = stringResource(R.string.privacy),
                     style = typography.bodySmall,
                     color = color.link,
                     modifier = Modifier
-                        .clickable { viewModel.onPrivacyPolicyClick() }
-                        .padding(spacing.small)
+                        .clickable(onClick = onPrivacyClick)
+                        .padding(size.paddingSmall)
                         .align(Alignment.End)
                 )
                 Spacer(Modifier.height(spacing.large))
@@ -164,8 +180,41 @@ fun AuthScreen(
     }
 }
 
-@Preview
+@Preview(
+    name = "Auth Screen Light",
+    showSystemUi = true,
+    showBackground = true,
+    locale = "es"
+)
 @Composable
 fun AuthScreenPreview() {
-    AuthScreen(viewModel = AuthViewModel(), onNavigateMain = {}, onNavigatePrivacyPolicy = {})
+    NenekTheme {
+        AuthScreenContent(
+            state = AuthUiState(),
+            snackbarHostState = remember { SnackbarHostState() },
+            onGoogleClick = {},
+            onFacebookClick = {},
+            onPrivacyClick = {}
+        )
+    }
+}
+
+@Preview(
+    name = "Auth Screen Dark",
+    showSystemUi = true,
+    showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    locale = "es"
+)
+@Composable
+fun AuthScreenDarkPreview() {
+    NenekTheme {
+        AuthScreenContent(
+            state = AuthUiState(),
+            snackbarHostState = remember { SnackbarHostState() },
+            onGoogleClick = {},
+            onFacebookClick = {},
+            onPrivacyClick = {}
+        )
+    }
 }

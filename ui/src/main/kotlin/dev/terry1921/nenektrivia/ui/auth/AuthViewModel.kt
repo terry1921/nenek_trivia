@@ -2,6 +2,11 @@ package dev.terry1921.nenektrivia.ui.auth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.terry1921.nenektrivia.database.entity.User
+import dev.terry1921.nenektrivia.domain.session.GetUserSessionUseCase
+import dev.terry1921.nenektrivia.domain.session.SaveUserSessionUseCase
+import javax.inject.Inject
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,20 +17,11 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-data class AuthUiState(
-    val isFacebookLoading: Boolean = false,
-    val isGoogleLoading: Boolean = false,
-    val errorMessage: String? = null
-)
-
-sealed class AuthEffect {
-    data object NavigateToMain : AuthEffect()
-    data object NavigateToPrivacyPolicy : AuthEffect()
-}
-
-enum class AuthProvider { GOOGLE, FACEBOOK }
-
-class AuthViewModel : ViewModel() {
+@HiltViewModel
+class AuthViewModel @Inject constructor(
+    private val saveUserSession: SaveUserSessionUseCase,
+    private val getUserSession: GetUserSessionUseCase
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(AuthUiState())
     val uiState: StateFlow<AuthUiState> = _uiState.asStateFlow()
@@ -36,6 +32,16 @@ class AuthViewModel : ViewModel() {
     fun onGoogleClick() = simulateLogin(AuthProvider.GOOGLE)
 
     fun onFacebookClick() = simulateLogin(AuthProvider.FACEBOOK)
+
+    init {
+        checkIfUserIsLoggedIn()
+    }
+
+    fun checkIfUserIsLoggedIn() = viewModelScope.launch {
+        if (getUserSession() != null) {
+            _effect.emit(AuthEffect.NavigateToMain)
+        }
+    }
 
     private fun simulateLogin(provider: AuthProvider) {
         // Conexión real a Firebase quedará fuera de alcance por ahora.
@@ -50,6 +56,7 @@ class AuthViewModel : ViewModel() {
             try {
                 // TODO() -> integrar FirebaseAuth con el provider cuando corresponda.
                 delay(1200)
+                saveUserSession(simulatedUser(provider)).getOrThrow()
                 _effect.emit(AuthEffect.NavigateToMain)
             } catch (t: Throwable) {
                 _uiState.update {
@@ -68,6 +75,20 @@ class AuthViewModel : ViewModel() {
                 }
             }
         }
+    }
+
+    private fun simulatedUser(provider: AuthProvider): User = when (provider) {
+        AuthProvider.GOOGLE ->
+            User(
+                username = "Jugador Google",
+                photoUrl = "https://i.pravatar.cc/300?img=12"
+            )
+
+        AuthProvider.FACEBOOK ->
+            User(
+                username = "Jugador Facebook",
+                photoUrl = "https://i.pravatar.cc/300?img=32"
+            )
     }
 
     fun onPrivacyPolicyClick() {

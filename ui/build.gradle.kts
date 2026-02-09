@@ -2,11 +2,14 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.ksp)
+    id(libs.plugins.hilt.plugin.get().pluginId)
 }
 
 android {
     namespace = "dev.terry1921.nenektrivia.ui"
     compileSdk = 36
+    val versionName = "1.0.0"
 
     defaultConfig {
         minSdk = 26
@@ -25,6 +28,9 @@ android {
         debug {
             isMinifyEnabled = false
         }
+        configureEach {
+            buildConfigField("String", "VERSION", "\"$versionName\"")
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -32,8 +38,12 @@ android {
     }
     kotlin { jvmToolchain(17) }
     buildFeatures {
+        buildConfig = true
         compose = true
         viewBinding = true
+    }
+    hilt {
+        enableAggregatingTask = true
     }
 }
 
@@ -43,6 +53,7 @@ composeCompiler {
 }
 
 dependencies {
+    implementation(project(":domain"))
     implementation(project(":model"))
 
     // androidx
@@ -54,6 +65,8 @@ dependencies {
     implementation(libs.androidx.lifecycle)
     implementation(libs.androidx.startup)
     implementation(libs.androidx.activity)
+    implementation(libs.play.review)
+    implementation(libs.compose.material.icons.extended)
 
     // compose
     implementation(platform(libs.compose.bom))
@@ -62,7 +75,7 @@ dependencies {
     implementation(libs.compose.ui.preview)
     implementation(libs.compose.material3)
     implementation(libs.androidx.navigation)
-    debugImplementation(libs.compose.ui.tooling)
+    implementation(libs.play.services.games)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
 
@@ -72,12 +85,23 @@ dependencies {
     implementation(libs.baseAdapter)
     implementation(libs.progressView)
     implementation(libs.coil)
+    implementation(libs.coil.network.okhttp)
     implementation(libs.transformationLayout)
+    implementation(libs.splashscreen)
+
+    // Hilt en androidTest con KSP
+    implementation(libs.hilt.android)
+    implementation(libs.hilt.navigation.compose)
+    implementation(libs.androidx.ui.text)
+    ksp(libs.hilt.compiler)
 
     // whatIf
     implementation(libs.whatif)
 
     // unit test
+    androidTestImplementation(libs.hilt.testing)
+    kspAndroidTest(libs.hilt.compiler)
+
     testImplementation(libs.junit)
     testImplementation(libs.turbine)
     testImplementation(libs.androidx.test.core)
@@ -91,4 +115,5 @@ dependencies {
     androidTestImplementation(libs.android.test.runner)
     androidTestImplementation(libs.compose.ui.test.junit4)
     debugImplementation(libs.compose.ui.test.manifest)
+    debugImplementation(libs.compose.ui.tooling)
 }
