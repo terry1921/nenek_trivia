@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import dev.terry1921.nenektrivia.model.category.leaderboard.PlayerScore
 import dev.terry1921.nenektrivia.ui.tokens.LocalSizeTokens
 import dev.terry1921.nenektrivia.ui.tokens.LocalSpacingTokens
@@ -23,8 +24,10 @@ fun LeaderboardList(players: List<PlayerScore>) {
         modifier = Modifier
             .fillMaxSize()
             .padding(
-                horizontal = size.paddingLarge,
-                vertical = spacing.topAppBarHeight
+                start = size.paddingLarge,
+                end = size.paddingLarge,
+                top = spacing.topAppBarHeight,
+                bottom = 0.dp
             ),
         state = listState,
         verticalArrangement = Arrangement.spacedBy(spacing.medium),
