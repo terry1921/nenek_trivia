@@ -34,4 +34,5 @@
     <string name="version">Versión</string>
     <string name="playstore_score">Calificar en Play Store</string>
     <string name="profile_photo">Foto de perfil</string>
+    <string name="continue_with_google">Continue with Google</string>
 </resources>

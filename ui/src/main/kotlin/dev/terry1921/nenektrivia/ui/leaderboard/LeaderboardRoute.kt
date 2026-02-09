@@ -5,7 +5,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 
 @Composable
-fun LeaderboardRoute(viewModel: LeaderboardViewModel, onBack: () -> Unit = {}) {
+fun LeaderboardRoute(viewModel: LeaderboardViewModel) {
     val state by viewModel.uiState.collectAsState()
     LeaderboardScreen(
         state = state,

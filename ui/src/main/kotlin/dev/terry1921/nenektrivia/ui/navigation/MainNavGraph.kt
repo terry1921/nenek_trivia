@@ -30,22 +30,16 @@ fun MainNavGraph(
     ) {
         composable(MainDestination.Home.route) {
             HomeRoute(
-                onPlayClick = {} // TODO("Pendiente ir a pantalla de juego")
+                onPlayClick = {}
             )
         }
         composable(MainDestination.Profile.route) {
             val vm: ProfileViewModel = hiltViewModel()
-            ProfileRoute(
-                viewModel = vm,
-                onBack = { navController.popBackStack() }
-            )
+            ProfileRoute(viewModel = vm)
         }
         composable(MainDestination.Leaderboard.route) {
             val vm: LeaderboardViewModel = hiltViewModel()
-            LeaderboardRoute(
-                viewModel = vm,
-                onBack = { navController.popBackStack() }
-            )
+            LeaderboardRoute(viewModel = vm)
         }
         composable(MainDestination.Options.route) {
             val vm: PreferencesViewModel = hiltViewModel()
