@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -88,6 +89,7 @@ fun SocialLoginButton(
             ),
             content = { content() }
         )
+
         SocialButtonVariant.Outlined -> OutlinedButton(
             onClick = onClick,
             enabled = enabled && !loading,
@@ -96,7 +98,7 @@ fun SocialLoginButton(
             colors = ButtonDefaults.outlinedButtonColors(
                 contentColor = color.darkText
             ),
-            border = ButtonDefaults.outlinedButtonBorder,
+            border = ButtonDefaults.outlinedButtonBorder(enabled = true),
             content = { content() }
         )
     }
@@ -114,7 +116,7 @@ fun SocialLoginButtonPreview() {
     ) {
         SocialLoginButton(
             modifier = Modifier.padding(8.dp),
-            label = "Continue with Google",
+            label = stringResource(R.string.continue_with_google),
             icon = ImageVector.vectorResource(id = R.drawable.ic_google),
             enabled = true,
             onClick = {},
@@ -136,7 +138,7 @@ fun SocialLoginButtonDarkPreview() {
     ) {
         SocialLoginButton(
             modifier = Modifier.padding(8.dp),
-            label = "Continue with Google",
+            label = stringResource(R.string.continue_with_google),
             icon = ImageVector.vectorResource(id = R.drawable.ic_google),
             enabled = true,
             onClick = {},
@@ -155,7 +157,7 @@ fun SocialLoginButtonLoadingPreview() {
     ) {
         SocialLoginButton(
             modifier = Modifier.padding(8.dp),
-            label = "Continue with Google",
+            label = stringResource(R.string.continue_with_google),
             icon = ImageVector.vectorResource(id = R.drawable.ic_google),
             enabled = true,
             onClick = {},
@@ -174,7 +176,7 @@ fun SocialLoginButtonPreviewOutlined() {
     ) {
         SocialLoginButton(
             modifier = Modifier.padding(16.dp),
-            label = "Continue with Google",
+            label = stringResource(R.string.continue_with_google),
             icon = ImageVector.vectorResource(id = R.drawable.ic_google),
             enabled = true,
             onClick = {},
@@ -193,7 +195,7 @@ fun SocialLoginButtonLoadingPreviewOutlined() {
     ) {
         SocialLoginButton(
             modifier = Modifier.padding(16.dp),
-            label = "Continue with Google",
+            label = stringResource(R.string.continue_with_google),
             icon = ImageVector.vectorResource(id = R.drawable.ic_google),
             enabled = true,
             onClick = {},

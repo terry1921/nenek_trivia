@@ -5,7 +5,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 
 @Composable
-fun ProfileRoute(viewModel: ProfileViewModel, onBack: () -> Unit = {}) {
+fun ProfileRoute(viewModel: ProfileViewModel) {
     val state by viewModel.uiState.collectAsState()
     ProfileScreen(
         state = state,
