@@ -35,4 +35,5 @@
     <string name="playstore_score">Calificar en Play Store</string>
     <string name="profile_photo">Foto de perfil</string>
     <string name="continue_with_google">Continue with Google</string>
+    <string name="default_web_client_id">458676168606-1cl772ijqckildsm7ah0uaodhsp8ibfp.apps.googleusercontent.com</string>
 </resources>

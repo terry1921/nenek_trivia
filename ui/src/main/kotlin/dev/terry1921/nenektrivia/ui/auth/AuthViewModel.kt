@@ -4,9 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.terry1921.nenektrivia.database.entity.User
+import dev.terry1921.nenektrivia.domain.auth.SignInWithGoogleUseCase
 import dev.terry1921.nenektrivia.domain.session.GetUserSessionUseCase
 import dev.terry1921.nenektrivia.domain.session.SaveUserSessionUseCase
 import javax.inject.Inject
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +22,8 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     private val saveUserSession: SaveUserSessionUseCase,
-    private val getUserSession: GetUserSessionUseCase
+    private val getUserSession: GetUserSessionUseCase,
+    private val signInWithGoogle: SignInWithGoogleUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(AuthUiState())
@@ -29,7 +32,48 @@ class AuthViewModel @Inject constructor(
     private val _effect = MutableSharedFlow<AuthEffect>()
     val effect: SharedFlow<AuthEffect> = _effect.asSharedFlow()
 
-    fun onGoogleClick() = simulateLogin(AuthProvider.GOOGLE)
+    fun onGoogleClick() {
+        _uiState.update {
+            it.copy(
+                isGoogleLoading = true,
+                isFacebookLoading = false,
+                errorMessage = null
+            )
+        }
+        viewModelScope.launch {
+            _effect.emit(AuthEffect.LaunchGoogleSignIn)
+        }
+    }
+
+    fun onGoogleToken(idToken: String) {
+        viewModelScope.launch {
+            try {
+                val remoteUser = signInWithGoogle(idToken).getOrThrow()
+                saveUserSession(remoteUser).getOrThrow()
+                _effect.emit(AuthEffect.NavigateToMain)
+            } catch (t: Throwable) {
+                if (t is CancellationException) throw t
+                _uiState.update {
+                    it.copy(errorMessage = "No se pudo iniciar sesión con Google.")
+                }
+            } finally {
+                _uiState.update { it.copy(isGoogleLoading = false) }
+            }
+        }
+    }
+
+    fun onGoogleCancelled() {
+        _uiState.update { it.copy(isGoogleLoading = false) }
+    }
+
+    fun onGoogleError(message: String? = null) {
+        _uiState.update {
+            it.copy(
+                isGoogleLoading = false,
+                errorMessage = message ?: "No se pudo iniciar sesión con Google."
+            )
+        }
+    }
 
     fun onFacebookClick() = simulateLogin(AuthProvider.FACEBOOK)
 

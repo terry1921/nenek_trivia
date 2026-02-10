@@ -76,6 +76,7 @@ dependencies {
     implementation(libs.compose.material3)
     implementation(libs.androidx.navigation)
     implementation(libs.play.services.games)
+    implementation(libs.play.services.auth)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
 

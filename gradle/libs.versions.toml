@@ -25,6 +25,7 @@ compose-bom = "2026.01.01"
 googleServices = "4.4.4"
 firebase-bom = "34.9.0"
 firebase-crashlytics = "3.0.6"
+playServicesAuth = "21.5.0"
 
 # Material (Views)
 material = "1.13.0"
@@ -155,8 +156,8 @@ androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lif
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom"}
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ndk"}
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
 firebase-database = { group = "com.google.firebase", name = "firebase-database" }
-
 
 # Testing
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -178,3 +179,4 @@ compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-mani
 baseAdapter = { group = "com.github.skydoves", name = "baserecyclerviewadapter", version.ref = "baseAdapter" }
 androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swiperefreshlayout" }
 play-services-games = { group = "com.google.android.gms", name = "play-services-games", version.ref = "playServicesGames" }
+play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "playServicesAuth" }
