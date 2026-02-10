@@ -78,6 +78,7 @@ dependencies {
     // firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.database)
+    implementation(libs.firebase.auth)
 
     // datastore
     implementation(libs.datastore)

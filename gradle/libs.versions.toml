@@ -1,7 +1,7 @@
 [versions]
 # Core tool chains
 agp = "9.0.0"
-kotlin = "2.3.0"
+kotlin = "2.3.10"
 ksp = "2.3.5"
 
 # AndroidX / UI
@@ -25,6 +25,7 @@ compose-bom = "2026.01.01"
 googleServices = "4.4.4"
 firebase-bom = "34.9.0"
 firebase-crashlytics = "3.0.6"
+playServicesAuth = "21.5.0"
 
 # Material (Views)
 material = "1.13.0"
@@ -34,14 +35,14 @@ datastore = "1.2.0"
 androidxRoom = "2.8.4"
 
 # DI
-hilt = "2.59"
+hilt = "2.59.1"
 hiltNavigation = "1.3.0"
 
 # Net
 retrofit = "3.0.0"
 okhttp = "5.3.2"
 gson = "2.13.2"
-sandwich = "2.2.0"
+sandwich = "2.2.1"
 
 # Coroutines
 coroutines = "1.10.2"
@@ -155,8 +156,8 @@ androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lif
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom"}
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ndk"}
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
 firebase-database = { group = "com.google.firebase", name = "firebase-database" }
-
 
 # Testing
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -178,3 +179,4 @@ compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-mani
 baseAdapter = { group = "com.github.skydoves", name = "baserecyclerviewadapter", version.ref = "baseAdapter" }
 androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swiperefreshlayout" }
 play-services-games = { group = "com.google.android.gms", name = "play-services-games", version.ref = "playServicesGames" }
+play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "playServicesAuth" }

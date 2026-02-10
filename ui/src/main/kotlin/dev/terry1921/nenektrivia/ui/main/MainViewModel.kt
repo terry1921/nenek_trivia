@@ -24,13 +24,6 @@ class MainViewModel @Inject constructor(private val clearUserSession: ClearUserS
     private val _effect = MutableSharedFlow<MainEffect>()
     val effect: SharedFlow<MainEffect> = _effect.asSharedFlow()
 
-    fun setUser(name: String?, avatarUrl: String?) {
-        _uiState.value = _uiState.value.copy(displayName = name, avatarUrl = avatarUrl)
-    }
-
-    val userName: String
-        get() = _uiState.value.displayName ?: "Invitado"
-
     fun onLogoutClick() {
         if (_uiState.value.isLoggingOut) return
         viewModelScope.launch {
@@ -38,6 +31,9 @@ class MainViewModel @Inject constructor(private val clearUserSession: ClearUserS
             runCatching {
                 clearUserSession()
             }.onSuccess {
+                _uiState.update {
+                    it.copy(displayName = null, avatarUrl = null)
+                }
                 _effect.emit(MainEffect.NavigateToAuth)
             }.onFailure {
                 _uiState.update { current ->

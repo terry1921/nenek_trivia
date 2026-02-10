@@ -1,6 +1,9 @@
 package dev.terry1921.nenektrivia.ui.auth
 
+import android.app.Activity
 import android.content.res.Configuration
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -28,11 +31,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import dev.terry1921.nenektrivia.ui.R
 import dev.terry1921.nenektrivia.ui.components.SocialButtonVariant
 import dev.terry1921.nenektrivia.ui.components.SocialLoginButton
@@ -53,11 +60,50 @@ fun AuthScreen(
 ) {
     val state by viewModel.uiState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
+    val context = LocalContext.current
+    val clientId = stringResource(R.string.default_web_client_id)
+    val googleSignInClient = remember {
+        val gso =
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(clientId)
+                .requestEmail()
+                .build()
+        GoogleSignIn.getClient(context, gso)
+    }
+    val googleSignInLauncher =
+        rememberLauncherForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode != Activity.RESULT_OK) {
+                viewModel.onGoogleCancelled()
+                return@rememberLauncherForActivityResult
+            }
+            val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+            try {
+                val account = task.getResult(ApiException::class.java)
+                val idToken = account?.idToken
+                if (idToken.isNullOrBlank()) {
+                    viewModel.onGoogleError("No se pudo obtener el token de Google.")
+                } else {
+                    viewModel.onGoogleToken(idToken)
+                }
+            } catch (error: ApiException) {
+                viewModel.onGoogleError()
+            }
+        }
 
     LaunchedEffect(Unit) {
         viewModel.effect.collectLatest { effect ->
-            if (effect is AuthEffect.NavigateToMain) onNavigateMain()
-            if (effect is AuthEffect.NavigateToPrivacyPolicy) onNavigatePrivacyPolicy()
+            when (effect) {
+                AuthEffect.NavigateToMain -> onNavigateMain()
+
+                AuthEffect.NavigateToPrivacyPolicy -> onNavigatePrivacyPolicy()
+
+                AuthEffect.LaunchGoogleSignIn -> {
+                    googleSignInClient.signOut()
+                    googleSignInLauncher.launch(googleSignInClient.signInIntent)
+                }
+            }
         }
     }
     LaunchedEffect(state.errorMessage) {

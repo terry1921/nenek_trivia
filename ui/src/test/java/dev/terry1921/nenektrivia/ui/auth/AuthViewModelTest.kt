@@ -2,13 +2,13 @@ package dev.terry1921.nenektrivia.ui.auth
 
 import app.cash.turbine.test
 import dev.terry1921.nenektrivia.database.entity.User
+import dev.terry1921.nenektrivia.domain.auth.SignInWithGoogleUseCase
 import dev.terry1921.nenektrivia.domain.session.GetUserSessionUseCase
 import dev.terry1921.nenektrivia.domain.session.SaveUserSessionUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestDispatcher
-import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runCurrent
@@ -36,12 +36,13 @@ class AuthViewModelTest {
 
     private val saveUserSession: SaveUserSessionUseCase = mock()
     private val getUserSession: GetUserSessionUseCase = mock()
+    private val signInWithGoogle: SignInWithGoogleUseCase = mock()
 
     @Test
     fun checkIfUserIsLoggedIn_emitsNavigateToMain() = runTest {
         whenever(getUserSession.invoke()).thenReturn(User(username = "Existing"))
 
-        val viewModel = AuthViewModel(saveUserSession, getUserSession)
+        val viewModel = AuthViewModel(saveUserSession, getUserSession, signInWithGoogle)
 
         viewModel.effect.test {
             advanceUntilIdle()
@@ -51,13 +52,10 @@ class AuthViewModelTest {
     }
 
     @Test
-    fun onGoogleClick_setsLoadingSavesUserAndNavigates() = runTest {
+    fun onGoogleClick_setsLoadingAndEmitsLaunchEffect() = runTest {
         whenever(getUserSession.invoke()).thenReturn(null)
-        whenever(
-            saveUserSession.invoke(any())
-        ).thenReturn(Result.success(User(username = "Jugador Google")))
 
-        val viewModel = AuthViewModel(saveUserSession, getUserSession)
+        val viewModel = AuthViewModel(saveUserSession, getUserSession, signInWithGoogle)
 
         viewModel.effect.test {
             viewModel.onGoogleClick()
@@ -67,17 +65,36 @@ class AuthViewModelTest {
             assertFalse(viewModel.uiState.value.isFacebookLoading)
             assertNull(viewModel.uiState.value.errorMessage)
 
-            advanceTimeBy(1200)
-            runCurrent()
+            assertEquals(AuthEffect.LaunchGoogleSignIn, awaitItem())
+
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun onGoogleToken_savesUserAndNavigates() = runTest {
+        whenever(getUserSession.invoke()).thenReturn(null)
+        whenever(
+            signInWithGoogle.invoke(any())
+        ).thenReturn(Result.success(User(id = "uid-1", username = "Jugador Google")))
+        whenever(
+            saveUserSession.invoke(any())
+        ).thenReturn(Result.success(User(id = "uid-1", username = "Jugador Google")))
+
+        val viewModel = AuthViewModel(saveUserSession, getUserSession, signInWithGoogle)
+
+        viewModel.effect.test {
+            viewModel.onGoogleToken("token")
+            advanceUntilIdle()
 
             assertEquals(AuthEffect.NavigateToMain, awaitItem())
             assertFalse(viewModel.uiState.value.isGoogleLoading)
             assertFalse(viewModel.uiState.value.isFacebookLoading)
 
+            verify(signInWithGoogle).invoke("token")
             verify(saveUserSession).invoke(
                 check {
                     assertEquals("Jugador Google", it.username)
-                    assertEquals("https://i.pravatar.cc/300?img=12", it.photoUrl)
                 }
             )
 
@@ -89,7 +106,7 @@ class AuthViewModelTest {
     fun onPrivacyPolicyClick_emitsNavigateToPrivacyPolicy() = runTest {
         whenever(getUserSession.invoke()).thenReturn(null)
 
-        val viewModel = AuthViewModel(saveUserSession, getUserSession)
+        val viewModel = AuthViewModel(saveUserSession, getUserSession, signInWithGoogle)
 
         viewModel.effect.test {
             viewModel.onPrivacyPolicyClick()
