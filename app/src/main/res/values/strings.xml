@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Nenek Trivia</string>
+    <string name="facebook_app_id">886920774135009</string>
+    <string name="facebook_client_token">fe81ca6a5a00e142942d548eec7588b0</string>
 </resources>
