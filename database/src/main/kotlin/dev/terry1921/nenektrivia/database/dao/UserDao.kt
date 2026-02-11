@@ -17,6 +17,9 @@ interface UserDao {
     @Query("SELECT * FROM users WHERE username = :username LIMIT 1")
     suspend fun findByUsername(username: String): User?
 
+    @Query("SELECT * FROM users WHERE id = :id LIMIT 1")
+    suspend fun findById(id: String): User?
+
     @Query("SELECT * FROM users WHERE is_logged_in = 1 LIMIT 1")
     suspend fun getActiveUser(): User?
 

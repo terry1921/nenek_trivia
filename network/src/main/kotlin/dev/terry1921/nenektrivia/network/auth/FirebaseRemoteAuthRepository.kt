@@ -1,5 +1,7 @@
 package dev.terry1921.nenektrivia.network.auth
 
+import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlin.coroutines.resume
@@ -14,9 +16,14 @@ class FirebaseRemoteAuthRepository(
 ) : RemoteAuthRepository {
 
     override suspend fun signInWithGoogle(idToken: String): Result<AuthUser> =
+        signInWithCredential(GoogleAuthProvider.getCredential(idToken, null))
+
+    override suspend fun signInWithFacebook(accessToken: String): Result<AuthUser> =
+        signInWithCredential(FacebookAuthProvider.getCredential(accessToken))
+
+    private suspend fun signInWithCredential(credential: AuthCredential): Result<AuthUser> =
         withContext(dispatcher) {
             suspendCancellableCoroutine { continuation ->
-                val credential = GoogleAuthProvider.getCredential(idToken, null)
                 auth.signInWithCredential(credential)
                     .addOnSuccessListener { result ->
                         val user = result.user

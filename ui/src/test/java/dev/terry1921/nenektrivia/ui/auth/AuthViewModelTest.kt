@@ -2,6 +2,7 @@ package dev.terry1921.nenektrivia.ui.auth
 
 import app.cash.turbine.test
 import dev.terry1921.nenektrivia.database.entity.User
+import dev.terry1921.nenektrivia.domain.auth.SignInWithFacebookUseCase
 import dev.terry1921.nenektrivia.domain.auth.SignInWithGoogleUseCase
 import dev.terry1921.nenektrivia.domain.session.GetUserSessionUseCase
 import dev.terry1921.nenektrivia.domain.session.SaveUserSessionUseCase
@@ -37,12 +38,13 @@ class AuthViewModelTest {
     private val saveUserSession: SaveUserSessionUseCase = mock()
     private val getUserSession: GetUserSessionUseCase = mock()
     private val signInWithGoogle: SignInWithGoogleUseCase = mock()
+    private val signInWithFacebook: SignInWithFacebookUseCase = mock()
 
     @Test
     fun checkIfUserIsLoggedIn_emitsNavigateToMain() = runTest {
         whenever(getUserSession.invoke()).thenReturn(User(username = "Existing"))
 
-        val viewModel = AuthViewModel(saveUserSession, getUserSession, signInWithGoogle)
+        val viewModel = createViewModel()
 
         viewModel.effect.test {
             advanceUntilIdle()
@@ -55,7 +57,7 @@ class AuthViewModelTest {
     fun onGoogleClick_setsLoadingAndEmitsLaunchEffect() = runTest {
         whenever(getUserSession.invoke()).thenReturn(null)
 
-        val viewModel = AuthViewModel(saveUserSession, getUserSession, signInWithGoogle)
+        val viewModel = createViewModel()
 
         viewModel.effect.test {
             viewModel.onGoogleClick()
@@ -81,7 +83,7 @@ class AuthViewModelTest {
             saveUserSession.invoke(any())
         ).thenReturn(Result.success(User(id = "uid-1", username = "Jugador Google")))
 
-        val viewModel = AuthViewModel(saveUserSession, getUserSession, signInWithGoogle)
+        val viewModel = createViewModel()
 
         viewModel.effect.test {
             viewModel.onGoogleToken("token")
@@ -103,10 +105,61 @@ class AuthViewModelTest {
     }
 
     @Test
+    fun onFacebookClick_setsLoadingAndEmitsLaunchEffect() = runTest {
+        whenever(getUserSession.invoke()).thenReturn(null)
+
+        val viewModel = createViewModel()
+
+        viewModel.effect.test {
+            viewModel.onFacebookClick()
+            runCurrent()
+
+            assertFalse(viewModel.uiState.value.isGoogleLoading)
+            assertTrue(viewModel.uiState.value.isFacebookLoading)
+            assertNull(viewModel.uiState.value.errorMessage)
+
+            assertEquals(AuthEffect.LaunchFacebookSignIn, awaitItem())
+
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun onFacebookToken_savesUserAndNavigates() = runTest {
+        whenever(getUserSession.invoke()).thenReturn(null)
+        whenever(
+            signInWithFacebook.invoke(any())
+        ).thenReturn(Result.success(User(id = "fb-uid-1", username = "Jugador Facebook")))
+        whenever(
+            saveUserSession.invoke(any())
+        ).thenReturn(Result.success(User(id = "fb-uid-1", username = "Jugador Facebook")))
+
+        val viewModel = createViewModel()
+
+        viewModel.effect.test {
+            viewModel.onFacebookToken("access-token")
+            advanceUntilIdle()
+
+            assertEquals(AuthEffect.NavigateToMain, awaitItem())
+            assertFalse(viewModel.uiState.value.isGoogleLoading)
+            assertFalse(viewModel.uiState.value.isFacebookLoading)
+
+            verify(signInWithFacebook).invoke("access-token")
+            verify(saveUserSession).invoke(
+                check {
+                    assertEquals("Jugador Facebook", it.username)
+                }
+            )
+
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
     fun onPrivacyPolicyClick_emitsNavigateToPrivacyPolicy() = runTest {
         whenever(getUserSession.invoke()).thenReturn(null)
 
-        val viewModel = AuthViewModel(saveUserSession, getUserSession, signInWithGoogle)
+        val viewModel = createViewModel()
 
         viewModel.effect.test {
             viewModel.onPrivacyPolicyClick()
@@ -116,6 +169,13 @@ class AuthViewModelTest {
             cancelAndIgnoreRemainingEvents()
         }
     }
+
+    private fun createViewModel() = AuthViewModel(
+        saveUserSession = saveUserSession,
+        getUserSession = getUserSession,
+        signInWithGoogle = signInWithGoogle,
+        signInWithFacebook = signInWithFacebook
+    )
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)

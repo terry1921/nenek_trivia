@@ -5,6 +5,8 @@ import dev.terry1921.nenektrivia.database.entity.User
 interface AuthRepository {
     suspend fun registerUser(user: User): Result<Unit>
 
+    suspend fun getUserById(userId: String): User?
+
     suspend fun getUserByUsername(username: String): User?
 
     suspend fun updateMaxPoints(userId: String, points: Int)
