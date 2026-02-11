@@ -1,8 +1,11 @@
 package dev.terry1921.nenektrivia.ui.auth
 
 import android.app.Activity
+import android.content.Context
+import android.content.ContextWrapper
 import android.content.res.Configuration
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.ActivityResultRegistryOwner
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -22,6 +25,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -37,6 +41,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
@@ -52,6 +61,14 @@ import dev.terry1921.nenektrivia.ui.tokens.LocalTypographyTokens
 import dev.terry1921.nenektrivia.ui.tokens.asMaterialShapes
 import kotlinx.coroutines.flow.collectLatest
 
+private val FacebookPermissions = listOf("email", "public_profile")
+
+private tailrec fun Context.findActivity(): Activity? = when (this) {
+    is Activity -> this
+    is ContextWrapper -> baseContext.findActivity()
+    else -> null
+}
+
 @Composable
 fun AuthScreen(
     viewModel: AuthViewModel,
@@ -61,6 +78,7 @@ fun AuthScreen(
     val state by viewModel.uiState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
+    val callbackManager = remember { CallbackManager.Factory.create() }
     val clientId = stringResource(R.string.default_web_client_id)
     val googleSignInClient = remember {
         val gso =
@@ -92,6 +110,33 @@ fun AuthScreen(
             }
         }
 
+    DisposableEffect(callbackManager) {
+        val loginManager = LoginManager.getInstance()
+        val facebookCallback =
+            object : FacebookCallback<LoginResult> {
+                override fun onSuccess(result: LoginResult) {
+                    val token = result.accessToken.token
+                    if (token.isBlank()) {
+                        viewModel.onFacebookError("No se pudo obtener el token de Facebook.")
+                    } else {
+                        viewModel.onFacebookToken(token)
+                    }
+                }
+
+                override fun onCancel() {
+                    viewModel.onFacebookCancelled()
+                }
+
+                override fun onError(error: FacebookException) {
+                    viewModel.onFacebookError(error.localizedMessage)
+                }
+            }
+        loginManager.registerCallback(callbackManager, facebookCallback)
+        onDispose {
+            loginManager.unregisterCallback(callbackManager)
+        }
+    }
+
     LaunchedEffect(Unit) {
         viewModel.effect.collectLatest { effect ->
             when (effect) {
@@ -102,6 +147,29 @@ fun AuthScreen(
                 AuthEffect.LaunchGoogleSignIn -> {
                     googleSignInClient.signOut()
                     googleSignInLauncher.launch(googleSignInClient.signInIntent)
+                }
+
+                AuthEffect.LaunchFacebookSignIn -> {
+                    val activity = context.findActivity()
+                    val activityResultOwner = activity as? ActivityResultRegistryOwner
+                    if (activityResultOwner == null) {
+                        viewModel.onFacebookError("No se pudo abrir el login de Facebook.")
+                    } else {
+                        try {
+                            LoginManager
+                                .getInstance()
+                                .logInWithReadPermissions(
+                                    activityResultOwner,
+                                    callbackManager,
+                                    FacebookPermissions
+                                )
+                        } catch (t: Throwable) {
+                            val message = t.message?.takeIf { it.isNotBlank() }
+                            viewModel.onFacebookError(
+                                message ?: "No se pudo iniciar sesión con Facebook."
+                            )
+                        }
+                    }
                 }
             }
         }

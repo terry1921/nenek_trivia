@@ -11,6 +11,8 @@ class RoomAuthRepository(private val dao: UserDao) : AuthRepository {
         Result.failure(t)
     }
 
+    override suspend fun getUserById(userId: String): User? = dao.findById(userId)
+
     override suspend fun getUserByUsername(username: String): User? = dao.findByUsername(username)
 
     override suspend fun updateMaxPoints(userId: String, points: Int) =

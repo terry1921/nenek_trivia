@@ -77,6 +77,7 @@ dependencies {
     implementation(libs.androidx.navigation)
     implementation(libs.play.services.games)
     implementation(libs.play.services.auth)
+    implementation(libs.facebook.login)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
 
