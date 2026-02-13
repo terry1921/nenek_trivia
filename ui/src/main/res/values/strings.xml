@@ -36,4 +36,15 @@
     <string name="profile_photo">Foto de perfil</string>
     <string name="continue_with_google">Continue with Google</string>
     <string name="default_web_client_id">458676168606-1cl772ijqckildsm7ah0uaodhsp8ibfp.apps.googleusercontent.com</string>
+    <string name="exit_quiz_title">¿Salir de la partida?</string>
+    <string name="exit_quiz_message">Perderás tu progreso actual.</string>
+    <string name="exit_quiz_confirm">Salir</string>
+    <string name="exit_quiz_cancel">Cancelar</string>
+    <string name="question_time_label">TIEMPO</string>
+    <string name="question_next_label">Siguiente</string>
+    <string name="question_new_game_label">Nuevo juego</string>
+    <string name="question_tip_label">¿SABÍAS QUE?</string>
+    <string name="cargando_pregunta">Cargando pregunta...</string>
+    <string name="winner_dialog_message">Felicidades has ganado la mayor puntuación hasta ahora</string>
+    <string name="winner_dialog_accept">Aceptar</string>
 </resources>

@@ -3,34 +3,29 @@ package dev.terry1921.nenektrivia.database.entity
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import java.util.UUID
 import kotlinx.parcelize.Parcelize
 
 /**
- * Question: exactly 1 correct + 3 incorrect options.
- * Enforce via app logic; DB holds 4 options and a correct index.
+ * Question payload persisted as received from Firebase `/questions`.
  */
 @Entity(
     tableName = "questions",
-    foreignKeys = [
-        ForeignKey(
-            entity = Category::class,
-            parentColumns = ["id"],
-            childColumns = ["category_id"],
-            onDelete = ForeignKey.CASCADE,
-            onUpdate = ForeignKey.CASCADE
-        )
-    ],
-    indices = [Index("category_id"), Index(value = ["text"], unique = false)]
+    indices = [
+        Index(value = ["category"]),
+        Index(value = ["question_text"])
+    ]
 )
 @Parcelize
 data class Question(
     @PrimaryKey val id: String = UUID.randomUUID().toString(),
-    @ColumnInfo(name = "text") val text: String,
-    @ColumnInfo(name = "options") val options: List<String>, // size must be 4
-    @ColumnInfo(name = "correct_index") val correctIndex: Int, // 0..3
-    @ColumnInfo(name = "category_id") val categoryId: Int
+    @ColumnInfo(name = "question_text") val question: String,
+    @ColumnInfo(name = "category") val category: String,
+    @ColumnInfo(name = "answer_good") val answerGood: String,
+    @ColumnInfo(name = "answer_bad_01") val answerBad01: String,
+    @ColumnInfo(name = "answer_bad_02") val answerBad02: String,
+    @ColumnInfo(name = "answer_bad_03") val answerBad03: String,
+    @ColumnInfo(name = "tip") val tip: String? = null
 ) : Parcelable

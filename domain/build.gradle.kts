@@ -37,7 +37,7 @@ android {
 
 dependencies {
     api(project(":database"))
-    api(project(":network"))
+    implementation(project(":network"))
     api(project(":model"))
 
     // coroutines/flow
@@ -46,9 +46,6 @@ dependencies {
     // di
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
-
-    // logging
-    implementation(libs.timber)
 
     // --- Testing ---
     testImplementation(libs.junit)

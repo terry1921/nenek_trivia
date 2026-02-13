@@ -2,7 +2,6 @@ package dev.terry1921.nenektrivia.ui.leaderboard
 
 import dev.terry1921.nenektrivia.domain.leaderboard.GetLeaderboardUseCase
 import dev.terry1921.nenektrivia.model.category.leaderboard.PlayerScore
-import dev.terry1921.nenektrivia.network.leaderboard.LeaderboardRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -18,6 +17,9 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class LeaderboardViewModelTest {
@@ -25,10 +27,12 @@ class LeaderboardViewModelTest {
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
+    private val getLeaderboardUseCase: GetLeaderboardUseCase = mock()
+
     @Test
     fun load_populatesLeaderboard() = runTest {
-        val repository = FakeLeaderboardRepository(expectedPlayers())
-        val viewModel = LeaderboardViewModel(GetLeaderboardUseCase(repository))
+        whenever(getLeaderboardUseCase.invoke(false)).thenReturn(expectedPlayers())
+        val viewModel = LeaderboardViewModel(getLeaderboardUseCase)
 
         val loadingState = viewModel.uiState.value
         assertTrue(loadingState.isLoading)
@@ -43,8 +47,9 @@ class LeaderboardViewModelTest {
 
     @Test
     fun retry_resetsLoadingAndRepublishesPlayers() = runTest {
-        val repository = FakeLeaderboardRepository(expectedPlayers())
-        val viewModel = LeaderboardViewModel(GetLeaderboardUseCase(repository))
+        whenever(getLeaderboardUseCase.invoke(false)).thenReturn(expectedPlayers())
+        whenever(getLeaderboardUseCase.invoke(true)).thenReturn(expectedPlayers())
+        val viewModel = LeaderboardViewModel(getLeaderboardUseCase)
         advanceUntilIdle()
 
         viewModel.retry()
@@ -53,7 +58,7 @@ class LeaderboardViewModelTest {
         val state = viewModel.uiState.value
         assertFalse(state.isLoading)
         assertEquals(expectedPlayers(), state.players)
-        assertTrue(repository.lastForceRefresh)
+        verify(getLeaderboardUseCase).invoke(true)
     }
 
     private fun expectedPlayers(): List<PlayerScore> = listOf(
@@ -68,16 +73,6 @@ class LeaderboardViewModelTest {
         PlayerScore(id = "9", image = null, username = "FrankCastle", points = 500),
         PlayerScore(id = "10", image = null, username = "GraceHopper", points = 400)
     )
-
-    private class FakeLeaderboardRepository(private val players: List<PlayerScore>) :
-        LeaderboardRepository {
-        var lastForceRefresh: Boolean = false
-
-        override suspend fun fetchLeaderboard(forceRefresh: Boolean): List<PlayerScore> {
-            lastForceRefresh = forceRefresh
-            return players
-        }
-    }
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)
