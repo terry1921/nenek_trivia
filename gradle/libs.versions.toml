@@ -74,7 +74,7 @@ androidxArchCore = "2.2.0"
 baseAdapter = "1.0.4"
 swiperefreshlayout = "1.2.0"
 playServicesGames = "24.0.0"
-uiText = "1.10.2"
+uiText = "1.10.3"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
