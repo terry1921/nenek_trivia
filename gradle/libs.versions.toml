@@ -19,7 +19,7 @@ androidxLifecycle = "2.10.0"
 androidXStartup = "1.2.0"
 
 # Compose
-compose-bom = "2026.01.01"
+compose-bom = "2026.02.00"
 
 # Firebase
 googleServices = "4.4.4"
