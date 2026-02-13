@@ -7,7 +7,7 @@ ksp = "2.3.5"
 # AndroidX / UI
 coreKtx = "1.17.0"
 splashscreen = "1.2.0"
-activity = "1.12.3"
+activity = "1.12.4"
 appcompat = "1.7.1"
 recyclerView = "1.4.0"
 androidxConstraintlayout = "2.2.1"
