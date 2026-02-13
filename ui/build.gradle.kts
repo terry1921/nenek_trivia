@@ -54,7 +54,6 @@ composeCompiler {
 
 dependencies {
     implementation(project(":domain"))
-    implementation(project(":model"))
 
     // androidx
     implementation(libs.material)

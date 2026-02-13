@@ -84,7 +84,7 @@ dependencies {
     implementation(libs.datastore)
 
     // logging
-    implementation(libs.timber)
+    api(libs.timber)
 
     // test
     testImplementation(libs.junit)

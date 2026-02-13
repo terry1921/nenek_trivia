@@ -70,8 +70,6 @@ android {
 dependencies {
     // modules
     implementation(project(":ui"))
-    implementation(project(":domain"))
-    implementation(project(":model"))
 
     // androidx
     implementation(libs.androidx.appcompat)
@@ -94,9 +92,6 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlytics)
-
-    // logging
-    implementation(libs.timber)
 
     // whatIf
     implementation(libs.whatif)

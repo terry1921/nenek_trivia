@@ -15,6 +15,8 @@ import dev.terry1921.nenektrivia.ui.preferences.PreferencesRoute
 import dev.terry1921.nenektrivia.ui.preferences.PreferencesViewModel
 import dev.terry1921.nenektrivia.ui.profile.ProfileRoute
 import dev.terry1921.nenektrivia.ui.profile.ProfileViewModel
+import dev.terry1921.nenektrivia.ui.questions.QuestionScreen
+import dev.terry1921.nenektrivia.ui.questions.QuestionsViewModel
 
 @Composable
 fun MainNavGraph(
@@ -30,7 +32,19 @@ fun MainNavGraph(
     ) {
         composable(MainDestination.Home.route) {
             HomeRoute(
-                onPlayClick = {}
+                onPlayClick = { navController.navigate(QuestionDestination.ROUTE) }
+            )
+        }
+        composable(QuestionDestination.ROUTE) {
+            val vm: QuestionsViewModel = hiltViewModel()
+            QuestionScreen(
+                viewModel = vm,
+                onBack = {
+                    navController.navigate(MainDestination.Home.route) {
+                        popUpTo(QuestionDestination.ROUTE) { inclusive = true }
+                        launchSingleTop = true
+                    }
+                }
             )
         }
         composable(MainDestination.Profile.route) {

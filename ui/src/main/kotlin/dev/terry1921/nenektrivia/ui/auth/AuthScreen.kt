@@ -88,27 +88,26 @@ fun AuthScreen(
                 .build()
         GoogleSignIn.getClient(context, gso)
     }
-    val googleSignInLauncher =
-        rememberLauncherForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result ->
-            if (result.resultCode != Activity.RESULT_OK) {
-                viewModel.onGoogleCancelled()
-                return@rememberLauncherForActivityResult
-            }
-            val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-            try {
-                val account = task.getResult(ApiException::class.java)
-                val idToken = account?.idToken
-                if (idToken.isNullOrBlank()) {
-                    viewModel.onGoogleError("No se pudo obtener el token de Google.")
-                } else {
-                    viewModel.onGoogleToken(idToken)
-                }
-            } catch (error: ApiException) {
-                viewModel.onGoogleError()
-            }
+    val googleSignInLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode != Activity.RESULT_OK) {
+            viewModel.onGoogleCancelled()
+            return@rememberLauncherForActivityResult
         }
+        val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+        try {
+            val account = task.getResult(ApiException::class.java)
+            val idToken = account?.idToken
+            if (idToken.isNullOrBlank()) {
+                viewModel.onGoogleError("No se pudo obtener el token de Google.")
+            } else {
+                viewModel.onGoogleToken(idToken)
+            }
+        } catch (error: ApiException) {
+            viewModel.onGoogleError()
+        }
+    }
 
     DisposableEffect(callbackManager) {
         val loginManager = LoginManager.getInstance()
@@ -174,6 +173,7 @@ fun AuthScreen(
             }
         }
     }
+
     LaunchedEffect(state.errorMessage) {
         state.errorMessage?.let { snackbarHostState.showSnackbar(it) }
     }
@@ -271,7 +271,7 @@ private fun AuthScreenContent(
                 SocialLoginButton(
                     label = stringResource(R.string.facebook_login),
                     icon = ImageVector.vectorResource(id = R.drawable.ic_facebook),
-                    enabled = !state.isFacebookLoading,
+                    enabled = false,
                     loading = state.isFacebookLoading,
                     onClick = onFacebookClick,
                     variant = SocialButtonVariant.Outlined,

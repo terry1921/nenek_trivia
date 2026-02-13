@@ -6,17 +6,26 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import dev.terry1921.nenektrivia.database.entity.Question
-import dev.terry1921.nenektrivia.database.relations.QuestionWithCategory
 
 @Dao
 interface QuestionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertAll(questions: List<Question>)
 
-    @Transaction
-    @Query("SELECT * FROM questions WHERE category_id = :categoryId")
-    suspend fun getByCategory(categoryId: String): List<QuestionWithCategory>
+    @Query("SELECT * FROM questions")
+    suspend fun getAll(): List<Question>
 
-    @Query("SELECT COUNT(*) FROM questions WHERE category_id = :categoryId")
-    suspend fun countByCategory(categoryId: String): Int
+    @Query("SELECT COUNT(*) FROM questions")
+    suspend fun countAll(): Int
+
+    @Query("DELETE FROM questions")
+    suspend fun deleteAll()
+
+    @Transaction
+    suspend fun replaceAll(questions: List<Question>) {
+        deleteAll()
+        if (questions.isNotEmpty()) {
+            upsertAll(questions)
+        }
+    }
 }

@@ -35,4 +35,4 @@ jobs:
         run: ./gradlew assembleDebug
 
       - name: Unit tests
-        run: ./gradlew :ui:testDebugUnitTest
+        run: ./gradlew testDebugUnitTest

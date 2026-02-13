@@ -3,7 +3,6 @@ package dev.terry1921.nenektrivia.database.questions
 import com.google.common.truth.Truth.assertThat
 import dev.terry1921.nenektrivia.database.dao.QuestionDao
 import dev.terry1921.nenektrivia.database.entity.Question
-import dev.terry1921.nenektrivia.database.relations.QuestionWithCategory
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -23,43 +22,44 @@ class RoomQuestionRepositoryTest {
     }
 
     @Test
-    fun `getQuestionsByCategory should call dao getByCategory`() = runTest {
-        val categoryId = "1"
-        val expected = emptyList<QuestionWithCategory>()
-        whenever(dao.getByCategory(categoryId)).thenReturn(expected)
+    fun `getAll should call dao getAll`() = runTest {
+        val expected = listOf(createQuestion())
+        whenever(dao.getAll()).thenReturn(expected)
 
-        val result = repository.getQuestionsByCategory(categoryId)
+        val result = repository.getAll()
 
-        verify(dao).getByCategory(categoryId)
+        verify(dao).getAll()
         assertThat(result).isEqualTo(expected)
     }
 
     @Test
-    fun `countByCategory should call dao countByCategory`() = runTest {
-        val categoryId = "1"
+    fun `countAll should call dao countAll`() = runTest {
         val expected = 5
-        whenever(dao.countByCategory(categoryId)).thenReturn(expected)
+        whenever(dao.countAll()).thenReturn(expected)
 
-        val result = repository.countByCategory(categoryId)
+        val result = repository.countAll()
 
-        verify(dao).countByCategory(categoryId)
+        verify(dao).countAll()
         assertThat(result).isEqualTo(expected)
     }
 
     @Test
-    fun `insertAll should call dao upsertAll`() = runTest {
-        val questions = listOf(
-            Question(
-                id = "1",
-                text = "Q1",
-                options = listOf("A", "B", "C", "D"),
-                correctIndex = 0,
-                categoryId = 1
-            )
-        )
+    fun `replaceAll should call dao replaceAll`() = runTest {
+        val questions = listOf(createQuestion())
 
-        repository.insertAll(questions)
+        repository.replaceAll(questions)
 
-        verify(dao).upsertAll(questions)
+        verify(dao).replaceAll(questions)
     }
+
+    private fun createQuestion() = Question(
+        id = "1",
+        question = "Q1",
+        category = "Geografia",
+        answerGood = "A",
+        answerBad01 = "B",
+        answerBad02 = "C",
+        answerBad03 = "D",
+        tip = "Tip"
+    )
 }
