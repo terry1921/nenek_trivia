@@ -10,9 +10,9 @@ Su meta es ofrecer una experiencia divertida y moderna de trivia, con un código
 - **`:app`** → Orquestador principal, navegación, Splash Screen API.
 - **`:model`** → Entidades de datos y contratos (interfaces de repositorios).
 - **`:database`** → Implementación de Room (DAOs, migraciones, seeds) y DataStore.
-- **`:domain`** → Casos de uso (Leaderboard, Sesión, Preferencias) y lógica de negocio.
-- **`:network`** → Cliente para servicios externos (Firebase Realtime Database para Leaderboard).
-- **`:ui`** → Pantallas (Home, Auth, Profile, Leaderboard, Preferences), ViewModels, componentes Compose y Design System con Tokens.
+- **`:domain`** → Casos de uso (Leaderboard, Sesión, Preferencias, Trivia) y lógica de negocio.
+- **`:network`** → Cliente para servicios externos (Firebase Auth, Firebase Realtime Database para Leaderboard y Preguntas).
+- **`:ui`** → Pantallas (Home, Auth, Profile, Leaderboard, Preferences, Trivia), ViewModels, componentes Compose y Design System con Tokens.
 
 ### Diagrama de Dependencias
 
@@ -28,23 +28,29 @@ Su meta es ofrecer una experiencia divertida y moderna de trivia, con un código
 
 ## ✅ Estado Actual
 - **Arquitectura**: Clean Architecture + MVVM + Flow + Hilt implementados.
-- **UI/UX**: Pantallas de Autenticación, Home, Leaderboard, Perfil y Preferencias construidas con Jetpack Compose y Material 3.
+- **UI/UX**:
+    - Pantallas completas: Autenticación, Home, Leaderboard, Perfil, Preferencias y Trivia (Juego).
+    - Diseño moderno con Material 3 y Jetpack Compose.
+    - Pantalla de juego con temporizador, sistema de puntajes y tips educativos.
 - **Datos**:
-    - Room para persistencia local (User, Score, GameSession, Question, Category).
-    - DataStore para preferencias de usuario.
-    - Firebase Realtime Database integrado para Leaderboard.
-- **Dominio**: Casos de uso implementados para gestión de sesión, configuración y leaderboard.
-- **Testing**: Tests unitarios iniciales para ViewModels.
-- **Navegación**: Jetpack Navigation Compose configurado.
+    - **Room** para persistencia local y caché.
+    - **DataStore** para preferencias de usuario.
+    - **Firebase Realtime Database** integrado para Leaderboard y obtención de preguntas en tiempo real.
+    - **Firebase Authentication** implementado con soporte para Google y Facebook.
+- **Dominio**: Casos de uso para gestión de sesión, configuración, leaderboard y mecánica de juego.
+- **Funcionalidades Extra**:
+    - In-App Review API integrada para valoraciones.
+    - Navegación fluida con Jetpack Navigation Compose.
+- **Testing**: Tests unitarios para ViewModels y casos de uso principales.
 - **Otros**: CI/CD básico con GitHub Actions y pre-commit hooks.
 
 ---
 
 ## 🚀 Próximos Pasos
-- Integración real con Firebase Authentication (actualmente simulada).
-- Implementación de la pantalla de Juego (Trivia) y lógica de la partida.
 - Ampliar cobertura de tests (Unitarios e Integración/UI).
-- Sincronización de progreso de usuario en la nube.
+- Sincronización avanzada de progreso de usuario en la nube (historial de partidas).
+- Optimización de rendimiento y animaciones.
+- Soporte para más categorías y modos de juego.
 
 ---
 
