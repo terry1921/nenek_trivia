@@ -126,7 +126,7 @@ class PreferencesViewModel @Inject constructor(
 
     // Fallback method (same as before)
     private fun openPlayStoreForReview(context: Context) {
-        val packageName = "com.fenixarts.nenektrivia" // context.packageName
+        val packageName = context.packageName
         try {
             context.startActivity(
                 Intent(
