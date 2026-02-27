@@ -57,7 +57,7 @@ transformationLayout = "1.1.6"
 playCore = "2.0.2"
 
 # Images
-coil = "3.3.0"
+coil = "3.4.0"
 
 # Testing
 junit = "4.13.2"
