@@ -2,15 +2,16 @@ package dev.terry1921.nenektrivia.ui.main
 
 import app.cash.turbine.test
 import dev.terry1921.nenektrivia.domain.session.ClearUserSessionUseCase
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import kotlinx.coroutines.test.resetMain
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
@@ -19,6 +20,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
+import org.mockito.kotlin.doSuspendableAnswer
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
@@ -34,7 +36,11 @@ class MainViewModelTest {
 
     @Test
     fun onLogoutClick_success_clearsSessionAndNavigates() = runTest {
-        whenever(clearUserSession.invoke()).thenReturn(Unit)
+        val gate = CompletableDeferred<Unit>()
+        whenever { clearUserSession.invoke() } doSuspendableAnswer {
+            gate.await()
+            Unit
+        }
         val viewModel = MainViewModel(clearUserSession)
 
         viewModel.effect.test {
@@ -44,6 +50,7 @@ class MainViewModelTest {
             runCurrent()
             assertTrue(viewModel.uiState.value.isLoggingOut)
 
+            gate.complete(Unit)
             advanceUntilIdle()
 
             // Check final state
@@ -62,7 +69,11 @@ class MainViewModelTest {
 
     @Test
     fun onLogoutClick_failure_showsErrorMessage() = runTest {
-        whenever(clearUserSession.invoke()).thenThrow(RuntimeException("Logout failed"))
+        val gate = CompletableDeferred<Unit>()
+        whenever { clearUserSession.invoke() } doSuspendableAnswer {
+            gate.await()
+            throw RuntimeException("Logout failed")
+        }
         val viewModel = MainViewModel(clearUserSession)
 
         viewModel.onLogoutClick()
@@ -71,6 +82,7 @@ class MainViewModelTest {
         runCurrent()
         assertTrue(viewModel.uiState.value.isLoggingOut)
 
+        gate.complete(Unit)
         advanceUntilIdle()
 
         // Check final state
@@ -82,9 +94,11 @@ class MainViewModelTest {
 
     @Test
     fun onLogoutClick_alreadyLoggingOut_doesNothing() = runTest {
-        // We simulate a long running logout by not returning immediately if needed,
-        // but since we are using StandardTestDispatcher, we can control execution.
-        whenever(clearUserSession.invoke()).thenReturn(Unit)
+        val gate = CompletableDeferred<Unit>()
+        whenever { clearUserSession.invoke() } doSuspendableAnswer {
+            gate.await()
+            Unit
+        }
 
         val viewModel = MainViewModel(clearUserSession)
 
@@ -96,6 +110,7 @@ class MainViewModelTest {
         viewModel.onLogoutClick()
         runCurrent()
 
+        gate.complete(Unit)
         advanceUntilIdle()
 
         // Should only have called clearUserSession once
