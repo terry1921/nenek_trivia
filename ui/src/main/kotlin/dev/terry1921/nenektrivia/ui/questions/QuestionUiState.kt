@@ -4,6 +4,7 @@ data class QuestionUiState(
     val questionIndex: Int = 1,
     val totalQuestions: Int = 10,
     val points: Int = 0,
+    val isHapticsEnabled: Boolean = false,
     val question: QuestionItem? = null,
     val selectedOptionId: String? = null,
     val revealAnswer: Boolean = false,

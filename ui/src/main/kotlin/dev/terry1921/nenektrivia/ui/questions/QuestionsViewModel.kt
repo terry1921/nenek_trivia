@@ -3,6 +3,7 @@ package dev.terry1921.nenektrivia.ui.questions
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.terry1921.nenektrivia.domain.preferences.GetUserSettingsUseCase
 import dev.terry1921.nenektrivia.domain.questions.GetQuestionsUseCase
 import dev.terry1921.nenektrivia.model.question.QuestionModel
 import javax.inject.Inject
@@ -10,11 +11,14 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-class QuestionsViewModel @Inject constructor(private val getQuestionsUseCase: GetQuestionsUseCase) :
-    ViewModel() {
+class QuestionsViewModel @Inject constructor(
+    private val getQuestionsUseCase: GetQuestionsUseCase,
+    private val getUserSettingsUseCase: GetUserSettingsUseCase
+) : ViewModel() {
     private val _uiState = MutableStateFlow(QuestionUiState())
     val uiState: StateFlow<QuestionUiState> = _uiState
 
@@ -29,6 +33,11 @@ class QuestionsViewModel @Inject constructor(private val getQuestionsUseCase: Ge
     private val pointsPerCorrect = 10
 
     init {
+        viewModelScope.launch {
+            getUserSettingsUseCase().collect { settings ->
+                _uiState.value = _uiState.value.copy(isHapticsEnabled = settings.isHapticsEnabled)
+            }
+        }
         viewModelScope.launch { startNewGame() }
     }
 
@@ -64,7 +73,11 @@ class QuestionsViewModel @Inject constructor(private val getQuestionsUseCase: Ge
         stopTimer()
         gameQuestions.clear()
         totalQuestionsInGame = 0
-        _uiState.value = QuestionUiState(points = 0, showWinnerDialog = false)
+        _uiState.value = QuestionUiState(
+            points = 0,
+            showWinnerDialog = false,
+            isHapticsEnabled = _uiState.value.isHapticsEnabled
+        )
     }
 
     private suspend fun startNewGame() {
@@ -86,6 +99,7 @@ class QuestionsViewModel @Inject constructor(private val getQuestionsUseCase: Ge
                 revealAnswer = true,
                 timeRemainingSeconds = 0f,
                 points = 0,
+                isHapticsEnabled = _uiState.value.isHapticsEnabled,
                 showWinnerDialog = false
             )
             return
@@ -98,6 +112,7 @@ class QuestionsViewModel @Inject constructor(private val getQuestionsUseCase: Ge
             questionIndex = 0,
             totalQuestions = totalQuestionsInGame,
             points = 0,
+            isHapticsEnabled = _uiState.value.isHapticsEnabled,
             question = null,
             selectedOptionId = null,
             revealAnswer = false,

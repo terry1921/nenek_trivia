@@ -32,7 +32,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -55,6 +57,7 @@ fun QuestionScreen(
     modifier: Modifier = Modifier
 ) {
     val state by viewModel.uiState.collectAsState()
+    val hapticFeedback = LocalHapticFeedback.current
     var showExitDialog by rememberSaveable { mutableStateOf(false) }
 
     if (state.showWinnerDialog) {
@@ -100,7 +103,12 @@ fun QuestionScreen(
 
     QuestionScreenContent(
         state = state,
-        onOptionSelected = viewModel::selectOption,
+        onOptionSelected = { optionId ->
+            if (state.isHapticsEnabled) {
+                hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
+            }
+            viewModel.selectOption(optionId)
+        },
         onNextQuestion = viewModel::nextQuestion,
         onBackRequest = { showExitDialog = true },
         modifier = modifier
