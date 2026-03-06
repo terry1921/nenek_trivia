@@ -213,7 +213,8 @@ class QuestionsViewModel @Inject constructor(
                 if (nextTime <= 0f) {
                     _uiState.value = current.copy(
                         timeRemainingSeconds = 0f,
-                        revealAnswer = true
+                        revealAnswer = true,
+                        showGameOverDialog = true
                     )
                     break
                 }

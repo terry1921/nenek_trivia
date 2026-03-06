@@ -9,6 +9,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestDispatcher
+import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
@@ -129,6 +130,26 @@ class QuestionsViewModelTest {
         assertFalse(restartedState.revealAnswer)
         assertEquals(1, restartedState.questionIndex)
         assertEquals(0, restartedState.points)
+    }
+
+    @Test
+    fun timerEndsWithoutAnswer_showsGameOverDialog() = runTest {
+        whenever(getQuestionsUseCase.invoke(false)).thenReturn(sampleQuestions(count = 2))
+        whenever(getUserSettingsUseCase.invoke()).thenReturn(
+            flowOf(UserSettings(isHapticsEnabled = true))
+        )
+
+        val viewModel = QuestionsViewModel(getQuestionsUseCase, getUserSettingsUseCase)
+        runCurrent()
+
+        advanceTimeBy(10_100)
+        runCurrent()
+
+        val state = viewModel.uiState.value
+        assertEquals(0, state.points)
+        assertTrue(state.revealAnswer)
+        assertTrue(state.showGameOverDialog)
+        assertEquals(0f, state.timeRemainingSeconds)
     }
 
     @Test
