@@ -1,9 +1,12 @@
 package dev.terry1921.nenektrivia.ui.questions
 
+import dev.terry1921.nenektrivia.domain.preferences.GetUserSettingsUseCase
 import dev.terry1921.nenektrivia.domain.questions.GetQuestionsUseCase
+import dev.terry1921.nenektrivia.model.category.preference.UserSettings
 import dev.terry1921.nenektrivia.model.question.QuestionModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.resetMain
@@ -29,12 +32,16 @@ class QuestionsViewModelTest {
     val mainDispatcherRule = MainDispatcherRule()
 
     private val getQuestionsUseCase: GetQuestionsUseCase = mock()
+    private val getUserSettingsUseCase: GetUserSettingsUseCase = mock()
 
     @Test
     fun init_loadsFirstQuestionWithZeroPoints() = runTest {
         whenever(getQuestionsUseCase.invoke(false)).thenReturn(sampleQuestions(count = 3))
+        whenever(getUserSettingsUseCase.invoke()).thenReturn(
+            flowOf(UserSettings(isHapticsEnabled = false))
+        )
 
-        val viewModel = QuestionsViewModel(getQuestionsUseCase)
+        val viewModel = QuestionsViewModel(getQuestionsUseCase, getUserSettingsUseCase)
         runCurrent()
 
         val state = viewModel.uiState.value
@@ -42,14 +49,18 @@ class QuestionsViewModelTest {
         assertEquals(1, state.questionIndex)
         assertEquals(3, state.totalQuestions)
         assertEquals(0, state.points)
+        assertFalse(state.isHapticsEnabled)
         assertFalse(state.revealAnswer)
     }
 
     @Test
     fun selectOption_correctAnswer_addsTenPointsAndNextQuestionDoesNotRepeat() = runTest {
         whenever(getQuestionsUseCase.invoke(false)).thenReturn(sampleQuestions(count = 3))
+        whenever(getUserSettingsUseCase.invoke()).thenReturn(
+            flowOf(UserSettings(isHapticsEnabled = true))
+        )
 
-        val viewModel = QuestionsViewModel(getQuestionsUseCase)
+        val viewModel = QuestionsViewModel(getQuestionsUseCase, getUserSettingsUseCase)
         runCurrent()
 
         val firstState = viewModel.uiState.value
@@ -71,8 +82,11 @@ class QuestionsViewModelTest {
     @Test
     fun selectOption_wrongAnswer_keepsPointsAtZero() = runTest {
         whenever(getQuestionsUseCase.invoke(false)).thenReturn(sampleQuestions(count = 2))
+        whenever(getUserSettingsUseCase.invoke()).thenReturn(
+            flowOf(UserSettings(isHapticsEnabled = true))
+        )
 
-        val viewModel = QuestionsViewModel(getQuestionsUseCase)
+        val viewModel = QuestionsViewModel(getQuestionsUseCase, getUserSettingsUseCase)
         runCurrent()
 
         val wrongOptionId = viewModel.uiState.value.question!!.options.first { !it.isCorrect }.id
@@ -85,8 +99,11 @@ class QuestionsViewModelTest {
     @Test
     fun completeGame_showsWinnerDialog() = runTest {
         whenever(getQuestionsUseCase.invoke(false)).thenReturn(sampleQuestions(count = 2))
+        whenever(getUserSettingsUseCase.invoke()).thenReturn(
+            flowOf(UserSettings(isHapticsEnabled = true))
+        )
 
-        val viewModel = QuestionsViewModel(getQuestionsUseCase)
+        val viewModel = QuestionsViewModel(getQuestionsUseCase, getUserSettingsUseCase)
         runCurrent()
 
         repeat(2) {
@@ -106,8 +123,11 @@ class QuestionsViewModelTest {
     @Test
     fun onExitGame_resetsPointsAndWinnerState() = runTest {
         whenever(getQuestionsUseCase.invoke(false)).thenReturn(sampleQuestions(count = 2))
+        whenever(getUserSettingsUseCase.invoke()).thenReturn(
+            flowOf(UserSettings(isHapticsEnabled = true))
+        )
 
-        val viewModel = QuestionsViewModel(getQuestionsUseCase)
+        val viewModel = QuestionsViewModel(getQuestionsUseCase, getUserSettingsUseCase)
         runCurrent()
 
         val correctOptionId = viewModel.uiState.value.question!!.options.first { it.isCorrect }.id
@@ -120,6 +140,7 @@ class QuestionsViewModelTest {
         assertEquals(0, state.points)
         assertFalse(state.showWinnerDialog)
         assertEquals(1, state.questionIndex)
+        assertTrue(state.isHapticsEnabled)
     }
 
     private fun sampleQuestions(count: Int): List<QuestionModel> = (1..count).map { index ->

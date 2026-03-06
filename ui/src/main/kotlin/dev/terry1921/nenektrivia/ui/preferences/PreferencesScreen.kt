@@ -69,7 +69,8 @@ fun PreferencesScreen(
                         title = stringResource(R.string.music_title),
                         subtitle = stringResource(R.string.music_subtitle),
                         isChecked = state.isMusicEnabled,
-                        onCheckedChange = viewModel::onMusicToggle
+                        onCheckedChange = viewModel::onMusicToggle,
+                        enabled = false
                     )
                 }
                 item {

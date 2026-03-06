@@ -12,7 +12,8 @@ fun SwitchRow(
     title: String,
     isChecked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
-    subtitle: String? = null
+    subtitle: String? = null,
+    enabled: Boolean = true
 ) {
     val color = LocalColorTokens.current
     ListItem(
@@ -23,7 +24,7 @@ fun SwitchRow(
             { Text(it, color = color.onSurfaceVariant) }
         },
         trailingContent = {
-            Switch(checked = isChecked, onCheckedChange = onCheckedChange)
+            Switch(checked = isChecked, onCheckedChange = onCheckedChange, enabled = enabled)
         }
     )
 }
