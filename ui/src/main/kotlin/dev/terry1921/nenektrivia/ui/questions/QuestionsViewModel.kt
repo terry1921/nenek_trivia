@@ -49,17 +49,29 @@ class QuestionsViewModel @Inject constructor(
             option.id == optionId && option.isCorrect
         }
 
+        stopTimer()
+
+        if (!isCorrect) {
+            _uiState.value = current.copy(
+                selectedOptionId = optionId,
+                revealAnswer = true,
+                showGameOverDialog = true
+            )
+            return
+        }
+
         _uiState.value = current.copy(
             selectedOptionId = optionId,
             revealAnswer = true,
-            points = current.points + if (isCorrect) pointsPerCorrect else 0
+            points = current.points + pointsPerCorrect,
+            showGameOverDialog = false
         )
-        stopTimer()
     }
 
     fun nextQuestion() {
         viewModelScope.launch {
             val current = _uiState.value
+            if (current.showGameOverDialog) return@launch
             if (current.timeRemainingSeconds <= 0f) {
                 startNewGame()
                 return@launch
@@ -69,6 +81,10 @@ class QuestionsViewModel @Inject constructor(
         }
     }
 
+    fun startAgain() {
+        viewModelScope.launch { startNewGame() }
+    }
+
     fun onExitGame() {
         stopTimer()
         gameQuestions.clear()
@@ -76,6 +92,7 @@ class QuestionsViewModel @Inject constructor(
         _uiState.value = QuestionUiState(
             points = 0,
             showWinnerDialog = false,
+            showGameOverDialog = false,
             isHapticsEnabled = _uiState.value.isHapticsEnabled
         )
     }
@@ -100,7 +117,8 @@ class QuestionsViewModel @Inject constructor(
                 timeRemainingSeconds = 0f,
                 points = 0,
                 isHapticsEnabled = _uiState.value.isHapticsEnabled,
-                showWinnerDialog = false
+                showWinnerDialog = false,
+                showGameOverDialog = false
             )
             return
         }
@@ -118,7 +136,8 @@ class QuestionsViewModel @Inject constructor(
             revealAnswer = false,
             timeRemainingSeconds = initialTimeSeconds,
             tip = null,
-            showWinnerDialog = false
+            showWinnerDialog = false,
+            showGameOverDialog = false
         )
 
         loadNextQuestionFromGame()
@@ -130,7 +149,8 @@ class QuestionsViewModel @Inject constructor(
             _uiState.value = _uiState.value.copy(
                 revealAnswer = true,
                 timeRemainingSeconds = 0f,
-                showWinnerDialog = true
+                showWinnerDialog = true,
+                showGameOverDialog = false
             )
             return
         }
@@ -173,7 +193,8 @@ class QuestionsViewModel @Inject constructor(
             revealAnswer = false,
             timeRemainingSeconds = initialTimeSeconds,
             tip = selected.tip,
-            showWinnerDialog = false
+            showWinnerDialog = false,
+            showGameOverDialog = false
         )
 
         startTimer()

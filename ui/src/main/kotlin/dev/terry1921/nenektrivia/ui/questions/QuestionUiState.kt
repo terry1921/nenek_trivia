@@ -10,7 +10,8 @@ data class QuestionUiState(
     val revealAnswer: Boolean = false,
     val timeRemainingSeconds: Float = 0f,
     val tip: String? = null,
-    val showWinnerDialog: Boolean = false
+    val showWinnerDialog: Boolean = false,
+    val showGameOverDialog: Boolean = false
 )
 
 data class QuestionItem(

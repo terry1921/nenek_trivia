@@ -70,6 +70,7 @@ class QuestionsViewModelTest {
         viewModel.selectOption(correctOptionId)
         assertEquals(10, viewModel.uiState.value.points)
         assertTrue(viewModel.uiState.value.revealAnswer)
+        assertFalse(viewModel.uiState.value.showGameOverDialog)
 
         viewModel.nextQuestion()
         runCurrent()
@@ -94,6 +95,40 @@ class QuestionsViewModelTest {
 
         assertEquals(0, viewModel.uiState.value.points)
         assertTrue(viewModel.uiState.value.revealAnswer)
+        assertTrue(viewModel.uiState.value.showGameOverDialog)
+    }
+
+    @Test
+    fun selectOption_wrongAnswer_gameEndsUntilStartAgain() = runTest {
+        whenever(getQuestionsUseCase.invoke(false)).thenReturn(sampleQuestions(count = 3))
+        whenever(getUserSettingsUseCase.invoke()).thenReturn(
+            flowOf(UserSettings(isHapticsEnabled = true))
+        )
+
+        val viewModel = QuestionsViewModel(getQuestionsUseCase, getUserSettingsUseCase)
+        runCurrent()
+
+        val firstState = viewModel.uiState.value
+        val firstQuestionId = firstState.question!!.id
+        val wrongOptionId = firstState.question.options.first { !it.isCorrect }.id
+
+        viewModel.selectOption(wrongOptionId)
+        viewModel.nextQuestion()
+        runCurrent()
+
+        val gameOverState = viewModel.uiState.value
+        assertTrue(gameOverState.showGameOverDialog)
+        assertEquals(firstQuestionId, gameOverState.question!!.id)
+        assertEquals(0, gameOverState.points)
+
+        viewModel.startAgain()
+        runCurrent()
+
+        val restartedState = viewModel.uiState.value
+        assertFalse(restartedState.showGameOverDialog)
+        assertFalse(restartedState.revealAnswer)
+        assertEquals(1, restartedState.questionIndex)
+        assertEquals(0, restartedState.points)
     }
 
     @Test
@@ -116,6 +151,7 @@ class QuestionsViewModelTest {
 
         val state = viewModel.uiState.value
         assertTrue(state.showWinnerDialog)
+        assertFalse(state.showGameOverDialog)
         assertTrue(state.revealAnswer)
         assertEquals(0f, state.timeRemainingSeconds)
     }
@@ -139,6 +175,7 @@ class QuestionsViewModelTest {
         val state = viewModel.uiState.value
         assertEquals(0, state.points)
         assertFalse(state.showWinnerDialog)
+        assertFalse(state.showGameOverDialog)
         assertEquals(1, state.questionIndex)
         assertTrue(state.isHapticsEnabled)
     }

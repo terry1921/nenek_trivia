@@ -47,4 +47,7 @@
     <string name="cargando_pregunta">Cargando pregunta...</string>
     <string name="winner_dialog_message">Felicidades has ganado la mayor puntuación hasta ahora</string>
     <string name="winner_dialog_accept">Aceptar</string>
+    <string name="game_over_dialog_title">Game Over</string>
+    <string name="game_over_dialog_score_message">Tu puntuación: %1$d</string>
+    <string name="game_over_dialog_start_again">Nuevo juego</string>
 </resources>
