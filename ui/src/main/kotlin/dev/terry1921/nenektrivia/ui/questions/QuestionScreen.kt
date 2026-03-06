@@ -77,7 +77,27 @@ fun QuestionScreen(
         )
     }
 
-    if (showExitDialog && !state.showWinnerDialog) {
+    if (state.showGameOverDialog && !state.showWinnerDialog) {
+        AlertDialog(
+            onDismissRequest = {},
+            title = { Text(text = stringResource(R.string.game_over_dialog_title)) },
+            text = {
+                Text(
+                    text = stringResource(
+                        R.string.game_over_dialog_score_message,
+                        state.points
+                    )
+                )
+            },
+            confirmButton = {
+                TextButton(onClick = viewModel::startAgain) {
+                    Text(text = stringResource(R.string.game_over_dialog_start_again))
+                }
+            }
+        )
+    }
+
+    if (showExitDialog && !state.showWinnerDialog && !state.showGameOverDialog) {
         AlertDialog(
             onDismissRequest = { showExitDialog = false },
             title = { Text(text = stringResource(R.string.exit_quiz_title)) },
