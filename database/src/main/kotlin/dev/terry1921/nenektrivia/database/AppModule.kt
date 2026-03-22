@@ -16,10 +16,13 @@ import dev.terry1921.nenektrivia.database.categories.CategoryRepository
 import dev.terry1921.nenektrivia.database.categories.RoomCategoryRepository
 import dev.terry1921.nenektrivia.database.dao.CategoryDao
 import dev.terry1921.nenektrivia.database.dao.GameSessionDao
+import dev.terry1921.nenektrivia.database.dao.HonorDao
 import dev.terry1921.nenektrivia.database.dao.QuestionDao
 import dev.terry1921.nenektrivia.database.dao.ScoreDao
 import dev.terry1921.nenektrivia.database.dao.SessionQuestionDao
 import dev.terry1921.nenektrivia.database.dao.UserDao
+import dev.terry1921.nenektrivia.database.honor.HonorRepository
+import dev.terry1921.nenektrivia.database.honor.RoomHonorRepository
 import dev.terry1921.nenektrivia.database.leaderboard.LeaderboardRepository
 import dev.terry1921.nenektrivia.database.leaderboard.RoomLeaderboardRepository
 import dev.terry1921.nenektrivia.database.preferences.DataStorePreferencesRepository
@@ -78,7 +81,28 @@ object AppModule {
                 )
             }
         }
-        val migrations: Array<out Migration> = arrayOf(migration1To2)
+        val migration4To5 = object : Migration(4, 5) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS `honors` (
+                        `id` TEXT NOT NULL,
+                        `image_url` TEXT,
+                        `points` INTEGER NOT NULL,
+                        `username` TEXT NOT NULL,
+                        PRIMARY KEY(`id`)
+                    )
+                    """.trimIndent()
+                )
+                db.execSQL(
+                    "CREATE INDEX IF NOT EXISTS `index_honors_points` ON `honors` (`points`)"
+                )
+                db.execSQL(
+                    "CREATE INDEX IF NOT EXISTS `index_honors_username` ON `honors` (`username`)"
+                )
+            }
+        }
+        val migrations: Array<out Migration> = arrayOf(migration1To2, migration4To5)
 
         return Room
             .databaseBuilder(
@@ -103,6 +127,9 @@ object AppModule {
     fun provideUserDao(db: NenekTriviaDatabase) = db.userDao()
 
     @Provides
+    fun provideHonorDao(db: NenekTriviaDatabase) = db.honorDao()
+
+    @Provides
     fun provideScoreDao(db: NenekTriviaDatabase) = db.scoreDao()
 
     @Provides
@@ -123,6 +150,9 @@ object AppModule {
 
     @Provides
     fun provideAuthRepository(userDao: UserDao): AuthRepository = RoomAuthRepository(userDao)
+
+    @Provides
+    fun provideHonorRepository(honorDao: HonorDao): HonorRepository = RoomHonorRepository(honorDao)
 
     @Provides
     fun provideLeaderboardRepository(scoreDao: ScoreDao): LeaderboardRepository =

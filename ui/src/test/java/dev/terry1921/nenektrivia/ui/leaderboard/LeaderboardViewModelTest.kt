@@ -1,6 +1,7 @@
 package dev.terry1921.nenektrivia.ui.leaderboard
 
 import dev.terry1921.nenektrivia.domain.leaderboard.GetLeaderboardUseCase
+import dev.terry1921.nenektrivia.domain.leaderboard.LeaderboardRefreshSignal
 import dev.terry1921.nenektrivia.model.category.leaderboard.PlayerScore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -28,11 +29,12 @@ class LeaderboardViewModelTest {
     val mainDispatcherRule = MainDispatcherRule()
 
     private val getLeaderboardUseCase: GetLeaderboardUseCase = mock()
+    private val leaderboardRefreshSignal = LeaderboardRefreshSignal()
 
     @Test
     fun load_populatesLeaderboard() = runTest {
         whenever(getLeaderboardUseCase.invoke(false)).thenReturn(expectedPlayers())
-        val viewModel = LeaderboardViewModel(getLeaderboardUseCase)
+        val viewModel = LeaderboardViewModel(getLeaderboardUseCase, leaderboardRefreshSignal)
 
         val loadingState = viewModel.uiState.value
         assertTrue(loadingState.isLoading)
@@ -49,10 +51,26 @@ class LeaderboardViewModelTest {
     fun retry_resetsLoadingAndRepublishesPlayers() = runTest {
         whenever(getLeaderboardUseCase.invoke(false)).thenReturn(expectedPlayers())
         whenever(getLeaderboardUseCase.invoke(true)).thenReturn(expectedPlayers())
-        val viewModel = LeaderboardViewModel(getLeaderboardUseCase)
+        val viewModel = LeaderboardViewModel(getLeaderboardUseCase, leaderboardRefreshSignal)
         advanceUntilIdle()
 
         viewModel.retry()
+        advanceUntilIdle()
+
+        val state = viewModel.uiState.value
+        assertFalse(state.isLoading)
+        assertEquals(expectedPlayers(), state.players)
+        verify(getLeaderboardUseCase).invoke(true)
+    }
+
+    @Test
+    fun refreshSignal_forcesReload() = runTest {
+        whenever(getLeaderboardUseCase.invoke(false)).thenReturn(expectedPlayers())
+        whenever(getLeaderboardUseCase.invoke(true)).thenReturn(expectedPlayers())
+        val viewModel = LeaderboardViewModel(getLeaderboardUseCase, leaderboardRefreshSignal)
+        advanceUntilIdle()
+
+        leaderboardRefreshSignal.notifyRefresh()
         advanceUntilIdle()
 
         val state = viewModel.uiState.value

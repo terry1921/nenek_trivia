@@ -5,12 +5,14 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import dev.terry1921.nenektrivia.database.dao.CategoryDao
 import dev.terry1921.nenektrivia.database.dao.GameSessionDao
+import dev.terry1921.nenektrivia.database.dao.HonorDao
 import dev.terry1921.nenektrivia.database.dao.QuestionDao
 import dev.terry1921.nenektrivia.database.dao.ScoreDao
 import dev.terry1921.nenektrivia.database.dao.SessionQuestionDao
 import dev.terry1921.nenektrivia.database.dao.UserDao
 import dev.terry1921.nenektrivia.database.entity.Category
 import dev.terry1921.nenektrivia.database.entity.GameSession
+import dev.terry1921.nenektrivia.database.entity.Honor
 import dev.terry1921.nenektrivia.database.entity.Question
 import dev.terry1921.nenektrivia.database.entity.Score
 import dev.terry1921.nenektrivia.database.entity.SessionQuestionCrossRef
@@ -22,10 +24,11 @@ import dev.terry1921.nenektrivia.database.entity.User
         Question::class,
         User::class,
         Score::class,
+        Honor::class,
         GameSession::class,
         SessionQuestionCrossRef::class
     ],
-    version = 4,
+    version = 5,
     exportSchema = true
 )
 @TypeConverters(RoomConverters::class)
@@ -35,6 +38,8 @@ abstract class NenekTriviaDatabase : RoomDatabase() {
     abstract fun questionDao(): QuestionDao
 
     abstract fun userDao(): UserDao
+
+    abstract fun honorDao(): HonorDao
 
     abstract fun scoreDao(): ScoreDao
 

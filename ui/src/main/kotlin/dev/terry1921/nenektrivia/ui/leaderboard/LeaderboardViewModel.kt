@@ -4,14 +4,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.terry1921.nenektrivia.domain.leaderboard.GetLeaderboardUseCase
+import dev.terry1921.nenektrivia.domain.leaderboard.LeaderboardRefreshSignal
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @HiltViewModel
 class LeaderboardViewModel @Inject constructor(
-    private val getLeaderboardUseCase: GetLeaderboardUseCase
+    private val getLeaderboardUseCase: GetLeaderboardUseCase,
+    private val leaderboardRefreshSignal: LeaderboardRefreshSignal
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(LeaderboardUiState(isLoading = true))
@@ -19,6 +22,11 @@ class LeaderboardViewModel @Inject constructor(
 
     init {
         load()
+        viewModelScope.launch {
+            leaderboardRefreshSignal.events.collectLatest {
+                load(forceRefresh = true)
+            }
+        }
     }
 
     fun load(forceRefresh: Boolean = false) = viewModelScope.launch {
