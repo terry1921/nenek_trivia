@@ -21,6 +21,7 @@ class MainActivity : ComponentActivity() {
         splashScreen.setKeepOnScreenCondition { true }
 
         setContent {
+            hiltViewModel<AppStartupViewModel>()
             val vm: PreferencesViewModel = hiltViewModel()
             val settings by vm.uiState.collectAsState()
             NenekTheme(theme = settings.selectedTheme) {

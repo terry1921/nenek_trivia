@@ -3,6 +3,7 @@ package dev.terry1921.nenektrivia.ui.questions
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.terry1921.nenektrivia.domain.honor.SyncHonorForGameResultUseCase
 import dev.terry1921.nenektrivia.domain.preferences.GetUserSettingsUseCase
 import dev.terry1921.nenektrivia.domain.questions.GetQuestionsUseCase
 import dev.terry1921.nenektrivia.model.question.QuestionModel
@@ -17,7 +18,8 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class QuestionsViewModel @Inject constructor(
     private val getQuestionsUseCase: GetQuestionsUseCase,
-    private val getUserSettingsUseCase: GetUserSettingsUseCase
+    private val getUserSettingsUseCase: GetUserSettingsUseCase,
+    private val syncHonorForGameResultUseCase: SyncHonorForGameResultUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(QuestionUiState())
     val uiState: StateFlow<QuestionUiState> = _uiState
@@ -57,6 +59,7 @@ class QuestionsViewModel @Inject constructor(
                 revealAnswer = true,
                 showGameOverDialog = true
             )
+            syncHonorForCurrentPoints()
             return
         }
 
@@ -152,6 +155,7 @@ class QuestionsViewModel @Inject constructor(
                 showWinnerDialog = true,
                 showGameOverDialog = false
             )
+            syncHonorForCurrentPoints()
             return
         }
 
@@ -216,6 +220,7 @@ class QuestionsViewModel @Inject constructor(
                         revealAnswer = true,
                         showGameOverDialog = true
                     )
+                    syncHonorForCurrentPoints()
                     break
                 }
 
@@ -227,6 +232,14 @@ class QuestionsViewModel @Inject constructor(
     private fun stopTimer() {
         timerJob?.cancel()
         timerJob = null
+    }
+
+    private fun syncHonorForCurrentPoints() {
+        viewModelScope.launch {
+            runCatching {
+                syncHonorForGameResultUseCase(_uiState.value.points)
+            }
+        }
     }
 
     override fun onCleared() {

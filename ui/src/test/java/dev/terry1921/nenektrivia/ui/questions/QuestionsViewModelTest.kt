@@ -1,5 +1,6 @@
 package dev.terry1921.nenektrivia.ui.questions
 
+import dev.terry1921.nenektrivia.domain.honor.SyncHonorForGameResultUseCase
 import dev.terry1921.nenektrivia.domain.preferences.GetUserSettingsUseCase
 import dev.terry1921.nenektrivia.domain.questions.GetQuestionsUseCase
 import dev.terry1921.nenektrivia.model.category.preference.UserSettings
@@ -24,6 +25,7 @@ import org.junit.Test
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -34,6 +36,7 @@ class QuestionsViewModelTest {
 
     private val getQuestionsUseCase: GetQuestionsUseCase = mock()
     private val getUserSettingsUseCase: GetUserSettingsUseCase = mock()
+    private val syncHonorForGameResultUseCase: SyncHonorForGameResultUseCase = mock()
 
     @Test
     fun init_loadsFirstQuestionWithZeroPoints() = runTest {
@@ -42,7 +45,11 @@ class QuestionsViewModelTest {
             flowOf(UserSettings(isHapticsEnabled = false))
         )
 
-        val viewModel = QuestionsViewModel(getQuestionsUseCase, getUserSettingsUseCase)
+        val viewModel = QuestionsViewModel(
+            getQuestionsUseCase,
+            getUserSettingsUseCase,
+            syncHonorForGameResultUseCase
+        )
         runCurrent()
 
         val state = viewModel.uiState.value
@@ -61,7 +68,11 @@ class QuestionsViewModelTest {
             flowOf(UserSettings(isHapticsEnabled = true))
         )
 
-        val viewModel = QuestionsViewModel(getQuestionsUseCase, getUserSettingsUseCase)
+        val viewModel = QuestionsViewModel(
+            getQuestionsUseCase,
+            getUserSettingsUseCase,
+            syncHonorForGameResultUseCase
+        )
         runCurrent()
 
         val firstState = viewModel.uiState.value
@@ -88,15 +99,21 @@ class QuestionsViewModelTest {
             flowOf(UserSettings(isHapticsEnabled = true))
         )
 
-        val viewModel = QuestionsViewModel(getQuestionsUseCase, getUserSettingsUseCase)
+        val viewModel = QuestionsViewModel(
+            getQuestionsUseCase,
+            getUserSettingsUseCase,
+            syncHonorForGameResultUseCase
+        )
         runCurrent()
 
         val wrongOptionId = viewModel.uiState.value.question!!.options.first { !it.isCorrect }.id
         viewModel.selectOption(wrongOptionId)
+        runCurrent()
 
         assertEquals(0, viewModel.uiState.value.points)
         assertTrue(viewModel.uiState.value.revealAnswer)
         assertTrue(viewModel.uiState.value.showGameOverDialog)
+        verify(syncHonorForGameResultUseCase).invoke(0)
     }
 
     @Test
@@ -106,7 +123,11 @@ class QuestionsViewModelTest {
             flowOf(UserSettings(isHapticsEnabled = true))
         )
 
-        val viewModel = QuestionsViewModel(getQuestionsUseCase, getUserSettingsUseCase)
+        val viewModel = QuestionsViewModel(
+            getQuestionsUseCase,
+            getUserSettingsUseCase,
+            syncHonorForGameResultUseCase
+        )
         runCurrent()
 
         val firstState = viewModel.uiState.value
@@ -139,7 +160,11 @@ class QuestionsViewModelTest {
             flowOf(UserSettings(isHapticsEnabled = true))
         )
 
-        val viewModel = QuestionsViewModel(getQuestionsUseCase, getUserSettingsUseCase)
+        val viewModel = QuestionsViewModel(
+            getQuestionsUseCase,
+            getUserSettingsUseCase,
+            syncHonorForGameResultUseCase
+        )
         runCurrent()
 
         advanceTimeBy(10_100)
@@ -150,6 +175,7 @@ class QuestionsViewModelTest {
         assertTrue(state.revealAnswer)
         assertTrue(state.showGameOverDialog)
         assertEquals(0f, state.timeRemainingSeconds)
+        verify(syncHonorForGameResultUseCase).invoke(0)
     }
 
     @Test
@@ -159,7 +185,11 @@ class QuestionsViewModelTest {
             flowOf(UserSettings(isHapticsEnabled = true))
         )
 
-        val viewModel = QuestionsViewModel(getQuestionsUseCase, getUserSettingsUseCase)
+        val viewModel = QuestionsViewModel(
+            getQuestionsUseCase,
+            getUserSettingsUseCase,
+            syncHonorForGameResultUseCase
+        )
         runCurrent()
 
         repeat(2) {
@@ -175,6 +205,7 @@ class QuestionsViewModelTest {
         assertFalse(state.showGameOverDialog)
         assertTrue(state.revealAnswer)
         assertEquals(0f, state.timeRemainingSeconds)
+        verify(syncHonorForGameResultUseCase).invoke(20)
     }
 
     @Test
@@ -184,7 +215,11 @@ class QuestionsViewModelTest {
             flowOf(UserSettings(isHapticsEnabled = true))
         )
 
-        val viewModel = QuestionsViewModel(getQuestionsUseCase, getUserSettingsUseCase)
+        val viewModel = QuestionsViewModel(
+            getQuestionsUseCase,
+            getUserSettingsUseCase,
+            syncHonorForGameResultUseCase
+        )
         runCurrent()
 
         val correctOptionId = viewModel.uiState.value.question!!.options.first { it.isCorrect }.id
