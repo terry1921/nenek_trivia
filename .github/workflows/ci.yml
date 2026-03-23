@@ -34,5 +34,5 @@ jobs:
       - name: Build
         run: ./gradlew assembleDebug
 
-      - name: Unit tests
-        run: ./gradlew testDebugUnitTest
+      - name: Module unit tests
+        run: ./gradlew :database:testDebugUnitTest :domain:testDebugUnitTest :ui:testDebugUnitTest
