@@ -99,6 +99,9 @@ dependencies {
     // whatIf
     implementation(libs.whatif)
 
+    // logs
+    implementation(libs.timber)
+
     // unit test
     androidTestImplementation(libs.hilt.testing)
     kspAndroidTest(libs.hilt.compiler)

@@ -9,6 +9,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(private val getUserSession: GetUserSessionUseCase) :
@@ -17,20 +18,24 @@ class ProfileViewModel @Inject constructor(private val getUserSession: GetUserSe
     val uiState: StateFlow<ProfileUiState> = _uiState
 
     init {
+        Timber.d("ProfileViewModel initialized")
         load()
     }
 
     fun load() = viewModelScope.launch {
+        Timber.d("Loading profile")
         _uiState.value = _uiState.value.copy(isLoading = true, error = null)
         runCatching {
             getUserSession()
         }.onSuccess { activeUser ->
             if (activeUser == null) {
+                Timber.w("No active user session found while loading profile")
                 _uiState.value = ProfileUiState(
                     isLoading = false,
                     error = "No active user session found."
                 )
             } else {
+                Timber.i("Profile loaded for user: %s", activeUser.username)
                 _uiState.value = ProfileUiState(
                     isLoading = false,
                     displayName = activeUser.username,
@@ -45,6 +50,7 @@ class ProfileViewModel @Inject constructor(private val getUserSession: GetUserSe
                 )
             }
         }.onFailure { throwable ->
+            Timber.e(throwable, "Failed to load profile")
             _uiState.value = ProfileUiState(
                 isLoading = false,
                 error = throwable.message ?: "Error loading profile."
@@ -52,5 +58,8 @@ class ProfileViewModel @Inject constructor(private val getUserSession: GetUserSe
         }
     }
 
-    fun retry() = load()
+    fun retry() {
+        Timber.d("Profile retry requested")
+        load()
+    }
 }

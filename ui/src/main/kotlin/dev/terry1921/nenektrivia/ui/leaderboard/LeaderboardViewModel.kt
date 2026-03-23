@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @HiltViewModel
 class LeaderboardViewModel @Inject constructor(
@@ -21,21 +22,26 @@ class LeaderboardViewModel @Inject constructor(
     val uiState: StateFlow<LeaderboardUiState> = _uiState
 
     init {
+        Timber.d("LeaderboardViewModel initialized")
         load()
         viewModelScope.launch {
             leaderboardRefreshSignal.events.collectLatest {
+                Timber.d("Leaderboard refresh signal received")
                 load(forceRefresh = true)
             }
         }
     }
 
     fun load(forceRefresh: Boolean = false) = viewModelScope.launch {
+        Timber.d("Loading leaderboard. forceRefresh=%s", forceRefresh)
         _uiState.value = LeaderboardUiState(isLoading = true)
         _uiState.value = try {
             val players = getLeaderboardUseCase(forceRefresh = forceRefresh)
+            Timber.i("Leaderboard loaded with %s players", players.size)
             LeaderboardUiState(isLoading = false, players = players)
         } catch (error: Exception) {
             if (error is kotlinx.coroutines.CancellationException) throw error
+            Timber.e(error, "Failed to load leaderboard. forceRefresh=%s", forceRefresh)
             LeaderboardUiState(
                 isLoading = false,
                 error = "No se pudo cargar el ranking."
@@ -43,5 +49,8 @@ class LeaderboardViewModel @Inject constructor(
         }
     }
 
-    fun retry() = load(forceRefresh = true)
+    fun retry() {
+        Timber.d("Leaderboard retry requested")
+        load(forceRefresh = true)
+    }
 }
