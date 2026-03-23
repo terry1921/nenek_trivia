@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @HiltViewModel
 class MainViewModel @Inject constructor(private val clearUserSession: ClearUserSessionUseCase) :
@@ -25,17 +26,23 @@ class MainViewModel @Inject constructor(private val clearUserSession: ClearUserS
     val effect: SharedFlow<MainEffect> = _effect.asSharedFlow()
 
     fun onLogoutClick() {
-        if (_uiState.value.isLoggingOut) return
+        if (_uiState.value.isLoggingOut) {
+            Timber.d("Logout request ignored because logout is already in progress")
+            return
+        }
         viewModelScope.launch {
+            Timber.d("Logout requested")
             _uiState.update { it.copy(isLoggingOut = true, errorMessage = null) }
             runCatching {
                 clearUserSession()
             }.onSuccess {
+                Timber.i("User session cleared, navigating to auth")
                 _uiState.update {
                     it.copy(displayName = null, avatarUrl = null)
                 }
                 _effect.emit(MainEffect.NavigateToAuth)
-            }.onFailure {
+            }.onFailure { error ->
+                Timber.e(error, "Failed to clear user session during logout")
                 _uiState.update { current ->
                     current.copy(errorMessage = "No se pudo cerrar sesión.")
                 }

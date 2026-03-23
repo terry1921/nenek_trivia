@@ -88,6 +88,9 @@ dependencies {
     // bundler
     implementation(libs.bundler)
 
+    // logs
+    implementation(libs.timber)
+
     // firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)

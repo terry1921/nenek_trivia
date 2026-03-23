@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
@@ -33,6 +34,7 @@ class AuthViewModel @Inject constructor(
     val effect: SharedFlow<AuthEffect> = _effect.asSharedFlow()
 
     fun onGoogleClick() {
+        Timber.d("Google sign-in requested")
         _uiState.update {
             it.copy(
                 isGoogleLoading = true,
@@ -48,11 +50,14 @@ class AuthViewModel @Inject constructor(
     fun onGoogleToken(idToken: String) {
         viewModelScope.launch {
             try {
+                Timber.d("Google sign-in started")
                 val remoteUser = signInWithGoogle(idToken).getOrThrow()
                 saveUserSession(remoteUser).getOrThrow()
+                Timber.i("Google sign-in succeeded, navigating to main")
                 _effect.emit(AuthEffect.NavigateToMain)
             } catch (t: Throwable) {
                 if (t is CancellationException) throw t
+                Timber.e(t, "Google sign-in failed")
                 _uiState.update {
                     it.copy(errorMessage = "No se pudo iniciar sesión con Google.")
                 }
@@ -63,10 +68,12 @@ class AuthViewModel @Inject constructor(
     }
 
     fun onGoogleCancelled() {
+        Timber.i("Google sign-in cancelled")
         _uiState.update { it.copy(isGoogleLoading = false) }
     }
 
     fun onGoogleError(message: String? = null) {
+        Timber.w("Google sign-in returned an error: %s", message ?: "unknown")
         _uiState.update {
             it.copy(
                 isGoogleLoading = false,
@@ -76,6 +83,7 @@ class AuthViewModel @Inject constructor(
     }
 
     fun onFacebookClick() {
+        Timber.d("Facebook sign-in requested")
         _uiState.update {
             it.copy(
                 isGoogleLoading = false,
@@ -91,11 +99,14 @@ class AuthViewModel @Inject constructor(
     fun onFacebookToken(accessToken: String) {
         viewModelScope.launch {
             try {
+                Timber.d("Facebook sign-in started")
                 val remoteUser = signInWithFacebook(accessToken).getOrThrow()
                 saveUserSession(remoteUser).getOrThrow()
+                Timber.i("Facebook sign-in succeeded, navigating to main")
                 _effect.emit(AuthEffect.NavigateToMain)
             } catch (t: Throwable) {
                 if (t is CancellationException) throw t
+                Timber.e(t, "Facebook sign-in failed")
                 _uiState.update {
                     it.copy(errorMessage = "No se pudo iniciar sesión con Facebook.")
                 }
@@ -106,10 +117,12 @@ class AuthViewModel @Inject constructor(
     }
 
     fun onFacebookCancelled() {
+        Timber.i("Facebook sign-in cancelled")
         _uiState.update { it.copy(isFacebookLoading = false) }
     }
 
     fun onFacebookError(message: String? = null) {
+        Timber.w("Facebook sign-in returned an error: %s", message ?: "unknown")
         _uiState.update {
             it.copy(
                 isFacebookLoading = false,
@@ -123,12 +136,17 @@ class AuthViewModel @Inject constructor(
     }
 
     fun checkIfUserIsLoggedIn() = viewModelScope.launch {
+        Timber.d("Checking for existing user session")
         if (getUserSession() != null) {
+            Timber.i("Existing user session found, navigating to main")
             _effect.emit(AuthEffect.NavigateToMain)
+        } else {
+            Timber.d("No existing user session found")
         }
     }
 
     fun onPrivacyPolicyClick() {
+        Timber.d("Privacy policy requested from auth screen")
         viewModelScope.launch {
             _effect.emit(AuthEffect.NavigateToPrivacyPolicy)
         }
