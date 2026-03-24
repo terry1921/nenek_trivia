@@ -50,7 +50,35 @@ fun SocialLoginButton(
     val size = LocalSizeTokens.current
     val spacing = LocalSpacingTokens.current
 
-    val content = @Composable {
+    val buttonColors = when (variant) {
+        SocialButtonVariant.Filled -> ButtonDefaults.buttonColors(
+            containerColor = color.primary,
+            contentColor = color.whiteText
+        )
+        SocialButtonVariant.Outlined -> ButtonDefaults.outlinedButtonColors(
+            contentColor = color.darkText
+        )
+    }
+
+    val border = when (variant) {
+        SocialButtonVariant.Filled -> null
+        SocialButtonVariant.Outlined -> ButtonDefaults.outlinedButtonBorder(enabled = true)
+    }
+
+    val elevation = when (variant) {
+        SocialButtonVariant.Filled -> ButtonDefaults.buttonElevation()
+        SocialButtonVariant.Outlined -> null
+    }
+
+    Button(
+        onClick = onClick,
+        enabled = enabled && !loading,
+        shape = shape,
+        modifier = modifier.fillMaxWidth(),
+        colors = buttonColors,
+        border = border,
+        elevation = elevation
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -75,32 +103,6 @@ fun SocialLoginButton(
             Spacer(modifier = Modifier.size(spacing.medium))
             Text(text = label, style = typography.titleMedium)
         }
-    }
-
-    when (variant) {
-        SocialButtonVariant.Filled -> Button(
-            onClick = onClick,
-            enabled = enabled && !loading,
-            shape = shape,
-            modifier = modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = color.primary,
-                contentColor = color.whiteText
-            ),
-            content = { content() }
-        )
-
-        SocialButtonVariant.Outlined -> OutlinedButton(
-            onClick = onClick,
-            enabled = enabled && !loading,
-            shape = shape,
-            modifier = modifier.fillMaxWidth(),
-            colors = ButtonDefaults.outlinedButtonColors(
-                contentColor = color.darkText
-            ),
-            border = ButtonDefaults.outlinedButtonBorder(enabled = true),
-            content = { content() }
-        )
     }
 }
 
