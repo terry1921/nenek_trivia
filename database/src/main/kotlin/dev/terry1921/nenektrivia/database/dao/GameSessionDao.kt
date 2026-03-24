@@ -14,7 +14,11 @@ interface GameSessionDao {
     suspend fun start(session: GameSession)
 
     @Query(
-        "UPDATE game_sessions SET ended_at = :endedAt, total_points = :points, questions_answered = :answered, correct_answers = :correct WHERE id = :sessionId"
+        """
+        UPDATE game_sessions
+        SET ended_at = :endedAt, total_points = :points, questions_answered = :answered, correct_answers = :correct
+        WHERE id = :sessionId
+        """
     )
     suspend fun finish(sessionId: String, endedAt: Long, points: Int, answered: Int, correct: Int)
 
