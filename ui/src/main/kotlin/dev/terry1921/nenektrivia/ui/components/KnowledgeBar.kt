@@ -17,6 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import dev.terry1921.nenektrivia.ui.tokens.NenekPalette
 import dev.terry1921.nenektrivia.ui.tokens.LocalSizeTokens
 import dev.terry1921.nenektrivia.ui.tokens.LocalSpacingTokens
 import dev.terry1921.nenektrivia.ui.tokens.LocalTypographyTokens
@@ -57,7 +58,7 @@ fun KnowledgeBarPreview() {
         KnowledgeBar(
             label = "Science",
             percent = 75,
-            barColor = Color(0xFF4CAF50),
+            barColor = NenekPalette.Green,
             trackColor = Color(0xFFE0E0E0)
         )
     }

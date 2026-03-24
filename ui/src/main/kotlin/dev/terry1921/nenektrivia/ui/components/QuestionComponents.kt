@@ -152,22 +152,21 @@ fun AnswerOptionCard(
     val shape = LocalShapeTokens.current
     val size = LocalSizeTokens.current
     val spacing = LocalSpacingTokens.current
-    val correctColor = Color(0xFF4CAF50)
 
     val backgroundColor = when (state) {
-        AnswerOptionState.Correct -> correctColor.copy(alpha = 0.2f)
+        AnswerOptionState.Correct -> color.success.copy(alpha = 0.2f)
         AnswerOptionState.Incorrect -> color.errorContainer.copy(alpha = 0.5f)
         AnswerOptionState.Selected -> color.primaryContainer.copy(alpha = 0.4f)
         AnswerOptionState.Default -> color.surface.copy(alpha = 0.08f)
     }
     val borderColor = when (state) {
-        AnswerOptionState.Correct -> correctColor
+        AnswerOptionState.Correct -> color.success
         AnswerOptionState.Incorrect -> color.error
         AnswerOptionState.Selected -> color.primary
         AnswerOptionState.Default -> color.outline.copy(alpha = 0.5f)
     }
     val textColor = when (state) {
-        AnswerOptionState.Correct -> correctColor
+        AnswerOptionState.Correct -> color.success
         AnswerOptionState.Incorrect -> color.onError
         AnswerOptionState.Selected -> color.onPrimaryContainer
         AnswerOptionState.Default -> color.textSecondary
@@ -243,16 +242,15 @@ private fun OptionIndicator(label: String, state: AnswerOptionState) {
     val typography = LocalTypographyTokens.current
     val color = LocalColorTokens.current
     val size = LocalSizeTokens.current
-    val correctColor = Color(0xFF4CAF50)
 
     val indicatorBackground = when (state) {
-        AnswerOptionState.Correct -> correctColor
+        AnswerOptionState.Correct -> color.success
         AnswerOptionState.Incorrect -> color.error
         AnswerOptionState.Selected -> color.primaryContainer.copy(alpha = 0.6f)
         AnswerOptionState.Default -> color.surface.copy(alpha = 0.1f)
     }
     val indicatorBorder = when (state) {
-        AnswerOptionState.Correct -> correctColor
+        AnswerOptionState.Correct -> color.success
         AnswerOptionState.Incorrect -> color.error
         AnswerOptionState.Selected -> color.primary
         AnswerOptionState.Default -> color.outline.copy(alpha = 0.6f)
