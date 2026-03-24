@@ -15,6 +15,7 @@ object NenekPalette {
     val Brown = Color(0xFF6A3F00)
     val ErrorRed = Color(0xFFB00020)
     val Blue = Color(0xFF2196F3)
+    val Green = Color(0xFF4CAF50)
     val Yellow = Color(0xFFFFE0B2)
 
     val BackgroundLight = Color(0xFFFAFAFA)
@@ -58,7 +59,8 @@ data class ColorTokens(
     val darkText: Color,
     val text: Color,
     val textSecondary: Color,
-    val textTertiary: Color
+    val textTertiary: Color,
+    val success: Color
 )
 
 val LightColorTokens =
@@ -96,7 +98,8 @@ val LightColorTokens =
         darkText = NenekPalette.Neutral0,
         text = NenekPalette.White,
         textSecondary = NenekPalette.Neutral20,
-        textTertiary = NenekPalette.Neutral10
+        textTertiary = NenekPalette.Neutral10,
+        success = NenekPalette.Green
     )
 
 val DarkColorTokens =
@@ -134,5 +137,6 @@ val DarkColorTokens =
         darkText = NenekPalette.Neutral0,
         text = NenekPalette.White,
         textSecondary = NenekPalette.Neutral90,
-        textTertiary = NenekPalette.Neutral95
+        textTertiary = NenekPalette.Neutral95,
+        success = NenekPalette.Green
     )
