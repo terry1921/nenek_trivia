@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.google.services)
@@ -18,6 +20,33 @@ android {
         versionCode = 1
         versionName = "1.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val facebookAppId =
+            providers.gradleProperty("FACEBOOK_APP_ID")
+                .orElse(providers.environmentVariable("FACEBOOK_APP_ID"))
+                .orElse(providers.provider {
+                    val lp = rootProject.file("local.properties")
+                    if (lp.exists()) {
+                        Properties().apply { lp.inputStream().use { load(it) } }.getProperty("FACEBOOK_APP_ID", "")
+                    } else {
+                        ""
+                    }
+                }).get()
+
+        val facebookClientToken =
+            providers.gradleProperty("FACEBOOK_CLIENT_TOKEN")
+                .orElse(providers.environmentVariable("FACEBOOK_CLIENT_TOKEN"))
+                .orElse(providers.provider {
+                    val lp = rootProject.file("local.properties")
+                    if (lp.exists()) {
+                        Properties().apply { lp.inputStream().use { load(it) } }.getProperty("FACEBOOK_CLIENT_TOKEN", "")
+                    } else {
+                        ""
+                    }
+                }).get()
+
+        resValue("string", "facebook_app_id", facebookAppId)
+        resValue("string", "facebook_client_token", facebookClientToken)
     }
 
     buildTypes {

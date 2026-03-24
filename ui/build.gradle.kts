@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -15,6 +17,20 @@ android {
         minSdk = 26
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        val googleClientId =
+            providers.gradleProperty("GOOGLE_WEB_CLIENT_ID")
+                .orElse(providers.environmentVariable("GOOGLE_WEB_CLIENT_ID"))
+                .orElse(providers.provider {
+                    val lp = rootProject.file("local.properties")
+                    if (lp.exists()) {
+                        Properties().apply { lp.inputStream().use { load(it) } }.getProperty("GOOGLE_WEB_CLIENT_ID", "")
+                    } else {
+                        ""
+                    }
+                }).get()
+
+        resValue("string", "default_web_client_id", googleClientId)
     }
 
     buildTypes {
