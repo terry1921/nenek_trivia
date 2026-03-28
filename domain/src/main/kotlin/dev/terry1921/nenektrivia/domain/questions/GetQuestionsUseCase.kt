@@ -19,6 +19,6 @@ class GetQuestionsUseCase @Inject constructor(
 
         val remote = remoteRepository.fetchQuestions()
         localRepository.replaceAll(remote.map { it.toEntity() })
-        return localRepository.getAll().map { it.toModel() }
+        return remote.map { it.toModel() }
     }
 }
