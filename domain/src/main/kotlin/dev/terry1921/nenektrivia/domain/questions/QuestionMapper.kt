@@ -15,6 +15,17 @@ internal fun RemoteQuestion.toEntity(): Question = Question(
     tip = tip
 )
 
+internal fun RemoteQuestion.toModel(): QuestionModel = QuestionModel(
+    id = id,
+    question = question,
+    category = category,
+    answerGood = answerGood,
+    answerBad01 = answerBad01,
+    answerBad02 = answerBad02,
+    answerBad03 = answerBad03,
+    tip = tip
+)
+
 internal fun Question.toModel(): QuestionModel = QuestionModel(
     id = id,
     question = question,
