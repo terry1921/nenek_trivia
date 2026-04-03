@@ -24,26 +24,34 @@ android {
         val facebookAppId =
             providers.gradleProperty("FACEBOOK_APP_ID")
                 .orElse(providers.environmentVariable("FACEBOOK_APP_ID"))
-                .orElse(providers.provider {
-                    val lp = rootProject.file("local.properties")
-                    if (lp.exists()) {
-                        Properties().apply { lp.inputStream().use { load(it) } }.getProperty("FACEBOOK_APP_ID", "")
-                    } else {
-                        ""
+                .orElse(
+                    providers.provider {
+                        val lp = rootProject.file("local.properties")
+                        if (lp.exists()) {
+                            Properties().apply {
+                                lp.inputStream().use { load(it) }
+                            }.getProperty("FACEBOOK_APP_ID", "")
+                        } else {
+                            ""
+                        }
                     }
-                }).get()
+                ).get()
 
         val facebookClientToken =
             providers.gradleProperty("FACEBOOK_CLIENT_TOKEN")
                 .orElse(providers.environmentVariable("FACEBOOK_CLIENT_TOKEN"))
-                .orElse(providers.provider {
-                    val lp = rootProject.file("local.properties")
-                    if (lp.exists()) {
-                        Properties().apply { lp.inputStream().use { load(it) } }.getProperty("FACEBOOK_CLIENT_TOKEN", "")
-                    } else {
-                        ""
+                .orElse(
+                    providers.provider {
+                        val lp = rootProject.file("local.properties")
+                        if (lp.exists()) {
+                            Properties().apply {
+                                lp.inputStream().use { load(it) }
+                            }.getProperty("FACEBOOK_CLIENT_TOKEN", "")
+                        } else {
+                            ""
+                        }
                     }
-                }).get()
+                ).get()
 
         resValue("string", "facebook_app_id", facebookAppId)
         resValue("string", "facebook_client_token", facebookClientToken)
@@ -63,8 +71,16 @@ android {
             enableAndroidTestCoverage = true
         }
     }
-    flavorDimensions += "store"
+    flavorDimensions += listOf("branding", "store")
     productFlavors {
+        create("original") {
+            dimension = "branding"
+            applicationId = "dev.terry1921.nenektrivia"
+        }
+        create("fenixarts") {
+            dimension = "branding"
+            applicationId = "com.fenixarts.nenektrivia"
+        }
         create("playstore") {
             dimension = "store"
             buildConfigField("Boolean", "FIREBASE_TEST", "false")
