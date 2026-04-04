@@ -20,6 +20,7 @@ androidXStartup = "1.2.0"
 
 # Compose
 compose-bom = "2026.03.00"
+browser = "1.10.0"
 
 # Firebase
 googleServices = "4.4.4"
@@ -58,6 +59,7 @@ playCore = "2.0.2"
 
 # Images
 coil = "3.4.0"
+androidx-browser = { group = "androidx.browser", name = "browser", version.ref = "browser" }
 
 # Testing
 junit = "4.13.2"

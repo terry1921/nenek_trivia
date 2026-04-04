@@ -80,6 +80,7 @@ dependencies {
     implementation(libs.androidx.lifecycle)
     implementation(libs.androidx.startup)
     implementation(libs.androidx.activity)
+    implementation(libs.androidx-browser)
     implementation(libs.play.review)
     implementation(libs.compose.material.icons.extended)
 

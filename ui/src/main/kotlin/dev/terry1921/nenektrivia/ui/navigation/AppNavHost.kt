@@ -1,10 +1,9 @@
 package dev.terry1921.nenektrivia.ui.navigation
 
-import android.content.Intent
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.core.net.toUri
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -19,10 +18,7 @@ const val PRIVACY_POLICY_URL = "https://nenek-trivia.web.app/privacy/"
 
 @Composable
 fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) {
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartActivityForResult(),
-        onResult = { /* Handle result if needed */ }
-    )
+    val context = LocalContext.current
     NavHost(
         navController = navController,
         startDestination = Routes.AUTH,
@@ -39,13 +35,8 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                     }
                 },
                 onNavigatePrivacyPolicy = {
-                    // open chrome with url
-                    Intent(
-                        Intent.ACTION_VIEW,
-                        PRIVACY_POLICY_URL.toUri()
-                    ).also {
-                        launcher.launch(it)
-                    }
+                    val uri = PRIVACY_POLICY_URL.toUri()
+                    CustomTabsIntent.Builder().build().launchUrl(context, uri)
                 }
             )
         }
@@ -60,12 +51,8 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                     }
                 },
                 onNavigatePrivacyPolicy = {
-                    Intent(
-                        Intent.ACTION_VIEW,
-                        PRIVACY_POLICY_URL.toUri()
-                    ).also {
-                        launcher.launch(it)
-                    }
+                    val uri = PRIVACY_POLICY_URL.toUri()
+                    CustomTabsIntent.Builder().build().launchUrl(context, uri)
                 }
             )
         }

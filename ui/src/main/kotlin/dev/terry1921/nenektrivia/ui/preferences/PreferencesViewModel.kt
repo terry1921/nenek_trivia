@@ -3,6 +3,7 @@ package dev.terry1921.nenektrivia.ui.preferences
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -157,12 +158,8 @@ class PreferencesViewModel @Inject constructor(
             )
         } catch (e: android.content.ActivityNotFoundException) {
             Timber.w(e, "Market app unavailable, opening Play Store review page in browser")
-            context.startActivity(
-                Intent(
-                    Intent.ACTION_VIEW,
-                    "https://play.google.com/store/apps/details?id=$packageName".toUri()
-                )
-            )
+            val playStoreUrl = "https://play.google.com/store/apps/details?id=$packageName".toUri()
+            CustomTabsIntent.Builder().build().launchUrl(context, playStoreUrl)
         }
     }
 }
