@@ -21,14 +21,18 @@ android {
         val googleClientId =
             providers.gradleProperty("GOOGLE_WEB_CLIENT_ID")
                 .orElse(providers.environmentVariable("GOOGLE_WEB_CLIENT_ID"))
-                .orElse(providers.provider {
-                    val lp = rootProject.file("local.properties")
-                    if (lp.exists()) {
-                        Properties().apply { lp.inputStream().use { load(it) } }.getProperty("GOOGLE_WEB_CLIENT_ID", "")
-                    } else {
-                        ""
+                .orElse(
+                    providers.provider {
+                        val lp = rootProject.file("local.properties")
+                        if (lp.exists()) {
+                            Properties().apply {
+                                lp.inputStream().use { load(it) }
+                            }.getProperty("GOOGLE_WEB_CLIENT_ID", "")
+                        } else {
+                            ""
+                        }
                     }
-                }).get()
+                ).get()
 
         resValue("string", "default_web_client_id", googleClientId)
     }
@@ -80,6 +84,7 @@ dependencies {
     implementation(libs.androidx.lifecycle)
     implementation(libs.androidx.startup)
     implementation(libs.androidx.activity)
+    implementation(libs.androidx.browser)
     implementation(libs.play.review)
     implementation(libs.compose.material.icons.extended)
 
