@@ -59,7 +59,6 @@ playCore = "2.0.2"
 
 # Images
 coil = "3.4.0"
-androidx-browser = { group = "androidx.browser", name = "browser", version.ref = "browser" }
 
 # Testing
 junit = "4.13.2"
@@ -100,6 +99,7 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 androidx-fragment = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "androidxFragment" }
 recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerView" }
 splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashscreen" }
+androidx-browser = { group = "androidx.browser", name = "browser", version.ref = "browser" }
 
 # Lifecycle / Startup
 androidx-lifecycle = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "androidxLifecycle" }
