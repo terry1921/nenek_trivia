@@ -9,6 +9,7 @@ fun LeaderboardRoute(viewModel: LeaderboardViewModel) {
     val state by viewModel.uiState.collectAsState()
     LeaderboardScreen(
         state = state,
-        onRetry = viewModel::retry
+        onRetry = viewModel::retry,
+        onRefresh = { viewModel.load(forceRefresh = true) }
     )
 }

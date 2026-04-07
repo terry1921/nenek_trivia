@@ -5,6 +5,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,11 +19,13 @@ import dev.terry1921.nenektrivia.ui.components.ErrorContent
 import dev.terry1921.nenektrivia.ui.components.LeaderboardList
 import dev.terry1921.nenektrivia.ui.tokens.LocalColorTokens
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LeaderboardScreen(
     modifier: Modifier = Modifier,
     state: LeaderboardUiState,
-    onRetry: () -> Unit = {}
+    onRetry: () -> Unit = {},
+    onRefresh: () -> Unit = {}
 ) {
     val color = LocalColorTokens.current
 
@@ -40,15 +44,21 @@ fun LeaderboardScreen(
                 .background(color.surface.copy(alpha = 0.08f))
         )
 
-        when {
-            state.isLoading -> Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) { CircularProgressIndicator() }
+        PullToRefreshBox(
+            isRefreshing = state.isLoading && state.players.isNotEmpty(),
+            onRefresh = onRefresh,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            when {
+                state.isLoading && state.players.isEmpty() -> Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) { CircularProgressIndicator() }
 
-            state.error != null -> ErrorContent(message = state.error, onRetry = onRetry)
+                state.error != null -> ErrorContent(message = state.error, onRetry = onRetry)
 
-            else -> LeaderboardList(players = state.players)
+                else -> LeaderboardList(players = state.players)
+            }
         }
     }
 }
