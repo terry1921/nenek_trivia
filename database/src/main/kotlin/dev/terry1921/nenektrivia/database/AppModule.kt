@@ -36,6 +36,7 @@ import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -57,8 +58,9 @@ object AppModule {
                 val database = dbProvider.get()
                 try {
                     database.categoryDao().upsertAll(CategorySeeds.default)
-                } catch (_: Throwable) {
+                } catch (e: Throwable) {
                     // Seeding must never crash app start; swallow and log if needed
+                    Timber.e(e, "Failed to seed default categories")
                 }
             }
         }
