@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace = "dev.terry1921.nenektrivia.database"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         minSdk = 26
@@ -55,7 +55,15 @@ android {
     }
     kotlin { jvmToolchain(17) }
     buildFeatures { buildConfig = true }
-    sourceSets.named("test") { assets.srcDirs(files("$projectDir/schemas")) }
+
+    sourceSets {
+        getByName("main").assets.srcDirs(files("$projectDir/schemas"))
+    }
+    sourceSets {
+        getByName("test") {
+            assets.srcDirs(files("$projectDir/schemas"))
+        }
+    }
     testOptions { unitTests.isIncludeAndroidResources = true }
 }
 

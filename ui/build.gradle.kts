@@ -10,7 +10,7 @@ plugins {
 
 android {
     namespace = "dev.terry1921.nenektrivia.ui"
-    compileSdk = 36
+    compileSdk = 37
     val versionName = "1.0.0"
 
     defaultConfig {
@@ -69,7 +69,9 @@ android {
 
 composeCompiler {
     reportsDestination = layout.buildDirectory.dir("compose_compiler")
-    stabilityConfigurationFile = rootProject.layout.projectDirectory.file("stability_config.conf")
+    stabilityConfigurationFiles.add(
+        rootProject.layout.projectDirectory.file("stability_config.conf")
+    )
 }
 
 dependencies {

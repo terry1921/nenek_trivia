@@ -20,7 +20,7 @@
     <string name="home_description">Muñeca huasteca</string>
     <string name="play_button_label">🎮  Jugar Trivia</string>
     <string name="app_name">Nenek Trivia</string>
-    <string name="app_subtitle">Volando alto, jugando fuerte</string>
+    <string name="app_subtitle">¿Que tanto conoces a la huasteca?</string>
     <string name="sound_appearance_header">SONIDO Y APARIENCIA</string>
     <string name="music_title">Música de fondo</string>
     <string name="music_subtitle">Reproducir música mientras juegas</string>
@@ -34,7 +34,7 @@
     <string name="version">Versión</string>
     <string name="playstore_score">Calificar en Play Store</string>
     <string name="profile_photo">Foto de perfil</string>
-    <string name="continue_with_google">Continue with Google</string>
+    <string name="continue_with_google">Continuar con Google</string>
     <string name="exit_quiz_title">¿Salir de la partida?</string>
     <string name="exit_quiz_message">Perderás tu progreso actual.</string>
     <string name="exit_quiz_confirm">Salir</string>

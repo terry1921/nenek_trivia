@@ -11,12 +11,12 @@ plugins {
 
 android {
     namespace = "dev.terry1921.nenektrivia"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "dev.terry1921.nenektrivia"
         minSdk = 26
-        targetSdk = 36
+        targetSdk = 37
         versionCode = 1
         versionName = "1.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

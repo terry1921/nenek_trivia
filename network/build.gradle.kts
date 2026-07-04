@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "dev.terry1921.nenektrivia.network"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         minSdk = 26

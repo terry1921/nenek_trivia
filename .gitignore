@@ -34,12 +34,17 @@ local.properties
 .idea/sonarlint
 .idea/sonarlint/issuestore
 .idea/sonarlint/issuestore/index.pb
+.config/
 
 # Android Studio
 *.iml
 /captures
 .externalNativeBuild
 .cxx
+/.kotlin/
+
+# Room schemas
+**/schemas/*.json
 
 # Keystore files (never commit keys)
 *.jks
