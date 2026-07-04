@@ -54,8 +54,9 @@ class AuthViewModelTest {
     }
 
     @Test
-    fun onGoogleClick_setsLoadingAndEmitsLaunchEffect() = runTest {
+    fun onGoogleClick_setsLoadingAndNavigates() = runTest {
         whenever(getUserSession.invoke()).thenReturn(null)
+        whenever(saveUserSession.invoke(any())).thenAnswer { Result.success(it.arguments[0] as User) }
 
         val viewModel = createViewModel()
 
@@ -67,33 +68,11 @@ class AuthViewModelTest {
             assertFalse(viewModel.uiState.value.isFacebookLoading)
             assertNull(viewModel.uiState.value.errorMessage)
 
-            assertEquals(AuthEffect.LaunchGoogleSignIn, awaitItem())
-
-            cancelAndIgnoreRemainingEvents()
-        }
-    }
-
-    @Test
-    fun onGoogleToken_savesUserAndNavigates() = runTest {
-        whenever(getUserSession.invoke()).thenReturn(null)
-        whenever(
-            signInWithGoogle.invoke(any())
-        ).thenReturn(Result.success(User(id = "uid-1", username = "Jugador Google")))
-        whenever(
-            saveUserSession.invoke(any())
-        ).thenReturn(Result.success(User(id = "uid-1", username = "Jugador Google")))
-
-        val viewModel = createViewModel()
-
-        viewModel.effect.test {
-            viewModel.onGoogleToken("token")
             advanceUntilIdle()
 
             assertEquals(AuthEffect.NavigateToMain, awaitItem())
             assertFalse(viewModel.uiState.value.isGoogleLoading)
-            assertFalse(viewModel.uiState.value.isFacebookLoading)
 
-            verify(signInWithGoogle).invoke("token")
             verify(saveUserSession).invoke(
                 check {
                     assertEquals("Jugador Google", it.username)
@@ -105,8 +84,9 @@ class AuthViewModelTest {
     }
 
     @Test
-    fun onFacebookClick_setsLoadingAndEmitsLaunchEffect() = runTest {
+    fun onFacebookClick_setsLoadingAndNavigates() = runTest {
         whenever(getUserSession.invoke()).thenReturn(null)
+        whenever(saveUserSession.invoke(any())).thenAnswer { Result.success(it.arguments[0] as User) }
 
         val viewModel = createViewModel()
 
@@ -118,36 +98,45 @@ class AuthViewModelTest {
             assertTrue(viewModel.uiState.value.isFacebookLoading)
             assertNull(viewModel.uiState.value.errorMessage)
 
-            assertEquals(AuthEffect.LaunchFacebookSignIn, awaitItem())
+            advanceUntilIdle()
+
+            assertEquals(AuthEffect.NavigateToMain, awaitItem())
+            assertFalse(viewModel.uiState.value.isFacebookLoading)
+
+            verify(saveUserSession).invoke(
+                check {
+                    assertEquals("Jugador Facebook", it.username)
+                }
+            )
 
             cancelAndIgnoreRemainingEvents()
         }
     }
 
     @Test
-    fun onFacebookToken_savesUserAndNavigates() = runTest {
+    fun onGuestClick_setsLoadingAndNavigates() = runTest {
         whenever(getUserSession.invoke()).thenReturn(null)
-        whenever(
-            signInWithFacebook.invoke(any())
-        ).thenReturn(Result.success(User(id = "fb-uid-1", username = "Jugador Facebook")))
-        whenever(
-            saveUserSession.invoke(any())
-        ).thenReturn(Result.success(User(id = "fb-uid-1", username = "Jugador Facebook")))
+        whenever(saveUserSession.invoke(any())).thenAnswer { Result.success(it.arguments[0] as User) }
 
         val viewModel = createViewModel()
 
         viewModel.effect.test {
-            viewModel.onFacebookToken("access-token")
+            viewModel.onGuestClick()
+            runCurrent()
+
+            assertFalse(viewModel.uiState.value.isGoogleLoading)
+            assertFalse(viewModel.uiState.value.isFacebookLoading)
+            assertTrue(viewModel.uiState.value.isGuestLoading)
+            assertNull(viewModel.uiState.value.errorMessage)
+
             advanceUntilIdle()
 
             assertEquals(AuthEffect.NavigateToMain, awaitItem())
-            assertFalse(viewModel.uiState.value.isGoogleLoading)
-            assertFalse(viewModel.uiState.value.isFacebookLoading)
+            assertFalse(viewModel.uiState.value.isGuestLoading)
 
-            verify(signInWithFacebook).invoke("access-token")
             verify(saveUserSession).invoke(
                 check {
-                    assertEquals("Jugador Facebook", it.username)
+                    assertEquals("Invitado", it.username)
                 }
             )
 

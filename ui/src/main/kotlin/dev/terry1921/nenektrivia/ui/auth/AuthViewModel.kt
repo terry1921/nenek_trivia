@@ -7,8 +7,10 @@ import dev.terry1921.nenektrivia.domain.auth.SignInWithFacebookUseCase
 import dev.terry1921.nenektrivia.domain.auth.SignInWithGoogleUseCase
 import dev.terry1921.nenektrivia.domain.session.GetUserSessionUseCase
 import dev.terry1921.nenektrivia.domain.session.SaveUserSessionUseCase
+import dev.terry1921.nenektrivia.database.entity.User
 import javax.inject.Inject
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -34,26 +36,21 @@ class AuthViewModel @Inject constructor(
     val effect: SharedFlow<AuthEffect> = _effect.asSharedFlow()
 
     fun onGoogleClick() {
-        Timber.d("Google sign-in requested")
+        Timber.d("Google sign-in requested (Simulated)")
         _uiState.update {
             it.copy(
                 isGoogleLoading = true,
                 isFacebookLoading = false,
+                isGuestLoading = false,
                 errorMessage = null
             )
         }
         viewModelScope.launch {
-            _effect.emit(AuthEffect.LaunchGoogleSignIn)
-        }
-    }
-
-    fun onGoogleToken(idToken: String) {
-        viewModelScope.launch {
             try {
-                Timber.d("Google sign-in started")
-                val remoteUser = signInWithGoogle(idToken).getOrThrow()
-                saveUserSession(remoteUser).getOrThrow()
-                Timber.i("Google sign-in succeeded, navigating to main")
+                delay(1500)
+                val user = User(username = "Jugador Google")
+                saveUserSession(user).getOrThrow()
+                Timber.i("Google sign-in succeeded (Simulated), navigating to main")
                 _effect.emit(AuthEffect.NavigateToMain)
             } catch (t: Throwable) {
                 if (t is CancellationException) throw t
@@ -65,6 +62,11 @@ class AuthViewModel @Inject constructor(
                 _uiState.update { it.copy(isGoogleLoading = false) }
             }
         }
+    }
+
+    fun onGoogleToken(idToken: String) {
+        // Obsolete with simulation, but keeping for compatibility if called
+        onGoogleClick()
     }
 
     fun onGoogleCancelled() {
@@ -83,26 +85,21 @@ class AuthViewModel @Inject constructor(
     }
 
     fun onFacebookClick() {
-        Timber.d("Facebook sign-in requested")
+        Timber.d("Facebook sign-in requested (Simulated)")
         _uiState.update {
             it.copy(
                 isGoogleLoading = false,
                 isFacebookLoading = true,
+                isGuestLoading = false,
                 errorMessage = null
             )
         }
         viewModelScope.launch {
-            _effect.emit(AuthEffect.LaunchFacebookSignIn)
-        }
-    }
-
-    fun onFacebookToken(accessToken: String) {
-        viewModelScope.launch {
             try {
-                Timber.d("Facebook sign-in started")
-                val remoteUser = signInWithFacebook(accessToken).getOrThrow()
-                saveUserSession(remoteUser).getOrThrow()
-                Timber.i("Facebook sign-in succeeded, navigating to main")
+                delay(1500)
+                val user = User(username = "Jugador Facebook")
+                saveUserSession(user).getOrThrow()
+                Timber.i("Facebook sign-in succeeded (Simulated), navigating to main")
                 _effect.emit(AuthEffect.NavigateToMain)
             } catch (t: Throwable) {
                 if (t is CancellationException) throw t
@@ -114,6 +111,11 @@ class AuthViewModel @Inject constructor(
                 _uiState.update { it.copy(isFacebookLoading = false) }
             }
         }
+    }
+
+    fun onFacebookToken(accessToken: String) {
+        // Obsolete with simulation, but keeping for compatibility if called
+        onFacebookClick()
     }
 
     fun onFacebookCancelled() {
@@ -128,6 +130,35 @@ class AuthViewModel @Inject constructor(
                 isFacebookLoading = false,
                 errorMessage = message ?: "No se pudo iniciar sesión con Facebook."
             )
+        }
+    }
+
+    fun onGuestClick() {
+        Timber.d("Guest sign-in requested (Simulated)")
+        _uiState.update {
+            it.copy(
+                isGoogleLoading = false,
+                isFacebookLoading = false,
+                isGuestLoading = true,
+                errorMessage = null
+            )
+        }
+        viewModelScope.launch {
+            try {
+                delay(1000)
+                val user = User(username = "Invitado")
+                saveUserSession(user).getOrThrow()
+                Timber.i("Guest sign-in succeeded (Simulated), navigating to main")
+                _effect.emit(AuthEffect.NavigateToMain)
+            } catch (t: Throwable) {
+                if (t is CancellationException) throw t
+                Timber.e(t, "Guest sign-in failed")
+                _uiState.update {
+                    it.copy(errorMessage = "No se pudo iniciar sesión como invitado.")
+                }
+            } finally {
+                _uiState.update { it.copy(isGuestLoading = false) }
+            }
         }
     }
 

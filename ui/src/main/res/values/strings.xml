@@ -4,6 +4,7 @@
     <string name="description_app">Participa en cuestionarios rápidos y sube en la clasificación.\nTodas tus curiosidades en un solo lugar.</string>
     <string name="google_login">Inicia sesión con Google</string>
     <string name="facebook_login">Inicia sesión con Facebook</string>
+    <string name="guest_login">Continuar como invitado</string>
     <string name="privacy">Política de privacidad</string>
     <string name="retry">Reintentar</string>
     <string name="knowledge_bar">Barra de conocimientos</string>

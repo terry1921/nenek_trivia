@@ -22,6 +22,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -183,6 +185,7 @@ fun AuthScreen(
         snackbarHostState = snackbarHostState,
         onGoogleClick = viewModel::onGoogleClick,
         onFacebookClick = viewModel::onFacebookClick,
+        onGuestClick = viewModel::onGuestClick,
         onPrivacyClick = viewModel::onPrivacyPolicyClick
     )
 }
@@ -193,6 +196,7 @@ private fun AuthScreenContent(
     snackbarHostState: SnackbarHostState,
     onGoogleClick: () -> Unit,
     onFacebookClick: () -> Unit,
+    onGuestClick: () -> Unit,
     onPrivacyClick: () -> Unit
 ) {
     val typography = LocalTypographyTokens.current
@@ -271,9 +275,19 @@ private fun AuthScreenContent(
                 SocialLoginButton(
                     label = stringResource(R.string.facebook_login),
                     icon = ImageVector.vectorResource(id = R.drawable.ic_facebook),
-                    enabled = false,
+                    enabled = !state.isFacebookLoading,
                     loading = state.isFacebookLoading,
                     onClick = onFacebookClick,
+                    variant = SocialButtonVariant.Outlined,
+                    shape = shapes.asMaterialShapes().medium
+                )
+                Spacer(Modifier.height(spacing.medium))
+                SocialLoginButton(
+                    label = stringResource(R.string.guest_login),
+                    icon = Icons.Default.Person,
+                    enabled = !state.isGuestLoading,
+                    loading = state.isGuestLoading,
+                    onClick = onGuestClick,
                     variant = SocialButtonVariant.Outlined,
                     shape = shapes.asMaterialShapes().medium
                 )
@@ -308,6 +322,7 @@ fun AuthScreenPreview() {
             snackbarHostState = remember { SnackbarHostState() },
             onGoogleClick = {},
             onFacebookClick = {},
+            onGuestClick = {},
             onPrivacyClick = {}
         )
     }
@@ -328,6 +343,7 @@ fun AuthScreenDarkPreview() {
             snackbarHostState = remember { SnackbarHostState() },
             onGoogleClick = {},
             onFacebookClick = {},
+            onGuestClick = {},
             onPrivacyClick = {}
         )
     }

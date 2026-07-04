@@ -35,7 +35,7 @@ En esta etapa:
 - **ViewModel (AuthViewModel):**
     - Manejar estado de la pantalla (loading, error, idle).
     - Exponer callbacks para botones sociales.
-    - Por ahora, solo simular acciones con `TODO()`.
+    - Acciones simuladas para Google, Facebook e Invitado (Implementado).
 - **Navegación:**
     - `SplashActivity` redirige a `AuthScreen`.
     - En el futuro, tras login exitoso, navegará a `MainScreen`.
