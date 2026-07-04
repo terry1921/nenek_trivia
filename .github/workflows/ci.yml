@@ -32,7 +32,9 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build
-        run: ./gradlew assembleDebug
+        env:
+          GRADLE_OPTS: -Xmx4g -XX:MaxMetaspaceSize=1g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
+        run: ./gradlew assembleDebug --no-daemon
 
       - name: Module unit tests
-        run: ./gradlew :database:testDebugUnitTest :domain:testDebugUnitTest :ui:testDebugUnitTest
+        run: ./gradlew :database:testDebugUnitTest :domain:testDebugUnitTest :ui:testDebugUnitTest :network:testDebugUnitTest
