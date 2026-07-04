@@ -55,6 +55,10 @@ android {
     }
     kotlin { jvmToolchain(17) }
     buildFeatures { buildConfig = true }
+
+    testOptions {
+        unitTests.isIncludeAndroidResources = true
+    }
 }
 
 dependencies {
@@ -91,4 +95,7 @@ dependencies {
     testImplementation(libs.coroutines.test)
     testImplementation(libs.okhttp.mockserver)
     testImplementation(libs.androidx.arch.core)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.truth)
+    testImplementation(libs.androidx.test.core)
 }
