@@ -2,6 +2,7 @@ package dev.terry1921.nenektrivia.network.honor
 
 import android.content.Context
 import com.google.firebase.database.FirebaseDatabase
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,7 +16,8 @@ object HonorModule {
 
     @Provides
     @Singleton
-    fun provideHonorCache(@ApplicationContext context: Context): HonorCache = HonorCache(context)
+    fun provideHonorCache(@ApplicationContext context: Context, gson: Gson): HonorCache =
+        HonorCache(context, gson)
 
     @Provides
     @Singleton

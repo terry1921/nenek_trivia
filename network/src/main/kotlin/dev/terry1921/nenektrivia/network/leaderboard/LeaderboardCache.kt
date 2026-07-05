@@ -12,14 +12,13 @@ import kotlinx.coroutines.flow.first
 
 private val Context.leaderboardCacheDataStore by preferencesDataStore(name = "leaderboard_cache")
 
-class LeaderboardCache(private val appContext: Context) {
+class LeaderboardCache(private val appContext: Context, private val gson: Gson) {
 
     private object Keys {
         val DATA = stringPreferencesKey("leaderboard_data")
         val UPDATED_AT = longPreferencesKey("leaderboard_updated_at")
     }
 
-    private val gson = Gson()
     private val type = object : TypeToken<List<PlayerScore>>() {}.type
 
     suspend fun readIfFresh(ttlMillis: Long): List<PlayerScore>? {

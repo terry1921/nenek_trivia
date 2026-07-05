@@ -4,6 +4,7 @@ import android.content.Context
 import com.google.firebase.Firebase
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.database
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,8 +22,10 @@ object LeaderboardModule {
 
     @Provides
     @Singleton
-    fun provideLeaderboardCache(@ApplicationContext context: Context): LeaderboardCache =
-        LeaderboardCache(context)
+    fun provideLeaderboardCache(
+        @ApplicationContext context: Context,
+        gson: Gson
+    ): LeaderboardCache = LeaderboardCache(context, gson)
 
     @Provides
     @Singleton

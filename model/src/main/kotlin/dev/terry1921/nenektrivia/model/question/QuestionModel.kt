@@ -10,3 +10,14 @@ data class QuestionModel(
     val answerBad03: String,
     val tip: String?
 )
+
+data class QuestionResponse(
+    val id: String,
+    val question: String,
+    val category: String,
+    val answerGood: String,
+    val answerBad01: String,
+    val answerBad02: String,
+    val answerBad03: String,
+    val tip: String?
+)

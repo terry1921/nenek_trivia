@@ -12,14 +12,13 @@ import kotlinx.coroutines.flow.first
 
 private val Context.honorCacheDataStore by preferencesDataStore(name = "honor_cache")
 
-class HonorCache(private val appContext: Context) {
+class HonorCache(private val appContext: Context, private val gson: Gson) {
 
     private object Keys {
         val DATA = stringPreferencesKey("honor_data")
         val UPDATED_AT = longPreferencesKey("honor_updated_at")
     }
 
-    private val gson = Gson()
     private val type = object : TypeToken<List<HonorModel>>() {}.type
 
     suspend fun readIfFresh(ttlMillis: Long): List<HonorModel>? {
