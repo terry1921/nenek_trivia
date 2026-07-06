@@ -53,7 +53,7 @@ fun KnowledgeSection(knowledge: Map<Category, Int>) {
         )
 
         ordered.forEachIndexed { idx, cat ->
-            val percent = knowledge[cat]?.coerceIn(1, 100) ?: 0
+            val percent = knowledge[cat]?.coerceIn(0, 100) ?: 0
             KnowledgeBar(
                 label = when (cat) {
                     Category.Art -> stringResource(R.string.knowledge_art)
@@ -86,11 +86,11 @@ private fun categoryColor(cat: Category): Color = when (cat) {
 private fun KnowledgeSectionPreview() {
     KnowledgeSection(
         knowledge = mapOf(
-            Category.Art to 80,
-            Category.Sports to 60,
-            Category.General to 90,
-            Category.Geography to 40,
-            Category.History to 70
+            Category.Art to 0,
+            Category.Sports to 0,
+            Category.General to 0,
+            Category.Geography to 0,
+            Category.History to 0
         )
     )
 }

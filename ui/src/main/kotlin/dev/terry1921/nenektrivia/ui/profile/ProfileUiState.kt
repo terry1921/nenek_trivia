@@ -7,6 +7,6 @@ data class ProfileUiState(
     val displayName: String? = null,
     val email: String? = null,
     val avatarUrl: String? = null,
-    val knowledge: Map<Category, Int> = emptyMap(), // 1..100
+    val knowledge: Map<Category, Int> = emptyMap(), // 0..100
     val error: String? = null
 )

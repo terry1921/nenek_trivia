@@ -33,10 +33,10 @@ jobs:
 
       - name: Build
         env:
-          GRADLE_OPTS: -Xmx6g -XX:MaxMetaspaceSize=2g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
+          GRADLE_OPTS: -Xmx8g -XX:MaxMetaspaceSize=2g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
         run: ./gradlew assembleDebug
 
       - name: Module unit tests
         env:
-          GRADLE_OPTS: -Xmx6g -XX:MaxMetaspaceSize=2g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
+          GRADLE_OPTS: -Xmx8g -XX:MaxMetaspaceSize=2g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
         run: ./gradlew :database:testDebugUnitTest :domain:testDebugUnitTest :ui:testDebugUnitTest :network:testDebugUnitTest
