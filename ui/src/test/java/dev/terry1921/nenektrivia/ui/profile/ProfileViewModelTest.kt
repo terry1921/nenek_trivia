@@ -47,11 +47,11 @@ class ProfileViewModelTest {
         assertNull(state.error)
         assertEquals(
             linkedMapOf(
-                Category.Art to 68,
-                Category.Sports to 80,
-                Category.General to 45,
-                Category.Geography to 90,
-                Category.History to 12
+                Category.Art to 0,
+                Category.Sports to 0,
+                Category.General to 0,
+                Category.Geography to 0,
+                Category.History to 0
             ),
             state.knowledge
         )

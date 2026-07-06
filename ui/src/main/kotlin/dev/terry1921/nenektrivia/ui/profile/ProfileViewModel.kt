@@ -41,11 +41,11 @@ class ProfileViewModel @Inject constructor(private val getUserSession: GetUserSe
                     displayName = activeUser.username,
                     avatarUrl = activeUser.photoUrl,
                     knowledge = linkedMapOf(
-                        Category.Art to 68,
-                        Category.Sports to 80,
-                        Category.General to 45,
-                        Category.Geography to 90,
-                        Category.History to 12
+                        Category.Art to 0,
+                        Category.Sports to 0,
+                        Category.General to 0,
+                        Category.Geography to 0,
+                        Category.History to 0
                     )
                 )
             }
