@@ -24,7 +24,7 @@ browser = "1.10.0"
 
 # Firebase
 googleServices = "4.5.0"
-firebase-bom = "34.15.0"
+firebase-bom = "34.16.0"
 firebase-crashlytics = "3.0.7"
 playServicesAuth = "21.6.0"
 facebookLogin = "18.3.0"
