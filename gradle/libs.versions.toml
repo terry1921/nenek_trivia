@@ -37,7 +37,7 @@ datastore = "1.2.1"
 androidxRoom = "2.8.4"
 
 # DI
-hilt = "2.60"
+hilt = "2.60.1"
 hiltNavigation = "1.4.0"
 
 # Net
