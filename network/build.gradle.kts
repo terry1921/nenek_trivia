@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
+    id(libs.plugins.hilt.plugin.get().pluginId)
 }
 
 android {
@@ -40,7 +41,7 @@ android {
             buildConfigField("String", "API_KEY", "\"$key\"")
         }
         release {
-            isMinifyEnabled = true
+            isMinifyEnabled = false
             val key = apiKeyProvider.orNull ?: ""
             buildConfigField("String", "API_KEY", "\"$key\"")
             proguardFiles(

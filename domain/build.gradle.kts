@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
+    id(libs.plugins.hilt.plugin.get().pluginId)
 }
 
 android {
@@ -16,7 +17,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = true
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -37,7 +38,7 @@ android {
 
 dependencies {
     api(project(":database"))
-    implementation(project(":network"))
+    api(project(":network"))
     api(project(":model"))
 
     // coroutines/flow
