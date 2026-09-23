@@ -17,8 +17,8 @@ android {
         applicationId = "dev.terry1921.nenektrivia"
         minSdk = 26
         targetSdk = 37
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = 9
+        versionName = "0.0.4"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         val facebookAppId =
@@ -115,6 +115,10 @@ android {
 dependencies {
     // modules
     implementation(project(":ui"))
+    implementation(project(":domain"))
+    implementation(project(":network"))
+    implementation(project(":database"))
+    implementation(project(":model"))
 
     // androidx
     implementation(libs.androidx.appcompat)

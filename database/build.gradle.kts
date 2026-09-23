@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
+    id(libs.plugins.hilt.plugin.get().pluginId)
     id("kotlin-parcelize")
 }
 
@@ -40,7 +41,7 @@ android {
             buildConfigField("String", "DATABASE_NAME", "\"$dbName\"")
         }
         release {
-            isMinifyEnabled = true
+            isMinifyEnabled = false
             val dbName = dbNameProvider.orNull ?: "default.db"
             buildConfigField("String", "DATABASE_NAME", "\"$dbName\"")
             proguardFiles(

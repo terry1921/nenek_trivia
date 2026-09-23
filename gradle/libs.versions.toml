@@ -1,32 +1,32 @@
 [versions]
 # Core tool chains
-agp = "9.2.1"
-kotlin = "2.4.0"
+agp = "9.4.1"
+kotlin = "2.4.20"
 ksp = "2.3.6"
 
 # AndroidX / UI
 coreKtx = "1.19.0"
 splashscreen = "1.2.0"
 activity = "1.13.0"
-appcompat = "1.7.1"
+appcompat = "1.8.0"
 recyclerView = "1.4.0"
-androidxConstraintlayout = "2.2.1"
-androidxFragment = "1.8.9"
-nav_version = "2.9.8"
+androidxConstraintlayout = "2.2.2"
+androidxFragment = "1.9.0"
+nav_version = "2.10.1"
 
 # Lifecycle / Startup
 androidxLifecycle = "2.11.0"
 androidXStartup = "1.2.0"
 
 # Compose
-compose-bom = "2026.06.01"
+compose-bom = "2026.09.00"
 browser = "1.10.0"
 
 # Firebase
 googleServices = "4.5.0"
-firebase-bom = "34.15.0"
-firebase-crashlytics = "3.0.7"
-playServicesAuth = "21.6.0"
+firebase-bom = "34.19.0"
+firebase-crashlytics = "3.0.8"
+playServicesAuth = "21.3.0"
 facebookLogin = "18.3.0"
 
 # Material (Views)
@@ -34,17 +34,17 @@ material = "1.14.0"
 
 # Data / DB
 datastore = "1.2.1"
-androidxRoom = "2.8.4"
+androidxRoom = "2.8.5"
 
 # DI
-hilt = "2.60"
+hilt = "2.60.1"
 hiltNavigation = "1.4.0"
 
 # Net
 retrofit = "3.0.0"
-okhttp = "5.4.0"
+okhttp = "5.5.0"
 gson = "2.14.0"
-sandwich = "2.3.0"
+sandwich = "2.4.0"
 
 # Coroutines
 coroutines = "1.11.0"
@@ -58,7 +58,7 @@ transformationLayout = "1.1.6"
 playCore = "2.0.2"
 
 # Images
-coil = "3.5.0"
+coil = "3.6.3"
 
 # Testing
 junit = "4.13.2"
@@ -69,13 +69,13 @@ truth = "1.4.5"
 turbine = "1.2.1"
 mockitoKotlin = "6.3.0"
 mockitoInline = "5.2.0"
-robolectric = "4.16.1"
+robolectric = "4.17"
 testRunner = "1.7.0"
 androidxArchCore = "2.2.0"
 baseAdapter = "1.0.4"
 swiperefreshlayout = "1.2.0"
 playServicesGames = "25.0.0"
-uiText = "1.11.4"
+uiText = "1.12.1"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
