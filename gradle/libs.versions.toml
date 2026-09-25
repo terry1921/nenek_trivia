@@ -26,7 +26,7 @@ browser = "1.10.0"
 googleServices = "4.5.0"
 firebase-bom = "34.19.0"
 firebase-crashlytics = "3.0.8"
-playServicesAuth = "21.3.0"
+playServicesAuth = "22.0.0"
 facebookLogin = "18.3.0"
 
 # Material (Views)
