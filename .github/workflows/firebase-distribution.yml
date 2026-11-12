@@ -1,0 +1,70 @@
+name: Firebase App Distribution
+
+on:
+  push:
+    branches: [development]
+
+permissions:
+  contents: read
+
+jobs:
+  distribute:
+    name: Distribute test APK
+    runs-on: ubuntu-latest
+    environment: firebase-testing
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Configure Firebase and APK signing
+        env:
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+          FIREBASE_DEBUG_KEYSTORE: ${{ secrets.FIREBASE_DEBUG_KEYSTORE }}
+        run: |
+          : "${GOOGLE_SERVICES_JSON:?Set GOOGLE_SERVICES_JSON}"
+          : "${FIREBASE_DEBUG_KEYSTORE:?Set FIREBASE_DEBUG_KEYSTORE}"
+          umask 077
+          config_dir=app/src/fenixartsFirebaseDebug
+          mkdir -p "$config_dir" ~/.android
+          printf '%s' "$GOOGLE_SERVICES_JSON" | base64 --decode > "$config_dir/google-services.json"
+          printf '%s' "$FIREBASE_DEBUG_KEYSTORE" | base64 --decode > ~/.android/debug.keystore
+
+      - name: Build test APK
+        env:
+          GOOGLE_WEB_CLIENT_ID: ${{ vars.GOOGLE_WEB_CLIENT_ID }}
+          FACEBOOK_APP_ID: ${{ vars.FACEBOOK_APP_ID }}
+          FACEBOOK_CLIENT_TOKEN: ${{ secrets.FACEBOOK_CLIENT_TOKEN }}
+          CONFIG_API: ${{ secrets.CONFIG_API }}
+        run: bash gradlew :app:assembleFenixartsFirebaseDebug
+
+      - name: Distribute APK to testers
+        env:
+          FIREBASE_APP_ID: ${{ vars.FIREBASE_APP_ID }}
+          FIREBASE_TESTER_GROUPS: ${{ vars.FIREBASE_TESTER_GROUPS }}
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: |
+          : "${FIREBASE_APP_ID:?Set FIREBASE_APP_ID}"
+          : "${FIREBASE_TESTER_GROUPS:?Set FIREBASE_TESTER_GROUPS}"
+          : "${FIREBASE_SERVICE_ACCOUNT:?Set FIREBASE_SERVICE_ACCOUNT}"
+          umask 077
+          credentials="$(mktemp)"
+          trap 'rm -f "$credentials"' EXIT
+          printf '%s' "$FIREBASE_SERVICE_ACCOUNT" > "$credentials"
+          export GOOGLE_APPLICATION_CREDENTIALS="$credentials"
+
+          git log -1 --format='%h %s' > "$RUNNER_TEMP/firebase-release-notes.txt"
+          npx --yes firebase-tools@15.36.0 appdistribution:distribute \
+            app/build/outputs/apk/fenixartsFirebase/debug/app-fenixarts-firebase-debug.apk \
+            --app "$FIREBASE_APP_ID" \
+            --groups "$FIREBASE_TESTER_GROUPS" \
+            --release-notes-file "$RUNNER_TEMP/firebase-release-notes.txt" \
+            --non-interactive
