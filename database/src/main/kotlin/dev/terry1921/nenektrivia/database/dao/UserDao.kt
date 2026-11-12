@@ -8,6 +8,9 @@ import dev.terry1921.nenektrivia.database.entity.User
 
 @Dao
 interface UserDao {
+    @Query("DELETE FROM users WHERE id = :userId")
+    suspend fun deleteById(userId: String)
+
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun insert(user: User)
 

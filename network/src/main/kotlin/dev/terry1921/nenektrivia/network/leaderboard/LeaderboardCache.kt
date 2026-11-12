@@ -29,6 +29,10 @@ class LeaderboardCache(private val appContext: Context, private val gson: Gson) 
         return runCatching { gson.fromJson<List<PlayerScore>>(json, type) }.getOrNull()
     }
 
+    suspend fun clear() {
+        appContext.leaderboardCacheDataStore.edit { it.clear() }
+    }
+
     suspend fun write(players: List<PlayerScore>) {
         val json = gson.toJson(players)
         appContext.leaderboardCacheDataStore.edit { prefs ->

@@ -2,6 +2,7 @@ package dev.terry1921.nenektrivia.ui.auth
 
 import app.cash.turbine.test
 import dev.terry1921.nenektrivia.database.entity.User
+import dev.terry1921.nenektrivia.domain.account.DeleteAccountUseCase
 import dev.terry1921.nenektrivia.domain.auth.SignInWithFacebookUseCase
 import dev.terry1921.nenektrivia.domain.auth.SignInWithGoogleUseCase
 import dev.terry1921.nenektrivia.domain.session.GetUserSessionUseCase
@@ -170,12 +171,17 @@ class AuthViewModelTest {
         }
     }
 
-    private fun createViewModel() = AuthViewModel(
-        saveUserSession = saveUserSession,
-        getUserSession = getUserSession,
-        signInWithGoogle = signInWithGoogle,
-        signInWithFacebook = signInWithFacebook
-    )
+    private suspend fun createViewModel(): AuthViewModel {
+        val deleteAccount = mock<DeleteAccountUseCase>()
+        whenever(deleteAccount.finishInterruptedCleanup()).thenReturn(false)
+        return AuthViewModel(
+            saveUserSession = saveUserSession,
+            getUserSession = getUserSession,
+            signInWithGoogle = signInWithGoogle,
+            signInWithFacebook = signInWithFacebook,
+            deleteAccount = deleteAccount
+        )
+    }
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)

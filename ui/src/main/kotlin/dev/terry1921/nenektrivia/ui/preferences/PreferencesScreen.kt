@@ -17,6 +17,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import dev.terry1921.nenektrivia.ui.R
 import dev.terry1921.nenektrivia.ui.components.ActionRow
 import dev.terry1921.nenektrivia.ui.components.InfoRow
@@ -36,6 +37,7 @@ fun PreferencesScreen(
     onRateAppClicked: () -> Unit,
     onPrivacyPolicyClicked: () -> Unit
 ) {
+    val accountDeletion: AccountDeletionViewModel = hiltViewModel()
     val spacing = LocalSpacingTokens.current
     val size = LocalSizeTokens.current
 
@@ -98,6 +100,12 @@ fun PreferencesScreen(
                         onClick = onLogoutClicked
                     )
                 }
+                item {
+                    ActionRow(
+                        title = stringResource(R.string.delete_account),
+                        onClick = accountDeletion::open
+                    )
+                }
 
                 item { Spacer(Modifier.height(spacing.large)) }
 
@@ -117,6 +125,8 @@ fun PreferencesScreen(
                 item { InfoRow(title = stringResource(R.string.version), value = state.appVersion) }
             }
         }
+
+        AccountDeletionDialog(accountDeletion, onDeleted = onLogoutClicked)
 
         if (state.showThemeDialog) {
             ThemeDialog(
