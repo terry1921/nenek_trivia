@@ -49,4 +49,12 @@
     <string name="game_over_dialog_title">Game Over</string>
     <string name="game_over_dialog_score_message">Tu puntuación: %1$d</string>
     <string name="game_over_dialog_start_again">Nuevo juego</string>
+    <string name="delete_account">Eliminar cuenta</string>
+    <string name="delete_account_confirmation">Se eliminarán de forma permanente tu cuenta de NeneK Trivia, tu progreso y tu entrada del ranking. Para confirmar, verifica tu identidad con el proveedor que usaste para iniciar sesión.</string>
+    <string name="delete_account_google">Verificar con Google</string>
+    <string name="delete_account_facebook">Verificar con Facebook</string>
+    <string name="delete_account_wait">Esperando confirmación. Mantén la conexión a Internet.</string>
+    <string name="delete_account_error">No se pudo completar la eliminación. Comprueba tu conexión y verifica la misma cuenta que usas en NeneK Trivia.</string>
+    <string name="delete_account_retry">Reintentar</string>
+    <string name="delete_account_cancel">Cancelar</string>
 </resources>

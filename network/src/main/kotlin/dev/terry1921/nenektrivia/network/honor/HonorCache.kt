@@ -29,6 +29,10 @@ class HonorCache(private val appContext: Context, private val gson: Gson) {
         return runCatching { gson.fromJson<List<HonorModel>>(json, type) }.getOrNull()
     }
 
+    suspend fun clear() {
+        appContext.honorCacheDataStore.edit { it.clear() }
+    }
+
     suspend fun write(items: List<HonorModel>) {
         val json = gson.toJson(items)
         appContext.honorCacheDataStore.edit { prefs ->

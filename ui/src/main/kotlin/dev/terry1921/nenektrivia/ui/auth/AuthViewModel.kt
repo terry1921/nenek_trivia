@@ -3,6 +3,7 @@ package dev.terry1921.nenektrivia.ui.auth
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.terry1921.nenektrivia.domain.account.DeleteAccountUseCase
 import dev.terry1921.nenektrivia.domain.auth.SignInWithFacebookUseCase
 import dev.terry1921.nenektrivia.domain.auth.SignInWithGoogleUseCase
 import dev.terry1921.nenektrivia.domain.session.GetUserSessionUseCase
@@ -24,7 +25,8 @@ class AuthViewModel @Inject constructor(
     private val saveUserSession: SaveUserSessionUseCase,
     private val getUserSession: GetUserSessionUseCase,
     private val signInWithGoogle: SignInWithGoogleUseCase,
-    private val signInWithFacebook: SignInWithFacebookUseCase
+    private val signInWithFacebook: SignInWithFacebookUseCase,
+    private val deleteAccount: DeleteAccountUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(AuthUiState())
@@ -137,6 +139,17 @@ class AuthViewModel @Inject constructor(
 
     fun checkIfUserIsLoggedIn() = viewModelScope.launch {
         Timber.d("Checking for existing user session")
+        try {
+            deleteAccount.finishInterruptedCleanup()
+        } catch (error: CancellationException) {
+            throw error
+        } catch (error: Exception) {
+            Timber.e(error, "Could not finish account deletion cleanup")
+            _uiState.update {
+                it.copy(errorMessage = "No se pudo completar la limpieza de la cuenta.")
+            }
+            return@launch
+        }
         if (getUserSession() != null) {
             Timber.i("Existing user session found, navigating to main")
             _effect.emit(AuthEffect.NavigateToMain)

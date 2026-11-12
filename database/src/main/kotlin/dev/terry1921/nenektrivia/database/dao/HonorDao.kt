@@ -8,6 +8,9 @@ import dev.terry1921.nenektrivia.database.entity.Honor
 
 @Dao
 interface HonorDao {
+    @Query("DELETE FROM honors WHERE id = :userId")
+    suspend fun deleteById(userId: String)
+
     @Query("SELECT * FROM honors WHERE id = :userId LIMIT 1")
     suspend fun findById(userId: String): Honor?
 
