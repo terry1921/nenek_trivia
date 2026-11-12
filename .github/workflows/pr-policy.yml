@@ -1,0 +1,35 @@
+name: PR Policy
+
+on:
+  pull_request:
+    branches: [main, development]
+    types: [opened, reopened, synchronize, edited, ready_for_review]
+
+permissions: {}
+
+jobs:
+  branch-policy:
+    name: PR branch policy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check source and target
+        shell: bash
+        env:
+          BASE: ${{ github.base_ref }}
+          HEAD_BRANCH: ${{ github.head_ref }}
+          HEAD_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          if [[ "$BASE" == main ]]; then
+            if [[ "$HEAD_BRANCH" == development && "$HEAD_REPOSITORY" == "$REPOSITORY" ]]; then
+              exit 0
+            fi
+            echo "::error::Only development in this repository may target main."
+            exit 1
+          fi
+
+          if [[ "$HEAD_BRANCH" =~ ^(feat|feature|fix|build|docs|ci|perf|refactor|revert|style|test|chore)/[a-z0-9]+([.-][a-z0-9]+)*$ ]]; then
+            exit 0
+          fi
+          echo "::error::Target development from a conventional branch, for example feat/account-deletion."
+          exit 1
